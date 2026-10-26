@@ -69,6 +69,9 @@ missing. The database connection test is at <http://localhost:3000/status> and
 | `npm run check:env` | Verify the required Supabase environment variables without printing secrets. |
 | `npm test` | Run the Vitest suite. |
 | `npm run test:watch` | Run Vitest in watch mode. |
+| `npm run test:coverage` | Run the unit suite with the coverage gate. |
+| `npm run test:integration` | Run RLS and profile trigger checks against local Supabase. |
+| `npm run test:e2e` | Run Playwright browser tests in Chrome. |
 | `npm run typecheck` | Generate Next.js route types and run TypeScript with `--noEmit`. |
 | `npm run lint` | Run ESLint. |
 | `npm run build` | Create a production build. |
@@ -147,6 +150,7 @@ Branch names use a short type prefix, for example `feat/login-page`, `fix/reset-
 
 ## Tests and evidence
 
+- [Testing guide](docs/testing.md)
 - [Test plan](docs/test-plan.md)
 - [Test cases](docs/test-cases.md)
 - [Test report](docs/test-report.md)
@@ -157,9 +161,14 @@ Run everything locally with:
 ```bash
 npm run typecheck
 npm run lint
-npm test
+npm run test:coverage
 npm run build
+npm run test:integration
+npm run test:e2e
 ```
+
+The integration and browser suites need a local Supabase stack. See
+[`docs/testing.md`](docs/testing.md) for the setup and the exact commands.
 
 ## Design
 

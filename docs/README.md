@@ -7,6 +7,7 @@
 | [Design system](design-system.md) | Colors, fonts, spacing, components, states, and accessibility rules. |
 | [Working agreement](working-agreement.md) | Team workflow and the Definition of Done. |
 | [Test plan](test-plan.md) | Scope, environments, pass/fail criteria, risks, and schedule. |
+| [Testing guide](testing.md) | Commands, local Supabase setup, CI layout, and what is not automated. |
 | [Test cases](test-cases.md) | Step-by-step cases and their automated coverage. |
 | [Test report](test-report.md) | What was run, what passed, bugs fixed, and known limitations. |
 | [Security notes](security.md) | Auth, RLS, roles, secrets, demo accounts, and the production checklist. |
