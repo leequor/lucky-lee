@@ -35,7 +35,7 @@ export default function StatusPage() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-canvas px-6 py-10">
+      <div className="mx-auto max-w-canvas px-6 pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-10">
         <h1 className="text-[28px] font-semibold leading-tight tracking-[-0.02em] text-ink">
           System status
         </h1>

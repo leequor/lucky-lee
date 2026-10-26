@@ -6,7 +6,7 @@ import { Logo } from "@/components/ui/logo";
 export function AuthShell({ children }: { children: ReactNode }) {
   return (
     <main className="min-h-[100dvh] bg-paper">
-      <div className="mx-auto flex min-h-[100dvh] w-full max-w-canvas flex-col px-6 py-6">
+      <div className="mx-auto flex min-h-[100dvh] w-full max-w-canvas flex-col px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-6">
         <header className="flex items-center justify-between">
           <Logo />
           <Link

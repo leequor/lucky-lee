@@ -61,10 +61,10 @@ export function LandingView({ user, preview = false }: { user: AuthUser; preview
   const displayName = user.fullName || user.email;
 
   return (
-    <div className="min-h-screen bg-paper">
+    <div className="min-h-[100dvh] bg-paper">
       <Navbar user={user} preview={preview} />
 
-      <main className="mx-auto max-w-canvas px-6 pb-10">
+      <main className="mx-auto max-w-canvas px-6 pb-[max(2.5rem,env(safe-area-inset-bottom))]">
         {preview ? (
           <div className="mt-4 rounded-md bg-warn-soft px-3.5 py-2.5 text-[13px] text-warn">
             Design preview · sample account
