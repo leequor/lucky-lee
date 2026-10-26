@@ -10,15 +10,19 @@
 | Unit and component test files | 19 |
 | Unit and component tests | 139 passed |
 | Coverage | 90.88% statements, 82.52% branches, 87.05% functions |
-| RLS integration tests | 7 passed against local Supabase |
-| Browser E2E tests | 17 passed in Chrome |
+| RLS integration tests | 7 local + 7 hosted passed |
+| Browser E2E tests | 17 local + 7 hosted smoke passed |
 | TypeScript | Passed |
 | ESLint | Passed |
 | Production build | Passed |
-| Hosted Supabase integration | Not run; no hosted project credentials were provided |
+| Hosted Supabase integration | Login, logout, protected redirect, reset link, new password, and reused-link rejection passed |
+| Hosted email delivery | Not tested; demo addresses are not real inboxes |
 | Human mockup comparison | Pending |
 
-**Overall:** the automated unit, component, database, and browser layers pass. The app now has a real end-to-end regression for registration, login, logout, duplicate email, and a single-use password reset link. The remaining gap is a run against the team's hosted Supabase project with real email delivery.
+**Overall:** the automated unit, component, database, and browser layers pass. The hosted Vercel
+deployment is live at <https://lucky-lee.vercel.app>, and hosted login, logout, protected redirect,
+password reset, and reused-link rejection pass. The remaining gap is real email delivery to a
+real inbox.
 
 ## Commands run
 
@@ -83,10 +87,10 @@ Coverage is measured across `app/`, `components/`, and `lib/`. The gate fails be
 | Group | Cases | Automated coverage | Hosted Supabase still needed |
 | --- | --- | --- | --- |
 | Registration | TC-REG-01 to TC-REG-05 | Unit, component, server action, and E2E | Real confirmation email |
-| Login and logout | TC-LOG-01 to TC-LOG-04 | Unit, server action, and E2E session | Hosted cookie/session check |
+| Login and logout | TC-LOG-01 to TC-LOG-04 | Unit, server action, and E2E session | Hosted session check (passed) |
 | Password reset | TC-RST-01 to TC-RST-06 | Unit, route, and E2E single-use link | Real email delivery and timed expiry |
 | Landing page | TC-LAND-01 to TC-LAND-03 | Page, component, E2E responsive | Human mockup comparison |
-| Health and security | TC-HLT-01 to TC-SEC-02 | Health routes, E2E, RLS integration, CI secret scan | Hosted RLS and deployed bundle scan |
+| Health and security | TC-HLT-01 to TC-SEC-02 | Health routes, E2E, local + hosted RLS, CI secret scan | Deployed browser bundle scan |
 
 ## Bugs found and fixed during the run
 
@@ -103,7 +107,9 @@ No S1 or S2 product bugs remain open.
 
 ## Known limitations
 
-1. **The hosted Supabase project was not tested.** All integration and E2E checks ran against the local stack. Real email delivery, hosted redirect allow-list, and hosted RLS still need one run with the team's URL, anon key, and demo password.
+1. **Hosted project tested, real email not.** The hosted project was tested for login, logout,
+   protected redirect, reset token, new password, reused-link rejection, and all 7 RLS checks.
+   Supabase email delivery to a real inbox, and timed expiry, still need one manual run.
 2. **Email delivery is not exercised.** The reset E2E generates a recovery token through the Supabase admin API and verifies the single-use link. It does not read a mailbox.
 3. **Visual comparison is partial.** Responsive checks prove no horizontal scroll at 360, 768, and 1440 px, and axe reports no critical violations. A human must still compare the screens with `design/mockups/`.
 4. **Failed login clears the email field.** Recorded as BUG-05.
@@ -116,9 +122,12 @@ No S1 or S2 product bugs remain open.
 - [x] Browser E2E checks pass.
 - [x] Health endpoints are covered.
 - [x] Test cases and the testing guide are documented.
-- [ ] Hosted Supabase walkthrough with the team's project.
+- [x] Hosted Supabase walkthrough: login, logout, reset link, new password, reused link, RLS.
+- [ ] Real email delivery to a real inbox.
 - [ ] Final human rehearsal on the presentation machine.
 
 ## Recommendation
 
-Run the hosted checklist once with `DEMO_PASSWORD` and the real Supabase project, then record the result here before Nov 9. If any hosted test fails, open a bug issue with the steps and a screenshot.
+Run the real email checklist once with a real inbox, then record the result here before Nov 9. If
+any email test fails, open a bug issue with the steps and a screenshot. Configure custom SMTP in
+Supabase for reliable delivery.

@@ -7,6 +7,8 @@ security, test evidence, and the Nov 9 presentation pack.
 This is the working copy at [`leequor/lucky-lee`](https://github.com/leequor/lucky-lee). The
 original repo, `leequor/Lucky-Patcher-`, is left untouched.
 
+**Live demo:** <https://lucky-lee.vercel.app>
+
 ## Team
 
 | Name | Role |
