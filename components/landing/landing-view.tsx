@@ -40,8 +40,8 @@ const SHORTCUTS = [
 ];
 
 const SYSTEM = [
-  { label: "Auth", value: "Supabase", note: "Email and password with secure sessions." },
-  { label: "Data", value: "RLS on", note: "Profiles are scoped to the signed-in user." },
+  { label: "Auth", value: "Supabase", note: "Email and password, secure sessions." },
+  { label: "Data", value: "RLS on", note: "Profiles scoped to the signed-in user." },
   { label: "Quality", value: "Automated", note: "Unit, RLS, browser, and security checks." },
 ];
 
@@ -73,10 +73,10 @@ export function LandingView({ user, preview = false }: { user: AuthUser; preview
                 <p className="label">Sprint 01 / Control room</p>
               </div>
 
-              <h1 className="mt-7 max-w-[12ch] text-[clamp(3rem,6.4vw,5.8rem)] font-semibold leading-[0.88] tracking-[-0.065em] text-ink">
+              <h1 className="mt-7 max-w-[13ch] text-[clamp(2.8rem,5vw,4.6rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-ink">
                 Welcome back,
                 <br />
-                <span className="box-decoration-clone inline-block bg-signal-500 px-2 pb-1 text-ink">
+                <span className="text-ink decoration-signal-500 decoration-[6px] underline-offset-[0.12em]">
                   {firstName}.
                 </span>
               </h1>
