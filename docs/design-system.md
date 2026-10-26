@@ -1,158 +1,148 @@
 # Design System
 
-The app uses a high-vis industrial label system: black structural panels, off-white paper, safety
-yellow marks, oversized grotesque type, and mono metadata. It is built to look like a tool the team
-operates, not a generic SaaS landing page.
+The app uses a quiet product interface: an off-white ground, white panels, near-black type, a
+single blue accent used only on real data, and status colours only where something has a state.
+It is built to look like a tool the team works in, not a marketing page.
 
 ## Brand idea
 
-- **Black and paper** carry the hierarchy. Yellow marks action, status, and the current item.
-- **No gradients, glass, blobs, shadows, or decorative illustrations.**
-- **Hard edges:** every control and tag is square. Radius is 0.
-- **Bricolage Grotesque** sets headlines and UI. **Space Mono** handles labels, counts, paths, and
-  state.
-- **One accent:** safety yellow. Error red is semantic only.
+- **One ground, one ink, one accent.** Chrome is achromatic; blue marks the sprint progress and
+  nothing else.
+- **Surfaces are flat.** Panels separate by one tone step and a 1 px line. No shadows, no glows.
+- **Soft geometry.** Panels use 8 px corners, controls 6 px. Nothing is a pill except status tags.
+- **Geist** sets all text. **Geist Mono** is reserved for IDs and code.
+- **No decoration.** No gradients, blobs, illustrations, index numbers, or tracked-out labels.
 
 ## Color palette
 
 | Token | Hex | Use |
 | --- | --- | --- |
-| `paper` | `#F3F3EE` | Page background. |
-| `surface` | `#FFFFFF` | Inputs and quiet inset surfaces. |
-| `ink` | `#0A0A0A` | Text, black panels, primary structure. |
-| `muted` | `#57594F` | Secondary text and metadata. |
-| `line` | `#C7C9BE` | Reference divider color. Borders use `ink/20`. |
-| `wash` | `#E8E9E0` | Neutral inset surface. |
-| `signal-50` | `#FFFBE0` | Yellow-tinted success/info surface. |
-| `signal-500` | `#FFE500` | Accent fill, focus ring, active/ready marks. |
-| `signal-700` | `#5C5200` | Yellow-adjacent text if a tint needs text. |
-| `danger-50` | `#FDECEA` | Error surface. |
-| `danger-500` | `#C62828` | Error border and fill. |
-| `danger-600` | `#A71D1D` | Error text. |
+| `paper` | `#F7F7F7` | Page ground. |
+| `surface` | `#FFFFFF` | Panels, inputs, navigation. |
+| `ink` | `#0A0A0A` | Text and primary action fill. |
+| `muted` | `#6B6B6B` | Secondary text, labels, metadata. |
+| `line` | `#E6E6E6` | Panel borders and row rules. |
+| `wash` | `#EFEFEF` | Secondary button fill, quiet insets. |
+| `accent` | `#1D5FBF` | Sprint progress bar only. |
+| `positive` | `#2E7D32` | Ready dot and status text. |
+| `positive-soft` | `#DCFAE5` | Ready tag fill. |
+| `negative` | `#C4242A` | Error borders, dots, text. |
+| `negative-soft` | `#FFEDEA` | Error alert fill. |
+| `warn` | `#92400E` | Preview banner text. |
+| `warn-soft` | `#FFFBEB` | Preview banner fill. |
 
-Yellow is a **fill**, not body text on paper. Use black text on yellow.
+Colour is data, status, or the one primary action. It never decorates the chrome.
 
 ## Typography
 
-| Role | Family | Notes |
+| Role | Family | Size / weight |
 | --- | --- | --- |
-| Display / body | Bricolage Grotesque | Tight tracking on display sizes. |
-| Labels / metadata | Space Mono | 10 px uppercase, 0.12–0.16em tracking. |
-| IDs / paths | Space Mono | Truncate long values, keep selectable. |
+| Page title | Geist | 24 px / 600, tracking -0.02em |
+| Utility page title | Geist | 28 px / 600 |
+| Section heading | Geist | 16 px / 500 |
+| Body | Geist | 14 px / 400, line-height 1.5–1.7 |
+| Field label | Geist | 14 px / 500 |
+| Metadata and hints | Geist | 12–13 px / 400 |
+| IDs and code | Geist Mono | 13 px, truncate long values |
 
-### Scale
-
-| Token | Size | Use |
-| --- | --- | --- |
-| Auth statement | 48–99 px, `clamp()` | Black left panel. |
-| Landing welcome | 48–93 px, `clamp()` | Signed-in hero. |
-| Page title | 42–70 px, `clamp()` | Status and 404. |
-| Section title | 29–40 px | Checklist, shortcuts. |
-| Body | 13–15 px, 1.5–1.7 line-height | Copy and descriptions. |
-| Metadata | 10–11 px | Labels, tags, endpoints. |
+Sentence case everywhere. No uppercase labels, no letter-spaced capitals. Numbers that align use
+`font-variant-numeric: tabular-nums` (`.figure`).
 
 ## Spacing and shape
 
-- Spacing scale: 4, 8, 12, 16, 20, 24, 32, 40, 48, 56 px.
-- Page gutter: 20 px mobile, 32 px desktop.
-- Content widths: 1400 px app shell, 1080 px utility pages, 420 px auth form.
-- Radius: 0. No pills, no rounded cards.
-- Borders: 1 px `ink/20`; accent rules are 4 px yellow.
-- Shadow: none. Hierarchy comes from black panels, rules, spacing, and type weight.
+- Spacing scale: 4, 8, 12, 16, 20, 24, 32, 40 px.
+- Page gutter: 24 px.
+- Content width: 1080 px canvas, 420 px auth form.
+- Radius: panels 8 px, controls 6 px, status tags full.
+- Borders: 1 px `line`. No 4 px accent bars, no double rules.
+- Shadow: none. Focus uses a 2 px black outline.
 
 ## Core components
 
 ### Buttons
 
-- **Primary:** yellow fill, black text, black border. Hover inverts to black fill, yellow text.
-- **Secondary:** transparent, 1 px ink/35 border, ink text. Hover fills black.
-- **Ghost:** text only, underline on hover.
-- Sizes: 32 px small, 40 px default, 44 px auth/mobile nav.
-- Focus: 2 px black outline plus a 5 px yellow outer ring.
-- Loading: disabled button with a 2 px square pulse and pending copy.
+- **Primary:** near-black `#141414` fill, white text, 6 px radius. Hover lightens to `#2B2B2B`.
+- **Secondary:** `wash` fill, 1 px `line` border, ink text. Hover `#E6E6E6`.
+- **Ghost:** text only; hover fills `wash`.
+- Sizes: 32 px small, 36 px default, 40 px large/auth.
+- Disabled: 45% opacity, no pointer events.
+- Pending: label swaps to the pending copy with a small pulse mark.
 
-### Inputs and fields
+### Inputs
 
-- Height 44 px, square corners, 1 px ink/30 border, white fill.
-- Focus: black border plus an inset 2 px black underline.
-- Error: red border, red text below the field.
-- Label always above the field. Label and hint use mono uppercase.
-- Placeholder uses `muted`, never a lighter tint.
-- `aria-invalid` and `aria-describedby` on every error.
+- Height 40 px, 6 px radius, 1 px `line`, white fill.
+- Focus: border turns ink; the global focus outline stays visible.
+- Error: red border, red 12 px message with `role="alert"`.
+- Label 14 px above the field; hint 12 px muted on the label row.
+- Placeholder `#9A9A9A`; never the only label.
 
 ### Alerts
 
-- Flat strip with a 4 px left border. No filled rounded box.
-- **Success:** black left border, yellow-tinted surface.
-- **Error:** red left border, red-tinted surface.
-- **Info:** muted left border, white fill.
+- 6 px radius, flat tinted fill, no left bar.
+- **Success:** `positive-soft` / `positive-ink`.
+- **Error:** `negative-soft` / `negative-ink`.
+- **Info:** `wash` / ink.
 - `role="alert"` for errors, `role="status"` otherwise.
+
+### Status tags
+
+- Full radius, 12 px medium, with a 6 px dot for state.
+- **Ready:** `positive-soft` fill, `positive-ink` text, green dot.
+- **Open / neutral:** `wash` fill, `#3D3D3D` text, grey dot.
+- **Error:** `negative-soft` fill, `negative-ink` text.
+- State is always spelled out; colour is never the only signal.
 
 ### Navigation
 
-- 64 px sticky bar, black background, yellow logo tile.
-- Wordmark left; system status link, email, role tag, square avatar, logout right.
-- Mobile hides email and system link. Logout remains visible with a 44 px target.
-
-### Tags
-
-- Square, 1 px border, mono 10 px uppercase.
-- Superadmin / ready: yellow fill, black text.
-- Admin: black fill, paper text.
-- User / open: transparent, ink border, ink text.
-- On black panels, use the dark tone: yellow or paper fills.
-
-### Rows
-
-- Checklist, account details, and status use full-width rows separated by 1 px rules.
-- No card inside a card. Numbers and state tags align to the right.
-- Long IDs truncate; emails wrap.
+- 64 px white bar, 1 px bottom rule.
+- Clover mark in a white tile, wordmark at 15 px/600.
+- Right cluster: status link, email, role tag, round avatar, secondary Log out.
+- Below 768 px the email, role, and status link hide; the log-out target stays.
 
 ## Layout
 
 ### Auth shell
 
-- Desktop: black statement panel 1.15fr, paper form panel 0.85fr.
-- Left: yellow logo tile, sprint label, oversized statement, three facts pinned to the bottom.
-- Right: form centered in a 420 px measure.
-- Mobile: black statement and facts stack above the form.
+- Full-height ground with the product mark at the top and a quiet footer.
+- Form card centred in a 420 px measure on a white panel.
+- No split-screen statement panel, no oversized type.
+- Fields stack in one column; the forgot-password link sits on the password label row.
 
 ### Landing
 
-- Black sticky navbar.
-- Asymmetric hero: welcome statement left, black account panel right.
-- Checklist left, presentation shortcuts right.
-- System facts render as a black three-cell band.
-- Footer is a mono rule line.
+- White navigation bar, then a 1080 px canvas.
+- Title row: `Account overview`, who is signed in, role tag, and one secondary action.
+- `Your account` panel: two-column label/value grid on desktop, stacked rows on mobile.
+- `Sprint 1 checklist`: heading row with `x of 5 ready`, a 8 px blue progress bar, then rows
+  with title, one-line note, and a status tag.
+- `Access and environment`: three cells divided by 1 px lines, one short fact each.
+- Footer rule with product, sprint, and session state.
 
 ### Status
 
-- Black header band.
-- Utility layout: title and explanation left, health rows right.
-- Health rows use text labels and `Ready` / `Wait` / `Warn` / `Fail` tags.
-- Raw endpoints sit below the rows as mono links.
+- Same white header and 1080 px canvas.
+- Heading, explanation, then the two health rows in one panel.
+- Below it, `If a check fails` with three short runbook rows so the page is not half empty.
 
 ## Motion
 
-- One 280 ms reveal on auth content. No scroll hijacks, no infinite loops.
-- All motion collapses under `prefers-reduced-motion: reduce`.
-- Hover and active states change color or translate by 1 px only.
+- Transitions are colour and background only, 150 ms.
+- No entrance animations, no scroll effects.
+- Everything collapses under `prefers-reduced-motion: reduce`.
 
 ## Accessibility
 
-- Body text contrast AA; metadata remains at `muted` or darker.
-- Yellow is never used for small text on paper.
-- Focus ring is always visible: black outline plus yellow outer ring.
-- Form labels are never placeholders.
-- State is never communicated by color alone.
-- Primary controls and mobile nav targets are at least 44 px.
-- Layout checked at 360, 768, and 1440 px.
+- Body and metadata text meet AA on `paper` and `surface`.
+- Focus is always visible: 2 px ink outline with 2 px offset.
+- Form labels are never placeholders; errors are wired with `aria-invalid` and `aria-describedby`.
+- Status tags pair a dot with words.
+- Controls are at least 32 px tall; primary and mobile actions are 40–44 px.
+- Layout checked at 360, 390, 768, 1440, and 1900 px.
 
 ## Avoid
 
-- Cream + clover green + coral + Fraunces.
-- Orange operator console variant.
-- Gradient blobs, glass panels, background grids, rounded cards.
-- Pills, emoji icons, decorative sparkles.
-- More than one accent color.
+- Black statement panels, safety-yellow fills, clover green, cream, coral, Fraunces.
+- Gradients, glass, blobs, shadows, background grids.
+- Uppercase tracked-out mono labels, index numbers (`01 / 02`), thin accent rules.
+- More than one accent colour, or colour on chrome.
 - Fake metrics or vague marketing copy.

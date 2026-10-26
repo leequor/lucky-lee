@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 const linkClass =
-  "font-medium text-ink underline decoration-ink/30 underline-offset-4 transition-colors hover:decoration-signal-600";
+  "font-medium text-ink underline decoration-[#c9c9c9] underline-offset-4 transition-colors hover:decoration-ink";
 
 function readParam(value: string | string[] | undefined) {
   return typeof value === "string" ? value : undefined;
@@ -24,7 +24,6 @@ export default async function LoginPage({
 
   return (
     <AuthCard
-      eyebrow="Account access / 01"
       title="Sign in to Lucky Patcher"
       description="Use the email and password on your team account. The session stays in a secure cookie."
       footer={

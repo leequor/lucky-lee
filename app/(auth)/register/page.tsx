@@ -9,12 +9,11 @@ export const metadata: Metadata = {
 };
 
 const linkClass =
-  "font-medium text-ink underline decoration-ink/30 underline-offset-4 transition-colors hover:decoration-signal-600";
+  "font-medium text-ink underline decoration-[#c9c9c9] underline-offset-4 transition-colors hover:decoration-ink";
 
 export default function RegisterPage() {
   return (
     <AuthCard
-      eyebrow="New account / 02"
       title="Create your account"
       description="Create the account you use for the dashboard and recovery. Development signups receive superadmin for testing."
       footer={

@@ -9,7 +9,7 @@
 | App version | `test/full-test-suite` + Vercel production |
 | Unit and component test files | 19 |
 | Unit and component tests | 139 passed |
-| Coverage | 90.12% statements, 82.11% branches, 85.88% functions |
+| Coverage | 90.15% statements, 81.98% branches, 86.04% functions |
 | RLS integration tests | 7 local + 7 hosted passed |
 | Browser E2E tests | 17 local + 7 hosted smoke passed |
 | TypeScript | Passed |

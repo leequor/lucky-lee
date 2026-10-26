@@ -9,49 +9,45 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: "#F3F3EE",
+        paper: "#F7F7F7",
         surface: "#FFFFFF",
         ink: "#0A0A0A",
-        muted: "#57594F",
-        line: "#C7C9BE",
-        wash: "#E8E9E0",
-        signal: {
-          50: "#FFFBE0",
-          100: "#FFF3A3",
-          400: "#FFE95C",
-          500: "#FFE500",
-          600: "#E6CF00",
-          700: "#5C5200",
+        muted: "#6B6B6B",
+        line: "#E6E6E6",
+        wash: "#EFEFEF",
+        accent: "#1D5FBF",
+        positive: {
+          DEFAULT: "#2E7D32",
+          soft: "#DCFAE5",
+          ink: "#04250E",
         },
-        danger: {
-          50: "#FDECEA",
-          500: "#C62828",
-          600: "#A71D1D",
+        negative: {
+          DEFAULT: "#C4242A",
+          soft: "#FFEDEA",
+          ink: "#831C1E",
+        },
+        warn: {
+          DEFAULT: "#92400E",
+          soft: "#FFFBEB",
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
+        sans: ["var(--font-geist-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       borderRadius: {
-        DEFAULT: "0px",
-        sm: "0px",
-        md: "0px",
-        lg: "0px",
-        xl: "0px",
-        "2xl": "0px",
-        "3xl": "0px",
+        none: "0px",
+        sm: "4px",
+        DEFAULT: "6px",
+        md: "6px",
+        lg: "8px",
+        xl: "10px",
+        "2xl": "12px",
         full: "9999px",
       },
-      keyframes: {
-        reveal: {
-          "0%": { opacity: "0", transform: "translateY(8px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-      },
-      animation: {
-        reveal: "reveal 280ms cubic-bezier(0.16, 1, 0.3, 1) both",
+      maxWidth: {
+        canvas: "1080px",
+        form: "420px",
       },
     },
   },

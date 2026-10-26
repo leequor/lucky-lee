@@ -5,14 +5,14 @@ presentation. They are not redrawn.
 
 ## Capture setup
 
-- App: local Next.js dev server against the hosted Supabase project
-- Viewport: 1440 px wide, full page
+- App: local production build (`npm run build` + `npm start`)
+- Viewport: 1440 × 900, full page
 - Fonts: loaded from the app build
-- Auth: signed-in demo account for the landing page
+- Auth: hosted Supabase project; signed-in demo account for the landing page
 - Reset form: local-only `/design-preview/reset-password` route
 - Status: hosted Supabase health check, both rows ready
 - Browser: system Chrome through Playwright; no dev overlay or browser chrome in the image
-- Date: 2026-10-26
+- Date: 2026-10-27
 
 ## Files
 

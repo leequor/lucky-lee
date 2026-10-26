@@ -14,14 +14,13 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 const linkClass =
-  "font-medium text-ink underline decoration-ink/30 underline-offset-4 transition-colors hover:decoration-signal-600";
-const codeClass = "border border-ink/15 bg-surface px-1 py-0.5 font-mono text-[11px]";
+  "font-medium text-ink underline decoration-[#c9c9c9] underline-offset-4 transition-colors hover:decoration-ink";
+const codeClass = "rounded-sm bg-wash px-1.5 py-0.5 font-mono text-[12px] text-ink";
 
 export default async function ResetPasswordPage() {
   if (!isSupabaseConfigured()) {
     return (
       <AuthCard
-        eyebrow="Configuration / 00"
         title="Supabase is not connected yet"
         description="Add your project URL and anon key to .env.local, then restart the development server."
         footer={
@@ -46,7 +45,6 @@ export default async function ResetPasswordPage() {
   if (!user) {
     return (
       <AuthCard
-        eyebrow="Recovery link / 04"
         title="This link has expired"
         description="Reset links are single-use and expire for your safety. Request a fresh one and open it in the same browser."
         footer={
@@ -59,7 +57,7 @@ export default async function ResetPasswordPage() {
       >
         <Link
           href="/forgot-password"
-          className="inline-flex h-11 w-full items-center justify-center border border-ink bg-signal-500 px-5 text-[13px] font-bold text-ink transition-colors hover:bg-ink hover:text-signal-500"
+          className="inline-flex h-10 w-full items-center justify-center rounded-md bg-[#141414] px-4 text-[14px] font-medium text-white transition-colors hover:bg-[#2b2b2b]"
         >
           Request a new reset link
         </Link>
@@ -69,7 +67,6 @@ export default async function ResetPasswordPage() {
 
   return (
     <AuthCard
-      eyebrow="Recovery link / 04"
       title="Set a new password"
       description={`Choose a new password for ${user.email ?? "your account"}. You will sign in with it on the next screen.`}
       footer={

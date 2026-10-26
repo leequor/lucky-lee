@@ -9,12 +9,11 @@ export const metadata: Metadata = {
 };
 
 const linkClass =
-  "font-medium text-ink underline decoration-ink/30 underline-offset-4 transition-colors hover:decoration-signal-600";
+  "font-medium text-ink underline decoration-[#c9c9c9] underline-offset-4 transition-colors hover:decoration-ink";
 
 export default function ForgotPasswordPage() {
   return (
     <AuthCard
-      eyebrow="Recovery / 03"
       title="Reset your password"
       description="Enter your account email. If it matches, Supabase sends a single-use reset link."
       footer={

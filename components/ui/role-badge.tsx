@@ -8,15 +8,15 @@ const LABELS: Record<AppRole, string> = {
 };
 
 const LIGHT: Record<AppRole, string> = {
-  superadmin: "border-signal-500 bg-signal-500 text-ink",
-  admin: "border-ink bg-ink text-paper",
-  user: "border-ink/25 bg-transparent text-muted",
+  superadmin: "bg-ink text-white",
+  admin: "bg-wash text-ink",
+  user: "border border-line bg-surface text-muted",
 };
 
 const DARK: Record<AppRole, string> = {
-  superadmin: "border-signal-500 bg-signal-500 text-ink",
-  admin: "border-paper/40 bg-paper text-ink",
-  user: "border-paper/30 bg-transparent text-paper/75",
+  superadmin: "bg-white text-ink",
+  admin: "bg-white/15 text-white",
+  user: "border border-white/25 bg-transparent text-white/70",
 };
 
 export function RoleBadge({
@@ -31,7 +31,7 @@ export function RoleBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center border px-2 py-1 font-mono text-[10px] font-bold uppercase leading-none tracking-[0.14em]",
+        "inline-flex items-center rounded-full px-2.5 py-1 text-[12px] font-medium leading-none",
         tone === "dark" ? DARK[role] : LIGHT[role],
         className,
       )}

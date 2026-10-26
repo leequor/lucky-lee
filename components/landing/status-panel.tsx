@@ -17,17 +17,24 @@ type SupabaseHealth = {
 };
 
 const STATE_LABEL = {
-  loading: "Wait",
+  loading: "Checking",
   ok: "Ready",
-  warn: "Warn",
-  error: "Fail",
+  warn: "Warning",
+  error: "Down",
 } as const;
 
-const STATE_STYLE = {
-  loading: "border-ink/30 text-muted",
-  ok: "border-ink bg-signal-500 text-ink",
-  warn: "border-ink bg-signal-500 text-ink",
-  error: "border-danger-500 bg-danger-500 text-white",
+const PILL = {
+  loading: "bg-wash text-[#3d3d3d]",
+  ok: "bg-positive-soft text-positive-ink",
+  warn: "bg-warn-soft text-warn",
+  error: "bg-negative-soft text-negative-ink",
+} as const;
+
+const DOT = {
+  loading: "bg-[#9a9a9a]",
+  ok: "bg-positive",
+  warn: "bg-warn",
+  error: "bg-negative",
 } as const;
 
 function StatusRow({
@@ -40,17 +47,18 @@ function StatusRow({
   detail: string;
 }) {
   return (
-    <div className="grid gap-3 border-b border-ink/20 py-4 sm:grid-cols-[1fr_auto] sm:items-start">
+    <div className="flex flex-wrap items-start justify-between gap-3 border-t border-line px-5 py-4 first:border-t-0">
       <div>
-        <p className="text-[13px] font-medium text-ink">{label}</p>
-        <p className="mt-1 max-w-[58ch] font-mono text-[10px] leading-5 text-muted">{detail}</p>
+        <p className="text-[14px] font-medium text-ink">{label}</p>
+        <p className="mt-0.5 max-w-[58ch] text-[13px] leading-5 text-muted">{detail}</p>
       </div>
       <span
         className={cn(
-          "inline-flex w-fit border px-2 py-1 font-mono text-[10px] font-bold uppercase leading-none tracking-[0.12em]",
-          STATE_STYLE[state],
+          "inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[12px] font-medium",
+          PILL[state],
         )}
       >
+        <span className={cn("h-1.5 w-1.5 rounded-full", DOT[state])} aria-hidden="true" />
         {STATE_LABEL[state]}
       </span>
     </div>
@@ -100,12 +108,12 @@ export function StatusPanel() {
   return (
     <div>
       {error ? (
-        <div className="mb-4 border-l-[4px] border-l-danger-500 bg-danger-50 px-4 py-3 font-mono text-[10px] leading-5 text-ink">
+        <div className="mb-3 rounded-md bg-negative-soft px-3.5 py-3 text-[13px] leading-5 text-negative-ink">
           {error}
         </div>
       ) : null}
 
-      <div className="border-t border-ink/20">
+      <div className="overflow-hidden rounded-lg border border-line bg-surface">
         <StatusRow
           label="Next.js app"
           state={app ? "ok" : error ? "error" : "loading"}
@@ -138,12 +146,12 @@ export function StatusPanel() {
                 : database.message || database.status
               : error
                 ? "The Supabase health endpoint did not respond."
-                : "Checking the Supabase Auth endpoint..."
+                : "Checking the Supabase Auth endpoint."
           }
         />
       </div>
 
-      <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+      <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-[13px] text-muted">
         <a className="transition-colors hover:text-ink" href="/api/health">
           /api/health
         </a>

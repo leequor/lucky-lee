@@ -25,18 +25,15 @@ export function FormField({
       .join(" ") || undefined;
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">
       <div className="flex items-baseline justify-between gap-3">
-        <label
-          htmlFor={id}
-          className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-ink"
-        >
+        <label htmlFor={id} className="text-[14px] font-medium text-ink">
           {label}
         </label>
         {labelExtra ? (
           <span className="text-[12px] text-muted">{labelExtra}</span>
         ) : hint ? (
-          <span id={`${id}-hint`} className="font-mono text-[10px] text-muted">
+          <span id={`${id}-hint`} className="text-[12px] text-muted">
             {hint}
           </span>
         ) : null}
@@ -46,23 +43,19 @@ export function FormField({
         aria-invalid={Boolean(error)}
         aria-describedby={describedBy}
         className={cn(
-          "h-11 w-full rounded-none border bg-surface px-3 text-[15px] text-ink outline-none transition-colors placeholder:text-muted focus:border-ink focus:shadow-[inset_0_-2px_0_0_#0a0a0a]",
-          error ? "border-danger-500 focus:border-danger-500 focus:shadow-[inset_0_-2px_0_0_#C62828]" : "border-ink/30",
+          "h-10 w-full rounded-md border border-line bg-surface px-3 text-[14px] text-ink outline-none transition-colors placeholder:text-[#9a9a9a] focus:border-ink",
+          error ? "border-negative focus:border-negative" : null,
           className,
         )}
         {...inputProps}
       />
       {hint && labelExtra ? (
-        <p id={`${id}-hint`} className="font-mono text-[10px] leading-4 text-muted">
+        <p id={`${id}-hint`} className="text-[12px] leading-5 text-muted">
           {hint}
         </p>
       ) : null}
       {error ? (
-        <p
-          id={`${id}-error`}
-          role="alert"
-          className="font-mono text-[10px] leading-4 text-danger-600"
-        >
+        <p id={`${id}-error`} role="alert" className="text-[12px] leading-5 text-negative">
           {error}
         </p>
       ) : null}

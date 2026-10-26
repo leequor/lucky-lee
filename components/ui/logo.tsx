@@ -3,6 +3,23 @@ import Link from "next/link";
 import { APP_NAME } from "@/lib/config";
 import { cn } from "@/lib/utils";
 
+function Clover({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      aria-hidden="true"
+      className={cn("h-5 w-5", className)}
+      fill="currentColor"
+    >
+      <circle cx="6.7" cy="6.7" r="3.6" />
+      <circle cx="13.3" cy="6.7" r="3.6" />
+      <circle cx="6.7" cy="13.3" r="3.6" />
+      <circle cx="13.3" cy="13.3" r="3.6" className="text-accent" />
+      <rect x="9.4" y="13.2" width="1.2" height="5.6" rx="0.6" />
+    </svg>
+  );
+}
+
 export function Logo({
   className,
   href = "/",
@@ -14,18 +31,11 @@ export function Logo({
 }) {
   const content = (
     <>
-      <span className="grid h-8 w-8 shrink-0 place-items-center border border-signal-500 bg-signal-500 font-mono text-[11px] font-bold tracking-[0.02em] text-ink">
-        LP
+      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-line bg-surface text-ink">
+        <Clover />
       </span>
       {!markOnly ? (
-        <span className="flex flex-col gap-1">
-          <span className="text-[15px] font-semibold leading-none tracking-[-0.03em] text-current">
-            {APP_NAME}
-          </span>
-          <span className="font-mono text-[10px] uppercase leading-none tracking-[0.16em] text-current opacity-55">
-            Account system / S1
-          </span>
-        </span>
+        <span className="text-[15px] font-semibold tracking-[-0.01em] text-ink">{APP_NAME}</span>
       ) : null}
     </>
   );

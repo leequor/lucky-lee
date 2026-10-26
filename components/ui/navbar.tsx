@@ -12,46 +12,34 @@ export function Navbar({ user, preview = false }: { user: AuthUser; preview?: bo
   const avatar = initials(user.fullName || user.email) || "LP";
 
   return (
-    <header className="sticky top-0 z-30 border-b border-ink bg-ink text-paper">
-      <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-4 px-5 sm:px-8">
+    <header className="sticky top-0 z-30 border-b border-line bg-surface">
+      <div className="mx-auto flex h-16 max-w-canvas items-center justify-between gap-4 px-6">
         <Logo href={preview ? "/design-preview" : "/"} />
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <Link
             href="/status"
-            className="hidden font-mono text-[10px] uppercase tracking-[0.12em] text-paper/60 transition-colors hover:text-signal-500 sm:block"
+            className="hidden text-[13px] text-muted transition-colors hover:text-ink md:block"
           >
             System status
           </Link>
-          <div className="hidden items-center gap-3 border-l border-paper/20 pl-4 md:flex">
-            <span className="max-w-[200px] truncate font-mono text-[10px] text-paper/60">
-              {user.email}
-            </span>
-            <RoleBadge role={user.role} tone="dark" />
+          <div className="hidden items-center gap-2.5 md:flex">
+            <span className="max-w-[200px] truncate text-[13px] text-muted">{user.email}</span>
+            <RoleBadge role={user.role} />
           </div>
           <div
-            className="grid h-8 w-8 place-items-center border border-signal-500 bg-transparent font-mono text-[10px] font-bold text-signal-500"
+            className="grid h-8 w-8 place-items-center rounded-full bg-wash text-[12px] font-medium text-ink"
             aria-hidden="true"
           >
             {avatar}
           </div>
           {preview ? (
-            <Button
-              variant="secondary"
-              size="sm"
-              className="h-11 border-paper/40 text-paper hover:border-signal-500 hover:bg-signal-500 hover:text-ink sm:h-8"
-              disabled
-            >
+            <Button variant="secondary" size="sm" className="h-9" disabled>
               Log out
             </Button>
           ) : (
             <form action={logoutAction}>
-              <Button
-                variant="secondary"
-                size="sm"
-                type="submit"
-                className="h-11 border-paper/40 text-paper hover:border-signal-500 hover:bg-signal-500 hover:text-ink sm:h-8"
-              >
+              <Button variant="secondary" size="sm" type="submit" className="h-9">
                 Log out
               </Button>
             </form>

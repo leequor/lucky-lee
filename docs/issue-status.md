@@ -15,7 +15,7 @@ This table maps the original issues in `leequor/Lucky-Patcher-` to the tracking 
 | #8 | #32 | Password reset token table | Supabase built-in reset chosen; no custom table; documented in `docs/supabase-setup.md` | Closed as not needed |
 | #9 | #33 | Demo accounts and secure database | `scripts/seed-demo-users.mjs`, RLS policies, `docs/security.md` | Done; hosted demo accounts seeded and RLS verified |
 | #10 | #34 | Wireframes | `design/wireframes/*.svg` | Done |
-| #11 | #35 | Final mockups | `design/mockups/*.png`, `design/README.md` | Done; captured from the shipped high-vis UI |
+| #11 | #35 | Final mockups | `design/mockups/*.png`, `design/README.md` | Done; captured from the shipped interface |
 | #12 | #36 | Login and logout | `app/(auth)/login/`, `loginAction`, `logoutAction`, tests | Done |
 | #13 | #37 | Set and reset password | `forgot-password`, `reset-password`, `/auth/callback`, `/auth/confirm`, tests | Done |
 | #14 | #38 | Main landing page | `app/page.tsx`, `components/landing/landing-view.tsx`, tests | Done |
@@ -41,9 +41,9 @@ This table maps the original issues in `leequor/Lucky-Patcher-` to the tracking 
 - The app is deployed at <https://lucky-lee.vercel.app> with a hosted Supabase project.
 - Hosted login, logout, protected redirect, reset link, new-password login, reused-link rejection,
   and all 7 RLS checks passed.
-- The interface was rebuilt twice; the shipped system is the high-vis industrial label direction in
+- The interface was rebuilt a third time; the shipped system is the quiet product interface in
   [`design-system.md`](design-system.md). Final mockups in `design/mockups/` are captured from the
   running app.
 - Remaining external actions: real-inbox email delivery, team acknowledgement of the working
   agreement (#18), and the full team rehearsal (#19).
-- Vercel Git auto-deploy is not connected; production deploys run with `npx vercel deploy --prod`.
+- The Vercel project is Git-connected to `main`; the first merged build auto-deploys to production.

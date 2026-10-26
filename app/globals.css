@@ -16,13 +16,13 @@ body {
 }
 
 ::selection {
-  background: #ffe500;
+  background: #dbe7fb;
   color: #0a0a0a;
 }
 
 @layer base {
   * {
-    border-color: theme("colors.ink / 14%");
+    border-color: #e6e6e6;
   }
 
   a,
@@ -32,9 +32,8 @@ body {
   }
 
   :focus-visible {
-    outline: 2px solid theme("colors.ink");
+    outline: 2px solid #141414;
     outline-offset: 2px;
-    box-shadow: 0 0 0 5px theme("colors.signal.500");
   }
 }
 
@@ -43,12 +42,8 @@ body {
     text-wrap: balance;
   }
 
-  .label {
-    @apply font-mono text-[10px] font-medium uppercase leading-none tracking-[0.16em] text-muted;
-  }
-
-  .rule {
-    @apply border-t border-ink/15;
+  .figure {
+    font-variant-numeric: tabular-nums;
   }
 }
 

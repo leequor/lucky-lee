@@ -15,11 +15,10 @@ export default function ResetPasswordPreviewPage() {
   return (
     <AuthShell>
       <AuthCard
-        eyebrow="Design preview"
         title="Set a new password"
         description="Sample recovery session for screenshots and design review. The real page only renders this form when Supabase has verified the reset link."
         footer={
-          <p className="text-xs text-muted">
+          <p className="text-[13px] text-muted">
             Local preview only. The form action still requires a real recovery session.
           </p>
         }

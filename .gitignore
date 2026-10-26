@@ -36,3 +36,7 @@ Thumbs.db
 # TypeScript
 *.tsbuildinfo
 .vercel
+
+# design skill working files
+.taste-skill/
+
