@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   quality:
-    name: Typecheck, lint, coverage, build
+    name: Typecheck, lint, test, build
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
