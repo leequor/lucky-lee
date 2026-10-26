@@ -29,7 +29,7 @@ export function FormField({
       <div className="flex items-baseline justify-between gap-3">
         <label
           htmlFor={id}
-          className="font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-ink"
+          className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-ink"
         >
           {label}
         </label>
@@ -46,8 +46,8 @@ export function FormField({
         aria-invalid={Boolean(error)}
         aria-describedby={describedBy}
         className={cn(
-          "h-11 w-full rounded-[2px] border bg-surface px-3 text-[15px] text-ink outline-none transition-colors placeholder:text-muted focus:border-ink focus:ring-1 focus:ring-ink",
-          error ? "border-signal-600 focus:border-signal-600 focus:ring-signal-600" : "border-ink/25",
+          "h-11 w-full rounded-none border bg-surface px-3 text-[15px] text-ink outline-none transition-colors placeholder:text-muted focus:border-ink focus:shadow-[inset_0_-2px_0_0_#0a0a0a]",
+          error ? "border-danger-500 focus:border-danger-500 focus:shadow-[inset_0_-2px_0_0_#C62828]" : "border-ink/30",
           className,
         )}
         {...inputProps}
@@ -61,7 +61,7 @@ export function FormField({
         <p
           id={`${id}-error`}
           role="alert"
-          className="font-mono text-[10px] leading-4 text-signal-700"
+          className="font-mono text-[10px] leading-4 text-danger-600"
         >
           {error}
         </p>

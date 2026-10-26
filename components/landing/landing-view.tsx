@@ -46,9 +46,9 @@ const SYSTEM = [
 ];
 
 const primaryLink =
-  "inline-flex h-10 items-center justify-center border border-ink bg-ink px-4 text-[13px] font-medium text-paper transition-colors hover:border-signal-600 hover:bg-signal-700";
+  "inline-flex h-10 items-center justify-center border border-ink bg-signal-500 px-4 text-[13px] font-bold text-ink transition-colors hover:bg-ink hover:text-signal-500";
 const secondaryLink =
-  "inline-flex h-10 items-center justify-center border border-ink/30 px-4 text-[13px] font-medium text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper";
+  "inline-flex h-10 items-center justify-center border border-ink/35 px-4 text-[13px] font-medium text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper";
 
 export function LandingView({ user, preview = false }: { user: AuthUser; preview?: boolean }) {
   const firstName = user.fullName?.split(/\s+/)[0] || user.email.split("@")[0] || "teammate";
@@ -60,27 +60,29 @@ export function LandingView({ user, preview = false }: { user: AuthUser; preview
 
       <main className="mx-auto max-w-[1400px] px-5 pb-8 sm:px-8">
         {preview ? (
-          <div className="border-b border-signal-600/25 bg-signal-50 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.12em] text-signal-700">
+          <div className="border-b border-ink bg-signal-500 px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink">
             Design preview / sample account
           </div>
         ) : null}
 
-        <section className="border-b border-ink/15 py-10 lg:py-14">
+        <section className="border-b border-ink/20 py-10 lg:py-14">
           <div className="grid gap-10 lg:grid-cols-[1.45fr_0.55fr]">
             <div>
               <div className="flex items-center gap-3">
-                <span className="h-[3px] w-8 bg-signal-500" aria-hidden="true" />
+                <span className="h-[4px] w-10 bg-signal-500" aria-hidden="true" />
                 <p className="label">Sprint 01 / Control room</p>
               </div>
 
-              <h1 className="mt-7 max-w-[12ch] text-[clamp(3rem,6.4vw,5.8rem)] font-semibold leading-[0.9] tracking-[-0.065em] text-ink">
+              <h1 className="mt-7 max-w-[12ch] text-[clamp(3rem,6.4vw,5.8rem)] font-semibold leading-[0.88] tracking-[-0.065em] text-ink">
                 Welcome back,
                 <br />
-                {firstName}.
+                <span className="box-decoration-clone inline-block bg-signal-500 px-2 pb-1 text-ink">
+                  {firstName}.
+                </span>
               </h1>
 
               <p className="mt-6 max-w-[46ch] text-[15px] leading-6 text-muted">
-                Signed in as <span className="font-medium text-ink">{user.email}</span>. Account
+                Signed in as <span className="font-bold text-ink">{user.email}</span>. Account
                 access, roles, and release checks live on this page.
               </p>
 
@@ -94,42 +96,44 @@ export function LandingView({ user, preview = false }: { user: AuthUser; preview
               </div>
             </div>
 
-            <aside className="border-t border-ink/15 pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+            <aside className="bg-ink p-6 text-paper">
               <div className="flex items-start justify-between gap-4">
-                <p className="label">Current account</p>
-                <RoleBadge role={user.role} />
+                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-paper/50">
+                  Current account
+                </p>
+                <RoleBadge role={user.role} tone="dark" />
               </div>
 
-              <h2 className="mt-4 break-words text-[26px] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
+              <h2 className="mt-4 break-words text-[26px] font-semibold leading-[1.05] tracking-[-0.04em] text-paper">
                 {displayName}
               </h2>
 
-              <dl className="mt-6 border-t border-ink/15 text-[12px]">
-                <div className="flex items-start justify-between gap-4 border-b border-ink/15 py-3">
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+              <dl className="mt-6 border-t border-paper/20 text-[12px]">
+                <div className="flex items-start justify-between gap-4 border-b border-paper/20 py-3">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-paper/40">
                     Email
                   </dt>
-                  <dd className="max-w-[210px] break-all text-right font-medium text-ink">
+                  <dd className="max-w-[210px] break-all text-right font-medium text-paper">
                     {user.email}
                   </dd>
                 </div>
-                <div className="flex items-start justify-between gap-4 border-b border-ink/15 py-3">
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+                <div className="flex items-start justify-between gap-4 border-b border-paper/20 py-3">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-paper/40">
                     Member since
                   </dt>
-                  <dd className="text-right font-medium text-ink">{formatDate(user.createdAt)}</dd>
+                  <dd className="text-right font-medium text-paper">{formatDate(user.createdAt)}</dd>
                 </div>
                 <div className="flex items-start justify-between gap-4 py-3">
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-paper/40">
                     Account ID
                   </dt>
-                  <dd className="max-w-[160px] truncate font-mono text-[10px] text-muted">
+                  <dd className="max-w-[160px] truncate font-mono text-[10px] text-paper/50">
                     {user.id}
                   </dd>
                 </div>
               </dl>
 
-              <p className="mt-6 border-l-[3px] border-l-signal-500 pl-3 font-mono text-[10px] leading-5 text-muted">
+              <p className="mt-6 border-l-[4px] border-l-signal-500 pl-3 font-mono text-[10px] leading-5 text-paper/55">
                 Passwords stay with Supabase. This app never stores one.
               </p>
             </aside>
@@ -141,14 +145,14 @@ export function LandingView({ user, preview = false }: { user: AuthUser; preview
           className="grid gap-10 py-10 lg:grid-cols-[1.4fr_0.6fr] lg:py-14"
         >
           <div>
-            <div className="flex flex-wrap items-end justify-between gap-4 border-b border-ink/15 pb-4">
+            <div className="flex flex-wrap items-end justify-between gap-4 border-b border-ink/20 pb-4">
               <div>
                 <p className="label">Definition of done</p>
                 <h2 className="mt-2 text-[clamp(1.8rem,3vw,2.5rem)] font-semibold leading-none tracking-[-0.045em] text-ink">
                   Sprint 1 checklist
                 </h2>
               </div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted">
+              <p className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-muted">
                 4 of 5 ready
               </p>
             </div>
@@ -157,7 +161,7 @@ export function LandingView({ user, preview = false }: { user: AuthUser; preview
               {CHECKLIST.map((item, index) => (
                 <li
                   key={item.title}
-                  className="grid grid-cols-[1.75rem_1fr_auto] items-start gap-4 border-b border-ink/15 py-4"
+                  className="grid grid-cols-[1.75rem_1fr_auto] items-start gap-4 border-b border-ink/20 py-4"
                 >
                   <span className="pt-0.5 font-mono text-[10px] text-muted">
                     {String(index + 1).padStart(2, "0")}
@@ -171,8 +175,8 @@ export function LandingView({ user, preview = false }: { user: AuthUser; preview
                   <span
                     className={
                       item.done
-                        ? "border border-ink bg-ink px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-paper"
-                        : "border border-signal-600 bg-signal-50 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-signal-700"
+                        ? "border border-ink bg-signal-500 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink"
+                        : "border border-ink bg-transparent px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink"
                     }
                   >
                     {item.done ? "Ready" : "Open"}
@@ -182,7 +186,7 @@ export function LandingView({ user, preview = false }: { user: AuthUser; preview
             </ol>
           </div>
 
-          <div className="lg:border-l lg:border-ink/15 lg:pl-8">
+          <div className="border-ink/20 lg:border-l lg:pl-8">
             <p className="label">Presentation shortcuts</p>
             <h2 className="mt-2 text-[clamp(1.8rem,3vw,2.5rem)] font-semibold leading-none tracking-[-0.045em] text-ink">
               Keep the demo calm
@@ -191,20 +195,20 @@ export function LandingView({ user, preview = false }: { user: AuthUser; preview
               Jump straight to the screens you need during the Nov 9 walkthrough.
             </p>
 
-            <div className="mt-6 border-t border-ink/15">
+            <div className="mt-6 border-t border-ink/20">
               {SHORTCUTS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="group flex items-center justify-between gap-4 border-b border-ink/15 py-4 transition-colors hover:text-signal-700 sm:py-3"
+                  className="group flex items-center justify-between gap-4 border-b border-ink/20 py-4 transition-colors hover:bg-signal-500 hover:px-2 hover:text-ink sm:py-3"
                 >
                   <span>
                     <span className="block text-[13px] font-medium">{link.label}</span>
-                    <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+                    <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.12em] text-muted group-hover:text-ink/60">
                       {link.note}
                     </span>
                   </span>
-                  <span className="font-mono text-[13px] text-muted" aria-hidden="true">
+                  <span className="font-mono text-[13px] text-muted group-hover:text-ink" aria-hidden="true">
                     →
                   </span>
                 </Link>
@@ -213,17 +217,19 @@ export function LandingView({ user, preview = false }: { user: AuthUser; preview
           </div>
         </section>
 
-        <section className="grid border-y border-ink/15 sm:grid-cols-3">
+        <section className="grid bg-ink text-paper sm:grid-cols-3">
           {SYSTEM.map((card) => (
             <div
               key={card.label}
-              className="border-b border-ink/15 py-5 sm:border-b-0 sm:border-r sm:px-5 sm:first:pl-0 sm:last:border-r-0 sm:last:pr-0"
+              className="border-b border-paper/20 py-5 sm:border-b-0 sm:border-r sm:px-5 sm:first:pl-0 sm:last:border-r-0 sm:last:pr-0"
             >
-              <p className="label">{card.label}</p>
-              <p className="mt-3 text-[24px] font-semibold leading-none tracking-[-0.04em] text-ink">
+              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-signal-500">
+                {card.label}
+              </p>
+              <p className="mt-3 text-[24px] font-semibold leading-none tracking-[-0.04em] text-paper">
                 {card.value}
               </p>
-              <p className="mt-3 max-w-[30ch] text-[11px] leading-5 text-muted">{card.note}</p>
+              <p className="mt-3 max-w-[30ch] text-[11px] leading-5 text-paper/55">{card.note}</p>
             </div>
           ))}
         </section>

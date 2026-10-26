@@ -16,8 +16,8 @@ body {
 }
 
 ::selection {
-  background: #f4511e;
-  color: #fffaf5;
+  background: #ffe500;
+  color: #0a0a0a;
 }
 
 @layer base {
@@ -32,8 +32,9 @@ body {
   }
 
   :focus-visible {
-    outline: 2px solid theme("colors.signal.500");
-    outline-offset: 3px;
+    outline: 2px solid theme("colors.ink");
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px theme("colors.signal.500");
   }
 }
 

@@ -58,6 +58,7 @@ test.describe("account access", () => {
 
     await expect(page.getByText("Wrong email or password.")).toBeVisible();
     await expect(page).toHaveURL(/\/login$/);
+    await expect(page.getByLabel("Email")).toHaveValue(demoUsers.user);
     await expect(page.getByLabel("Password")).toHaveValue("");
   });
 

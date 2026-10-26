@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Archivo, IBM_Plex_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Space_Mono } from "next/font/google";
 
 import { APP_DESCRIPTION, APP_NAME, getSiteUrl } from "@/lib/config";
 
 import "./globals.css";
 
-const sans = Archivo({
+const sans = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const mono = IBM_Plex_Mono({
+const mono = Space_Mono({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "700"],
   variable: "--font-mono",
   display: "swap",
 });

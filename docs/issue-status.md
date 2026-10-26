@@ -35,3 +35,15 @@ This table maps the original issues in `leequor/Lucky-Patcher-` to the tracking 
   agreement. The document is ready; a checkbox cannot honestly represent a person's reading.
 - Issue #19's technical dry run covered the app screens and backup screenshots. The live email
   and reset flow need one run with the team's Supabase project.
+
+## Completion notes
+
+- The app is deployed at <https://lucky-lee.vercel.app> with a hosted Supabase project.
+- Hosted login, logout, protected redirect, reset link, new-password login, reused-link rejection,
+  and all 7 RLS checks passed.
+- The interface was rebuilt twice; the shipped system is the high-vis industrial label direction in
+  [`design-system.md`](design-system.md). Final mockups in `design/mockups/` are captured from the
+  running app.
+- Remaining external actions: real-inbox email delivery, team acknowledgement of the working
+  agreement (#18), and the full team rehearsal (#19).
+- Vercel Git auto-deploy is not connected; production deploys run with `npx vercel deploy --prod`.

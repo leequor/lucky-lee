@@ -59,7 +59,7 @@ export default async function ResetPasswordPage() {
       >
         <Link
           href="/forgot-password"
-          className="inline-flex h-11 w-full items-center justify-center border border-ink bg-ink px-5 text-[13px] font-medium text-paper transition-colors hover:border-signal-600 hover:bg-signal-700"
+          className="inline-flex h-11 w-full items-center justify-center border border-ink bg-signal-500 px-5 text-[13px] font-bold text-ink transition-colors hover:bg-ink hover:text-signal-500"
         >
           Request a new reset link
         </Link>

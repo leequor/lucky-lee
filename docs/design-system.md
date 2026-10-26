@@ -1,47 +1,50 @@
 # Design System
 
-The app reads as an operator's field manual: paper-flat surfaces, hard rules, compact mono labels,
-one signal accent. It should feel built for a team that runs the system, not decorated for a pitch.
+The app uses a high-vis industrial label system: black structural panels, off-white paper, safety
+yellow marks, oversized grotesque type, and mono metadata. It is built to look like a tool the team
+operates, not a generic SaaS landing page.
 
 ## Brand idea
 
-- **Paper and ink** carry the interface. No gradients, glass, floating cards, or decorative blobs.
-- **Signal orange** marks action, open state, and focus. One accent, used sparingly.
-- **Hard edges and thin rules** create hierarchy. Shadows are not used for elevation.
-- **Archivo** sets the voice. **IBM Plex Mono** handles metadata, counts, paths, and status.
-- **The grid is asymmetric**, but mobile collapses to one column with the same reading order.
+- **Black and paper** carry the hierarchy. Yellow marks action, status, and the current item.
+- **No gradients, glass, blobs, shadows, or decorative illustrations.**
+- **Hard edges:** every control and tag is square. Radius is 0.
+- **Bricolage Grotesque** sets headlines and UI. **Space Mono** handles labels, counts, paths, and
+  state.
+- **One accent:** safety yellow. Error red is semantic only.
 
 ## Color palette
 
 | Token | Hex | Use |
 | --- | --- | --- |
-| `paper` | `#F2F2EC` | Page background. |
-| `surface` | `#FAFAF5` | Inputs and quiet inset surfaces. |
-| `ink` | `#12130F` | Primary text, primary buttons, ready tags. |
-| `muted` | `#616458` | Secondary text and metadata. |
-| `line` | `#CFD0C4` | Reference divider color. Borders use `ink/15`. |
-| `wash` | `#E7E8DE` | Neutral success surface. |
-| `signal-50` | `#FFF2EC` | Open/warning surface. |
-| `signal-500` | `#F4511E` | Focus ring, accent rule, small marks. |
-| `signal-600` | `#D9410F` | Error and warning borders. |
-| `signal-700` | `#A8320B` | Signal text and dark hover fill. |
+| `paper` | `#F3F3EE` | Page background. |
+| `surface` | `#FFFFFF` | Inputs and quiet inset surfaces. |
+| `ink` | `#0A0A0A` | Text, black panels, primary structure. |
+| `muted` | `#57594F` | Secondary text and metadata. |
+| `line` | `#C7C9BE` | Reference divider color. Borders use `ink/20`. |
+| `wash` | `#E8E9E0` | Neutral inset surface. |
+| `signal-50` | `#FFFBE0` | Yellow-tinted success/info surface. |
+| `signal-500` | `#FFE500` | Accent fill, focus ring, active/ready marks. |
+| `signal-700` | `#5C5200` | Yellow-adjacent text if a tint needs text. |
+| `danger-50` | `#FDECEA` | Error surface. |
+| `danger-500` | `#C62828` | Error border and fill. |
+| `danger-600` | `#A71D1D` | Error text. |
 
-No second accent. Ready is ink. Open/warning/error is signal. Do not use color as the only state
-signal: every state also has a text label.
+Yellow is a **fill**, not body text on paper. Use black text on yellow.
 
 ## Typography
 
 | Role | Family | Notes |
 | --- | --- | --- |
-| Display / body | Archivo | Tight tracking on display sizes. No serif. |
-| Labels / metadata | IBM Plex Mono | 10 px uppercase, 0.12–0.16em tracking. |
-| IDs / paths | IBM Plex Mono | Truncate long values, keep them selectable. |
+| Display / body | Bricolage Grotesque | Tight tracking on display sizes. |
+| Labels / metadata | Space Mono | 10 px uppercase, 0.12–0.16em tracking. |
+| IDs / paths | Space Mono | Truncate long values, keep selectable. |
 
 ### Scale
 
 | Token | Size | Use |
 | --- | --- | --- |
-| Auth statement | 48–99 px, `clamp()` | Left auth panel. |
+| Auth statement | 48–99 px, `clamp()` | Black left panel. |
 | Landing welcome | 48–93 px, `clamp()` | Signed-in hero. |
 | Page title | 42–70 px, `clamp()` | Status and 404. |
 | Section title | 29–40 px | Checklist, shortcuts. |
@@ -53,50 +56,51 @@ signal: every state also has a text label.
 - Spacing scale: 4, 8, 12, 16, 20, 24, 32, 40, 48, 56 px.
 - Page gutter: 20 px mobile, 32 px desktop.
 - Content widths: 1400 px app shell, 1080 px utility pages, 420 px auth form.
-- Radius: 2 px for controls and tags. No pills, no 16–32 px cards.
-- Borders: 1 px `ink/15`; accent rules are 3 px signal.
-- Shadow: none. Hierarchy comes from rules, spacing, and type weight.
+- Radius: 0. No pills, no rounded cards.
+- Borders: 1 px `ink/20`; accent rules are 4 px yellow.
+- Shadow: none. Hierarchy comes from black panels, rules, spacing, and type weight.
 
 ## Core components
 
 ### Buttons
 
-- **Primary:** ink fill, paper text, signal-700 hover, 2 px radius.
-- **Secondary:** transparent, 1 px ink/30 border, ink text. Hover fills ink.
+- **Primary:** yellow fill, black text, black border. Hover inverts to black fill, yellow text.
+- **Secondary:** transparent, 1 px ink/35 border, ink text. Hover fills black.
 - **Ghost:** text only, underline on hover.
-- Sizes: 32 px small, 40 px default, 44 px auth.
-- Focus: global 2 px signal outline with 3 px offset.
+- Sizes: 32 px small, 40 px default, 44 px auth/mobile nav.
+- Focus: 2 px black outline plus a 5 px yellow outer ring.
 - Loading: disabled button with a 2 px square pulse and pending copy.
 
 ### Inputs and fields
 
-- Height 44 px, 2 px radius, 1 px ink/25 border, `surface` fill.
-- Focus: ink border plus 1 px ink ring.
-- Error: signal border, signal text below the field.
+- Height 44 px, square corners, 1 px ink/30 border, white fill.
+- Focus: black border plus an inset 2 px black underline.
+- Error: red border, red text below the field.
 - Label always above the field. Label and hint use mono uppercase.
-- Placeholder uses `muted`, not a lighter tint.
+- Placeholder uses `muted`, never a lighter tint.
 - `aria-invalid` and `aria-describedby` on every error.
 
 ### Alerts
 
-- Flat strip with a 3 px left border. No filled rounded box.
-- **Success:** ink left border, `wash` surface.
-- **Error:** signal left border, `signal-50` surface.
-- **Info:** muted left border, `surface` fill.
+- Flat strip with a 4 px left border. No filled rounded box.
+- **Success:** black left border, yellow-tinted surface.
+- **Error:** red left border, red-tinted surface.
+- **Info:** muted left border, white fill.
 - `role="alert"` for errors, `role="status"` otherwise.
 
 ### Navigation
 
-- 64 px sticky bar, paper background, 1 px bottom rule.
+- 64 px sticky bar, black background, yellow logo tile.
 - Wordmark left; system status link, email, role tag, square avatar, logout right.
-- Mobile hides email and system link. Logout remains visible.
+- Mobile hides email and system link. Logout remains visible with a 44 px target.
 
 ### Tags
 
-- 2 px radius, 1 px border, mono 10 px uppercase.
-- Superadmin: ink fill, paper text.
-- Admin: signal-50 fill, signal-700 text.
-- User: transparent, ink/25 border, muted text.
+- Square, 1 px border, mono 10 px uppercase.
+- Superadmin / ready: yellow fill, black text.
+- Admin: black fill, paper text.
+- User / open: transparent, ink border, ink text.
+- On black panels, use the dark tone: yellow or paper fills.
 
 ### Rows
 
@@ -108,20 +112,22 @@ signal: every state also has a text label.
 
 ### Auth shell
 
-- Desktop: two columns, 1.15fr statement / 0.85fr form, divided by a 1 px rule.
-- Left: logo, sprint label, oversized statement, three facts pinned to the bottom.
+- Desktop: black statement panel 1.15fr, paper form panel 0.85fr.
+- Left: yellow logo tile, sprint label, oversized statement, three facts pinned to the bottom.
 - Right: form centered in a 420 px measure.
-- Mobile: statement and facts stack above the form in one column.
+- Mobile: black statement and facts stack above the form.
 
 ### Landing
 
-- Asymmetric hero: welcome statement left, account panel right.
-- Checklist left, presentation shortcuts right. On mobile the shortcut list follows the checklist.
-- System facts render as a three-cell strip, not cards.
+- Black sticky navbar.
+- Asymmetric hero: welcome statement left, black account panel right.
+- Checklist left, presentation shortcuts right.
+- System facts render as a black three-cell band.
 - Footer is a mono rule line.
 
 ### Status
 
+- Black header band.
 - Utility layout: title and explanation left, health rows right.
 - Health rows use text labels and `Ready` / `Wait` / `Warn` / `Fail` tags.
 - Raw endpoints sit below the rows as mono links.
@@ -135,16 +141,18 @@ signal: every state also has a text label.
 ## Accessibility
 
 - Body text contrast AA; metadata remains at `muted` or darker.
-- Focus ring is always visible and uses the single signal accent.
+- Yellow is never used for small text on paper.
+- Focus ring is always visible: black outline plus yellow outer ring.
 - Form labels are never placeholders.
 - State is never communicated by color alone.
-- Touch targets are at least 44 px for primary controls.
+- Primary controls and mobile nav targets are at least 44 px.
 - Layout checked at 360, 768, and 1440 px.
 
 ## Avoid
 
-- Warm cream + green + serif (the previous direction).
-- Gradient blobs, glass panels, background grids, oversized rounded cards.
+- Cream + clover green + coral + Fraunces.
+- Orange operator console variant.
+- Gradient blobs, glass panels, background grids, rounded cards.
 - Pills, emoji icons, decorative sparkles.
 - More than one accent color.
 - Fake metrics or vague marketing copy.

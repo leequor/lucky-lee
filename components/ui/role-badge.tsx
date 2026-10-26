@@ -7,18 +7,32 @@ const LABELS: Record<AppRole, string> = {
   user: "User",
 };
 
-const STYLES: Record<AppRole, string> = {
-  superadmin: "border-ink bg-ink text-paper",
-  admin: "border-signal-600/40 bg-signal-100 text-signal-700",
+const LIGHT: Record<AppRole, string> = {
+  superadmin: "border-signal-500 bg-signal-500 text-ink",
+  admin: "border-ink bg-ink text-paper",
   user: "border-ink/25 bg-transparent text-muted",
 };
 
-export function RoleBadge({ role, className }: { role: AppRole; className?: string }) {
+const DARK: Record<AppRole, string> = {
+  superadmin: "border-signal-500 bg-signal-500 text-ink",
+  admin: "border-paper/40 bg-paper text-ink",
+  user: "border-paper/30 bg-transparent text-paper/75",
+};
+
+export function RoleBadge({
+  role,
+  tone = "light",
+  className,
+}: {
+  role: AppRole;
+  tone?: "light" | "dark";
+  className?: string;
+}) {
   return (
     <span
       className={cn(
-        "inline-flex items-center border px-2 py-1 font-mono text-[10px] font-medium uppercase leading-none tracking-[0.14em]",
-        STYLES[role],
+        "inline-flex items-center border px-2 py-1 font-mono text-[10px] font-bold uppercase leading-none tracking-[0.14em]",
+        tone === "dark" ? DARK[role] : LIGHT[role],
         className,
       )}
     >

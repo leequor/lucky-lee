@@ -18,9 +18,10 @@ with test evidence. The demo should take about 12 minutes, including one minute 
 
 ## Before the presentation
 
-- [ ] `npm run check:env` passes on the presentation laptop.
-- [ ] `npm run seed:demo` has created the three demo accounts.
-- [ ] `/status` shows both checks green.
+- [ ] `npx supabase start` and `npm run seed:demo` have created the three local demo accounts.
+- [ ] `npm run dev` is running, or the live URL <https://lucky-lee.vercel.app> is open as backup.
+- [ ] `/status` shows both checks ready.
+- [ ] The local inbox is open at <http://127.0.0.1:54324> for the reset email.
 - [ ] The browser has tabs ready: `/`, `/register`, `/login`, `/forgot-password`, `/status`,
       the Supabase **Authentication → Users** page, and the Supabase **Table Editor → profiles**
       page.
@@ -79,7 +80,8 @@ and a linked PR.
 1. Open `/forgot-password`.
 2. Enter the regular demo user's email and submit.
 3. Show the generic success message.
-4. Open the reset email from the inbox (or use the prepared inbox tab).
+4. Open the reset email in the local inbox at <http://127.0.0.1:54324>. Local Supabase catches
+   every message even when the demo address uses the `.test` domain.
 5. Open the reset link. If delivery is slow, switch to the backup screenshot.
 6. Set a new password and submit.
 7. Log in with the new password.
@@ -106,10 +108,10 @@ development shortcut."
 
 **Jaymark**
 
-1. Show the test report summary: 50 automated checks passing.
+1. Show the test report summary: 139 unit/component checks, 7 RLS checks, and 17 browser checks.
 2. Show the test plan and test cases.
-3. Explain the test levels: unit, component, manual integration, visual.
-4. Be honest about the remaining live Supabase checks and the plan to run them before the demo.
+3. Explain the test levels: unit, component, database RLS, browser E2E, manual integration, visual.
+4. Be honest that real email delivery to a real inbox is the only remaining manual check.
 5. Show the health check endpoint and the build result.
 
 ### 10:30–11:30 — Design and close
@@ -117,7 +119,8 @@ development shortcut."
 **Ian Kenneth + Alexander**
 
 1. Show the design system and one wireframe/mockup pair.
-2. Point out the responsive auth shell and the landing page.
+2. Point out the black statement panel, yellow action language, responsive auth shell, and landing
+   page.
 3. Close with the Sprint 1 outcome: register, login/logout, reset, landing, roles, RLS, tests,
    and documentation.
 4. Invite questions.
@@ -147,8 +150,8 @@ The local screenshot set is in `docs/screenshots/`:
 
 | Date | Type | Result | Notes |
 | --- | --- | --- | --- |
-| 2026-10-26 | Technical dry run | Passed for public screens and design preview | Local Next.js build, screenshots captured. The live Supabase auth and email-delivery steps still need one run with the team's project. |
-| 2026-11-07 | Full team rehearsal | Planned | Run the complete script on the presentation laptop with `DEMO_PASSWORD` and the real project. |
+| 2026-10-26 | Technical dry run | Passed for public screens, hosted login/logout, hosted reset, and design preview | Local Next.js build, hosted Supabase, screenshots captured. Real email delivery to a real inbox still needs one manual run. |
+| 2026-11-07 | Full team rehearsal | Planned | Run the complete script on the presentation laptop with the local stack and the live URL as backup. |
 
 ## Rehearsal checklist
 
@@ -156,8 +159,9 @@ The local screenshot set is in `docs/screenshots/`:
       test results.
 - [x] Every segment has a speaker.
 - [x] Backup screenshots are prepared.
-- [x] Public screens were walked through locally.
-- [ ] Full rehearsal with the live Supabase project.
+- [x] Public screens and hosted auth flow were walked through.
+- [x] Hosted login, logout, reset, reused-link rejection, and RLS verified.
+- [ ] Full team rehearsal with real email delivery.
 - [ ] Final timing on the presentation laptop.
 - [ ] One person is responsible for the browser tabs and one for the backup window.
 

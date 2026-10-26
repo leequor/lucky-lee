@@ -5,11 +5,11 @@
 | Item | Result |
 | --- | --- |
 | Date | 2026-10-26 |
-| Tester | Automated run with local Supabase and Chrome |
-| App version | `main` working copy |
+| Tester | Automated run with local and hosted Supabase and Chrome |
+| App version | `test/full-test-suite` + Vercel production |
 | Unit and component test files | 19 |
 | Unit and component tests | 139 passed |
-| Coverage | 90.88% statements, 82.52% branches, 87.05% functions |
+| Coverage | 90.12% statements, 82.11% branches, 85.88% functions |
 | RLS integration tests | 7 local + 7 hosted passed |
 | Browser E2E tests | 17 local + 7 hosted smoke passed |
 | TypeScript | Passed |
@@ -100,7 +100,7 @@ Coverage is measured across `app/`, `components/`, and `lib/`. The gate fails be
 | BUG-02 | S4 | The Vitest config emitted an ESM/CommonJS warning. | Fixed by renaming it to `vitest.config.mts`. |
 | BUG-03 | S2 | The initial migration used unsupported `CREATE TYPE IF NOT EXISTS`, which would fail on Supabase. | Fixed with an idempotent `DO` block. |
 | BUG-04 | S3 | The auth `next` path accepted backslash escapes that URL parsing could turn into an external origin. | Fixed with stricter validation and regression tests. |
-| BUG-05 | S3 | A failed login clears the email field, so the user must retype it. The E2E test refills it before the retry. | Open; UX improvement. |
+| BUG-05 | S3 | A failed login cleared the email field, forcing the user to retype it. | Fixed; the email stays controlled and is verified by E2E. |
 | BUG-06 | S2 | The Supabase health check called `/rest/v1/`, which hosted projects reject for anon keys, so `/status` falsely showed the database as down. | Fixed; now calls `/auth/v1/health`. |
 
 No S1 or S2 product bugs remain open.
@@ -112,8 +112,7 @@ No S1 or S2 product bugs remain open.
    Supabase email delivery to a real inbox, and timed expiry, still need one manual run.
 2. **Email delivery is not exercised.** The reset E2E generates a recovery token through the Supabase admin API and verifies the single-use link. It does not read a mailbox.
 3. **Visual comparison is partial.** Responsive checks prove no horizontal scroll at 360, 768, and 1440 px, and axe reports no critical violations. A human must still compare the screens with `design/mockups/`.
-4. **Failed login clears the email field.** Recorded as BUG-05.
-5. **Dev-only dependency advisories:** `npm audit --omit=dev` reports zero production vulnerabilities. `npm audit` reports three moderate advisories in the Tailwind 3/PostCSS build chain; clearing them requires a Tailwind 4 migration outside Sprint 1.
+4. **Dev-only dependency advisories:** `npm audit --omit=dev` reports zero production vulnerabilities. `npm audit` reports three moderate advisories in the Tailwind 3/PostCSS build chain; clearing them requires a Tailwind 4 migration outside Sprint 1.
 
 ## Demo readiness
 
