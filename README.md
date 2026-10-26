@@ -197,6 +197,6 @@ The integration and browser suites need a local Supabase stack. See
 | Endpoint | Meaning |
 | --- | --- |
 | `GET /api/health` | The Next.js app is running. |
-| `GET /api/health/supabase` | The configured Supabase REST endpoint responds. |
+| `GET /api/health/supabase` | The configured Supabase Auth health endpoint responds. |
 
 The `/status` page calls both endpoints in the browser and shows the result with latency.

@@ -25,7 +25,7 @@ describe("checkSupabaseConnection", () => {
     expect(result.status).toBe("not_configured");
   });
 
-  it("checks the configured REST endpoint", async () => {
+  it("checks the configured Auth health endpoint", async () => {
     stubConfigured();
     const fetchImpl = vi.fn().mockResolvedValue({ ok: true, status: 200 });
 
@@ -33,7 +33,7 @@ describe("checkSupabaseConnection", () => {
 
     expect(result.status).toBe("connected");
     expect(fetchImpl).toHaveBeenCalledWith(
-      "https://project.supabase.co/rest/v1/",
+      "https://project.supabase.co/auth/v1/health",
       expect.objectContaining({
         headers: {
           apikey: "test-key",

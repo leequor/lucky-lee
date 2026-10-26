@@ -97,6 +97,7 @@ Coverage is measured across `app/`, `components/`, and `lib/`. The gate fails be
 | BUG-03 | S2 | The initial migration used unsupported `CREATE TYPE IF NOT EXISTS`, which would fail on Supabase. | Fixed with an idempotent `DO` block. |
 | BUG-04 | S3 | The auth `next` path accepted backslash escapes that URL parsing could turn into an external origin. | Fixed with stricter validation and regression tests. |
 | BUG-05 | S3 | A failed login clears the email field, so the user must retype it. The E2E test refills it before the retry. | Open; UX improvement. |
+| BUG-06 | S2 | The Supabase health check called `/rest/v1/`, which hosted projects reject for anon keys, so `/status` falsely showed the database as down. | Fixed; now calls `/auth/v1/health`. |
 
 No S1 or S2 product bugs remain open.
 

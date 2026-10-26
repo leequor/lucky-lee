@@ -125,7 +125,7 @@ export function StatusPanel() {
               : database.message || database.status
             : error
               ? "The Supabase health endpoint did not respond."
-              : "Checking the Supabase REST endpoint..."
+              : "Checking the Supabase Auth endpoint..."
         }
       />
 

@@ -252,7 +252,8 @@ violations. Human mockup comparison remains manual.
 clear `not_configured` message; if the project is down, `unavailable`.
 
 **Coverage:** `tests/health.test.ts`, `tests/health-routes.test.ts`, and `e2e/status.spec.ts`;
-hosted project check is manual.
+hosted project check is manual. The check calls `/auth/v1/health`, which is public. The REST root
+requires a service-role key on hosted projects and is not used.
 
 ### TC-SEC-01 — RLS smoke test
 

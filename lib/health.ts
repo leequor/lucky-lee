@@ -20,7 +20,7 @@ export async function checkSupabaseConnection(
 
   try {
     const { url, anonKey } = getSupabasePublicConfig();
-    const response = await fetchImpl(`${url}/rest/v1/`, {
+    const response = await fetchImpl(`${url}/auth/v1/health`, {
       headers: {
         apikey: anonKey,
         Authorization: `Bearer ${anonKey}`,
