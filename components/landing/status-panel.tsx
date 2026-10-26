@@ -16,31 +16,43 @@ type SupabaseHealth = {
   message?: string;
 };
 
+const STATE_LABEL = {
+  loading: "Wait",
+  ok: "Ready",
+  warn: "Warn",
+  error: "Fail",
+} as const;
+
+const STATE_STYLE = {
+  loading: "border-ink/25 text-muted",
+  ok: "border-ink bg-ink text-paper",
+  warn: "border-signal-600 bg-signal-50 text-signal-700",
+  error: "border-signal-600 bg-signal-700 text-white",
+} as const;
+
 function StatusRow({
   label,
   state,
   detail,
 }: {
   label: string;
-  state: "loading" | "ok" | "warn" | "error";
+  state: keyof typeof STATE_LABEL;
   detail: string;
 }) {
-  const color =
-    state === "ok"
-      ? "bg-clover-500"
-      : state === "warn"
-        ? "bg-coral-400"
-        : state === "error"
-          ? "bg-coral-600"
-          : "bg-ink/25";
-
   return (
-    <div className="flex items-start gap-3 rounded-2xl border border-ink/8 bg-white/55 p-4">
-      <span className={cn("mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full", color)} aria-hidden="true" />
+    <div className="grid gap-3 border-b border-ink/15 py-4 sm:grid-cols-[1fr_auto] sm:items-start">
       <div>
-        <p className="text-sm font-semibold text-ink">{label}</p>
-        <p className="mt-1 text-xs leading-5 text-muted">{detail}</p>
+        <p className="text-[13px] font-medium text-ink">{label}</p>
+        <p className="mt-1 max-w-[58ch] font-mono text-[10px] leading-5 text-muted">{detail}</p>
       </div>
+      <span
+        className={cn(
+          "inline-flex w-fit border px-2 py-1 font-mono text-[10px] uppercase leading-none tracking-[0.12em]",
+          STATE_STYLE[state],
+        )}
+      >
+        {STATE_LABEL[state]}
+      </span>
     </div>
   );
 }
@@ -86,61 +98,58 @@ export function StatusPanel() {
   }, []);
 
   return (
-    <div className="space-y-5">
+    <div>
       {error ? (
-        <div className="rounded-2xl border border-coral-500/25 bg-coral-100/70 px-4 py-3 text-sm text-coral-600">
+        <div className="mb-4 border-l-[3px] border-l-signal-600 bg-signal-50 px-4 py-3 font-mono text-[10px] leading-5 text-ink">
           {error}
         </div>
       ) : null}
 
-      <StatusRow
-        label="Next.js app"
-        state={app ? "ok" : error ? "error" : "loading"}
-        detail={
-          app
-            ? `Service ${app.service} responded at ${new Date(app.timestamp).toLocaleTimeString()}.`
-            : error
-              ? "The app health endpoint did not respond."
-              : "Checking the app health endpoint..."
-        }
-      />
+      <div className="border-t border-ink/15">
+        <StatusRow
+          label="Next.js app"
+          state={app ? "ok" : error ? "error" : "loading"}
+          detail={
+            app
+              ? `Service ${app.service} responded at ${new Date(app.timestamp).toLocaleTimeString()}.`
+              : error
+                ? "The app health endpoint did not respond."
+                : "Checking the app health endpoint..."
+          }
+        />
 
-      <StatusRow
-        label="Supabase connection"
-        state={
-          !database
-            ? error
-              ? "error"
-              : "loading"
-            : database.status === "connected"
-              ? "ok"
-              : database.status === "not_configured"
-                ? "warn"
-                : "error"
-        }
-        detail={
-          database
-            ? database.status === "connected"
-              ? `Connected in ${database.latencyMs ?? 0} ms.`
-              : database.message || database.status
-            : error
-              ? "The Supabase health endpoint did not respond."
-              : "Checking the Supabase Auth endpoint..."
-        }
-      />
+        <StatusRow
+          label="Supabase connection"
+          state={
+            !database
+              ? error
+                ? "error"
+                : "loading"
+              : database.status === "connected"
+                ? "ok"
+                : database.status === "not_configured"
+                  ? "warn"
+                  : "error"
+          }
+          detail={
+            database
+              ? database.status === "connected"
+                ? `Connected in ${database.latencyMs ?? 0} ms.`
+                : database.message || database.status
+              : error
+                ? "The Supabase health endpoint did not respond."
+                : "Checking the Supabase Auth endpoint..."
+          }
+        />
+      </div>
 
-      <div className="rounded-2xl border border-ink/8 bg-white/45 p-4 text-xs leading-5 text-muted">
-        <p className="font-semibold text-ink">Raw endpoints</p>
-        <p className="mt-1">
-          <a className="font-semibold text-clover-700 hover:underline" href="/api/health">
-            /api/health
-          </a>{" "}
-          checks the web app.{" "}
-          <a className="font-semibold text-clover-700 hover:underline" href="/api/health/supabase">
-            /api/health/supabase
-          </a>{" "}
-          checks the configured Supabase project.
-        </p>
+      <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+        <a className="transition-colors hover:text-ink" href="/api/health">
+          /api/health
+        </a>
+        <a className="transition-colors hover:text-ink" href="/api/health/supabase">
+          /api/health/supabase
+        </a>
       </div>
     </div>
   );

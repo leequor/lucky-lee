@@ -2,71 +2,52 @@ import type { ReactNode } from "react";
 
 import { Logo } from "@/components/ui/logo";
 
-const FEATURES = [
-  {
-    title: "One account, every screen",
-    body: "Register once, then move between login, reset, and the landing page without friction.",
-  },
-  {
-    title: "Sessions handled properly",
-    body: "Supabase Auth and secure cookies keep the session fresh without putting secrets in the browser.",
-  },
-  {
-    title: "A reset flow that respects people",
-    body: "Clear messages for expired links, short passwords, and the happy path.",
-  },
+const FACTS = [
+  { label: "Auth", value: "Supabase" },
+  { label: "Session", value: "Secure cookie" },
+  { label: "Reset", value: "Single use" },
 ];
 
 export function AuthShell({ children }: { children: ReactNode }) {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-cream">
-      <div className="pointer-events-none absolute inset-0 bg-grid-soft [mask-image:linear-gradient(to_bottom,black,transparent_78%)]" />
-      <div className="pointer-events-none absolute -left-24 top-20 h-72 w-72 rounded-full bg-clover-200/50 blur-3xl" />
-      <div className="pointer-events-none absolute -right-24 bottom-10 h-80 w-80 rounded-full bg-coral-100/70 blur-3xl" />
+    <main className="min-h-[100dvh] bg-paper">
+      <div className="mx-auto grid min-h-[100dvh] max-w-[1500px] lg:grid-cols-[1.15fr_0.85fr]">
+        <section className="flex flex-col border-ink/15 px-5 py-6 sm:px-10 lg:border-r lg:px-14 lg:py-9">
+          <div className="flex items-center justify-between gap-4">
+            <Logo />
+            <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted">
+              S1 / Access
+            </span>
+          </div>
 
-      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col px-5 py-7 sm:px-8 lg:grid lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-16 lg:py-10">
-        <div className="mb-8 flex items-center justify-between lg:hidden">
-          <Logo />
-          <span className="rounded-full border border-ink/10 bg-white/60 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-ink/55">
-            Sprint 1
-          </span>
-        </div>
+          <div className="pt-16 lg:mt-auto lg:pb-12 lg:pt-20">
+            <div className="mb-6 h-[3px] w-10 bg-signal-500" aria-hidden="true" />
+            <p className="label">Sprint 01 / Account access</p>
+            <h1 className="mt-5 max-w-[12ch] text-[clamp(3rem,7vw,6.2rem)] font-semibold leading-[0.9] tracking-[-0.065em] text-ink">
+              One account.
+              <br />
+              Everything after.
+            </h1>
+            <p className="mt-6 max-w-[42ch] text-[15px] leading-6 text-muted">
+              Register, sign in, and recover your password. The team dashboard and role
+              controls sit behind the same door.
+            </p>
+          </div>
 
-        <section className="hidden lg:block">
-          <Logo />
-          <p className="mt-14 text-xs font-bold uppercase tracking-[0.24em] text-clover-700">
-            Account access, sorted
-          </p>
-          <h2 className="mt-4 max-w-xl font-display text-5xl font-semibold leading-[1.04] tracking-tight text-ink text-balance">
-            A calmer way to get everyone in.
-          </h2>
-          <p className="mt-5 max-w-lg text-[15px] leading-7 text-muted">
-            Lucky Patcher brings registration, sign-in, password recovery, and the team
-            dashboard into one consistent experience.
-          </p>
-
-          <div className="mt-10 space-y-5">
-            {FEATURES.map((feature, index) => (
-              <div key={feature.title} className="flex gap-4">
-                <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-clover-100 text-xs font-bold text-clover-800">
-                  0{index + 1}
-                </span>
-                <div>
-                  <p className="font-semibold text-ink">{feature.title}</p>
-                  <p className="mt-1 max-w-md text-sm leading-6 text-muted">{feature.body}</p>
-                </div>
+          <dl className="grid grid-cols-3 border-t border-ink/15 pt-5">
+            {FACTS.map((fact) => (
+              <div key={fact.label} className="border-r border-ink/15 pr-3 last:border-r-0">
+                <dt className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
+                  {fact.label}
+                </dt>
+                <dd className="mt-2 text-[12px] font-medium text-ink">{fact.value}</dd>
               </div>
             ))}
-          </div>
-
-          <div className="mt-12 flex items-center gap-3 text-xs font-medium text-ink/45">
-            <span className="h-px w-10 bg-ink/20" />
-            Built by the Lucky Patcher team
-          </div>
+          </dl>
         </section>
 
-        <section className="flex flex-1 items-center justify-center lg:justify-end">
-          <div className="w-full max-w-md">{children}</div>
+        <section className="flex items-center px-5 py-12 sm:px-10 lg:px-14 lg:py-16">
+          <div className="w-full max-w-[420px]">{children}</div>
         </section>
       </div>
     </main>

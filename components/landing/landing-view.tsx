@@ -2,14 +2,8 @@ import Link from "next/link";
 
 import { Navbar } from "@/components/ui/navbar";
 import { RoleBadge } from "@/components/ui/role-badge";
-import type { AppRole, AuthUser } from "@/lib/auth/types";
-import { cn, formatDate } from "@/lib/utils";
-
-const ROLE_LABELS: Record<AppRole, string> = {
-  superadmin: "Superadmin",
-  admin: "Admin",
-  user: "User",
-};
+import type { AuthUser } from "@/lib/auth/types";
+import { formatDate } from "@/lib/utils";
 
 const CHECKLIST = [
   {
@@ -24,7 +18,7 @@ const CHECKLIST = [
   },
   {
     title: "Database guardrails",
-    body: "Profiles, roles, and row level security are in the migration.",
+    body: "Profiles, roles, and row level security live in the migration.",
     done: true,
   },
   {
@@ -39,185 +33,178 @@ const CHECKLIST = [
   },
 ];
 
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-      <dt className="text-[11px] font-bold uppercase tracking-[0.16em] text-clover-200/75">
-        {label}
-      </dt>
-      <dd className="mt-2 text-sm font-semibold text-white">{value}</dd>
-    </div>
-  );
-}
+const SHORTCUTS = [
+  { href: "/login", label: "Login", note: "Sign in" },
+  { href: "/register", label: "Register", note: "Create account" },
+  { href: "/forgot-password", label: "Reset request", note: "Recovery" },
+];
+
+const SYSTEM = [
+  { label: "Auth", value: "Supabase", note: "Email and password with secure sessions." },
+  { label: "Data", value: "RLS on", note: "Profiles are scoped to the signed-in user." },
+  { label: "Quality", value: "Automated", note: "Unit, RLS, browser, and security checks." },
+];
+
+const primaryLink =
+  "inline-flex h-10 items-center justify-center border border-ink bg-ink px-4 text-[13px] font-medium text-paper transition-colors hover:border-signal-600 hover:bg-signal-700";
+const secondaryLink =
+  "inline-flex h-10 items-center justify-center border border-ink/30 px-4 text-[13px] font-medium text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper";
 
 export function LandingView({ user, preview = false }: { user: AuthUser; preview?: boolean }) {
   const firstName = user.fullName?.split(/\s+/)[0] || user.email.split("@")[0] || "teammate";
   const displayName = user.fullName || user.email;
 
   return (
-    <div className="min-h-screen bg-cream">
-      <div className="pointer-events-none fixed inset-0 bg-grid-soft opacity-70 [mask-image:linear-gradient(to_bottom,black,transparent_72%)]" />
+    <div className="min-h-screen bg-paper">
       <Navbar user={user} preview={preview} />
 
-      <main className="relative mx-auto max-w-6xl px-5 pb-16 pt-8 sm:px-8 sm:pt-10">
+      <main className="mx-auto max-w-[1400px] px-5 pb-8 sm:px-8">
         {preview ? (
-          <div className="mb-5 rounded-full border border-coral-500/20 bg-coral-100/70 px-4 py-2 text-center text-xs font-semibold text-coral-600">
-            Design preview with a sample account. Set NEXT_PUBLIC_DESIGN_PREVIEW=true locally to view it.
+          <div className="border-b border-signal-600/25 bg-signal-50 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.12em] text-signal-700">
+            Design preview / sample account
           </div>
         ) : null}
 
-        <section className="grid gap-6 lg:grid-cols-[1.28fr_.72fr]">
-          <div className="relative overflow-hidden rounded-[2.25rem] bg-clover-900 p-7 text-white shadow-card sm:p-9">
-            <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full border border-white/10" />
-            <div className="pointer-events-none absolute -bottom-24 right-16 h-64 w-64 rounded-full border border-white/10" />
-            <div className="pointer-events-none absolute right-8 top-8 text-[120px] font-display leading-none text-white/[0.04]">
-              ✦
-            </div>
-
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-clover-200">
-              Sprint 1 control room
-            </p>
-            <h1 className="mt-5 max-w-2xl font-display text-4xl font-semibold leading-[1.04] tracking-tight text-balance sm:text-[3.35rem]">
-              Welcome back, {firstName}.
-            </h1>
-            <p className="mt-5 max-w-xl text-[15px] leading-7 text-clover-100/80">
-              You are signed in as <span className="font-semibold text-white">{user.email}</span>.
-              Everything the team needs for account access and release readiness is in one place.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/status"
-                className="inline-flex h-11 items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-clover-900 transition hover:bg-clover-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-clover-900"
-              >
-                Check system status
-              </Link>
-              <a
-                href="#sprint-checklist"
-                className="inline-flex h-11 items-center justify-center rounded-full border border-white/20 px-5 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-clover-900"
-              >
-                View sprint checklist
-              </a>
-            </div>
-
-            <dl className="mt-10 grid gap-3 sm:grid-cols-3">
-              <Stat label="Role" value={ROLE_LABELS[user.role]} />
-              <Stat label="Auth" value="Active session" />
-              <Stat label="Member since" value={formatDate(user.createdAt)} />
-            </dl>
-          </div>
-
-          <aside className="rounded-[2.25rem] border border-ink/10 bg-paper/90 p-6 shadow-soft sm:p-7">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">
-                  Current account
-                </p>
-                <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-ink">
-                  {displayName}
-                </h2>
+        <section className="border-b border-ink/15 py-10 lg:py-14">
+          <div className="grid gap-10 lg:grid-cols-[1.45fr_0.55fr]">
+            <div>
+              <div className="flex items-center gap-3">
+                <span className="h-[3px] w-8 bg-signal-500" aria-hidden="true" />
+                <p className="label">Sprint 01 / Control room</p>
               </div>
-              <RoleBadge role={user.role} />
-            </div>
 
-            <dl className="mt-6 space-y-4 border-t border-ink/10 pt-5 text-sm">
-              <div className="flex items-start justify-between gap-4">
-                <dt className="text-muted">Email</dt>
-                <dd className="max-w-[210px] break-all text-right font-semibold text-ink">
-                  {user.email}
-                </dd>
-              </div>
-              <div className="flex items-start justify-between gap-4">
-                <dt className="text-muted">Member since</dt>
-                <dd className="text-right font-semibold text-ink">{formatDate(user.createdAt)}</dd>
-              </div>
-              <div className="flex items-start justify-between gap-4">
-                <dt className="text-muted">Account ID</dt>
-                <dd className="max-w-[160px] truncate text-right font-mono text-xs text-ink/60">
-                  {user.id}
-                </dd>
-              </div>
-            </dl>
+              <h1 className="mt-7 max-w-[12ch] text-[clamp(3rem,6.4vw,5.8rem)] font-semibold leading-[0.9] tracking-[-0.065em] text-ink">
+                Welcome back,
+                <br />
+                {firstName}.
+              </h1>
 
-            <div className="mt-6 rounded-2xl bg-clover-50 p-4">
-              <p className="text-sm font-semibold text-clover-900">Passwords stay private</p>
-              <p className="mt-1 text-sm leading-6 text-clover-800/80">
-                Supabase hashes credentials. This app never stores a password in its own database.
+              <p className="mt-6 max-w-[46ch] text-[15px] leading-6 text-muted">
+                Signed in as <span className="font-medium text-ink">{user.email}</span>. Account
+                access, roles, and release checks live on this page.
               </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link href="/status" className={primaryLink}>
+                  Check system status
+                </Link>
+                <a href="#sprint-checklist" className={secondaryLink}>
+                  Sprint checklist
+                </a>
+              </div>
             </div>
-          </aside>
+
+            <aside className="border-t border-ink/15 pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+              <div className="flex items-start justify-between gap-4">
+                <p className="label">Current account</p>
+                <RoleBadge role={user.role} />
+              </div>
+
+              <h2 className="mt-4 break-words text-[26px] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
+                {displayName}
+              </h2>
+
+              <dl className="mt-6 border-t border-ink/15 text-[12px]">
+                <div className="flex items-start justify-between gap-4 border-b border-ink/15 py-3">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+                    Email
+                  </dt>
+                  <dd className="max-w-[210px] break-all text-right font-medium text-ink">
+                    {user.email}
+                  </dd>
+                </div>
+                <div className="flex items-start justify-between gap-4 border-b border-ink/15 py-3">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+                    Member since
+                  </dt>
+                  <dd className="text-right font-medium text-ink">{formatDate(user.createdAt)}</dd>
+                </div>
+                <div className="flex items-start justify-between gap-4 py-3">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+                    Account ID
+                  </dt>
+                  <dd className="max-w-[160px] truncate font-mono text-[10px] text-muted">
+                    {user.id}
+                  </dd>
+                </div>
+              </dl>
+
+              <p className="mt-6 border-l-[3px] border-l-signal-500 pl-3 font-mono text-[10px] leading-5 text-muted">
+                Passwords stay with Supabase. This app never stores one.
+              </p>
+            </aside>
+          </div>
         </section>
 
-        <section id="sprint-checklist" className="mt-6 grid gap-6 md:grid-cols-[1.15fr_.85fr]">
-          <div className="rounded-[2rem] border border-ink/10 bg-paper/90 p-6 shadow-soft sm:p-7">
-            <div className="flex flex-wrap items-center justify-between gap-3">
+        <section
+          id="sprint-checklist"
+          className="grid gap-10 py-10 lg:grid-cols-[1.4fr_0.6fr] lg:py-14"
+        >
+          <div>
+            <div className="flex flex-wrap items-end justify-between gap-4 border-b border-ink/15 pb-4">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-clover-700">
-                  Definition of done
-                </p>
-                <h2 className="mt-1 font-display text-2xl font-semibold tracking-tight text-ink">
+                <p className="label">Definition of done</p>
+                <h2 className="mt-2 text-[clamp(1.8rem,3vw,2.5rem)] font-semibold leading-none tracking-[-0.045em] text-ink">
                   Sprint 1 checklist
                 </h2>
               </div>
-              <span className="rounded-full bg-clover-100 px-3 py-1 text-xs font-bold text-clover-800">
-                4 / 5 ready
-              </span>
+              <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted">
+                4 of 5 ready
+              </p>
             </div>
 
-            <ul className="mt-5 space-y-3">
-              {CHECKLIST.map((item) => (
+            <ol>
+              {CHECKLIST.map((item, index) => (
                 <li
                   key={item.title}
-                  className="flex items-start gap-3 rounded-2xl border border-ink/5 bg-white/45 p-3.5"
+                  className="grid grid-cols-[1.75rem_1fr_auto] items-start gap-4 border-b border-ink/15 py-4"
                 >
-                  <span
-                    className={cn(
-                      "mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full text-xs font-bold",
-                      item.done
-                        ? "bg-clover-100 text-clover-800"
-                        : "border border-dashed border-ink/20 text-ink/30",
-                    )}
-                    aria-hidden="true"
-                  >
-                    {item.done ? "✓" : "·"}
+                  <span className="pt-0.5 font-mono text-[10px] text-muted">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
                   <div>
-                    <p className="text-sm font-semibold text-ink">{item.title}</p>
-                    <p className="mt-0.5 text-xs leading-5 text-muted">{item.body}</p>
+                    <p className="text-[14px] font-medium text-ink">{item.title}</p>
+                    <p className="mt-1 max-w-[52ch] text-[12px] leading-5 text-muted">
+                      {item.body}
+                    </p>
                   </div>
+                  <span
+                    className={
+                      item.done
+                        ? "border border-ink bg-ink px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-paper"
+                        : "border border-signal-600 bg-signal-50 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-signal-700"
+                    }
+                  >
+                    {item.done ? "Ready" : "Open"}
+                  </span>
                 </li>
               ))}
-            </ul>
+            </ol>
           </div>
 
-          <div className="rounded-[2rem] border border-ink/10 bg-paper/90 p-6 shadow-soft sm:p-7">
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-clover-700">
-              Presentation shortcuts
-            </p>
-            <h2 className="mt-1 font-display text-2xl font-semibold tracking-tight text-ink">
+          <div className="lg:border-l lg:border-ink/15 lg:pl-8">
+            <p className="label">Presentation shortcuts</p>
+            <h2 className="mt-2 text-[clamp(1.8rem,3vw,2.5rem)] font-semibold leading-none tracking-[-0.045em] text-ink">
               Keep the demo calm
             </h2>
-            <p className="mt-3 text-sm leading-6 text-muted">
+            <p className="mt-4 max-w-[34ch] text-[13px] leading-6 text-muted">
               Jump straight to the screens you need during the Nov 9 walkthrough.
             </p>
 
-            <div className="mt-5 space-y-3">
-              {[
-                { href: "/status", label: "System status", note: "Health checks" },
-                { href: "/login", label: "Login screen", note: "Sign in" },
-                { href: "/register", label: "Register screen", note: "Create account" },
-                { href: "/forgot-password", label: "Reset request", note: "Recovery" },
-              ].map((link) => (
+            <div className="mt-6 border-t border-ink/15">
+              {SHORTCUTS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="flex items-center justify-between gap-3 rounded-2xl border border-ink/8 bg-white/45 px-4 py-3 transition hover:border-clover-700/20 hover:bg-white"
+                  className="group flex items-center justify-between gap-4 border-b border-ink/15 py-4 transition-colors hover:text-signal-700 sm:py-3"
                 >
                   <span>
-                    <span className="block text-sm font-semibold text-ink">{link.label}</span>
-                    <span className="block text-xs text-muted">{link.note}</span>
+                    <span className="block text-[13px] font-medium">{link.label}</span>
+                    <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+                      {link.note}
+                    </span>
                   </span>
-                  <span className="text-clover-700" aria-hidden="true">
+                  <span className="font-mono text-[13px] text-muted" aria-hidden="true">
                     →
                   </span>
                 </Link>
@@ -226,45 +213,24 @@ export function LandingView({ user, preview = false }: { user: AuthUser; preview
           </div>
         </section>
 
-        <section className="mt-6 grid gap-4 sm:grid-cols-3">
-          {[
-            {
-              label: "Auth provider",
-              value: "Supabase",
-              note: "Email and password with secure sessions.",
-            },
-            {
-              label: "Database guardrail",
-              value: "RLS on",
-              note: "Profiles are scoped to the signed-in user.",
-            },
-            {
-              label: "Quality gate",
-              value: "Automated",
-              note: "Validation and auth helpers have unit tests.",
-            },
-          ].map((card) => (
+        <section className="grid border-y border-ink/15 sm:grid-cols-3">
+          {SYSTEM.map((card) => (
             <div
               key={card.label}
-              className="rounded-[1.75rem] border border-ink/10 bg-paper/70 p-5 shadow-soft"
+              className="border-b border-ink/15 py-5 sm:border-b-0 sm:border-r sm:px-5 sm:first:pl-0 sm:last:border-r-0 sm:last:pr-0"
             >
-              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
-                {card.label}
+              <p className="label">{card.label}</p>
+              <p className="mt-3 text-[24px] font-semibold leading-none tracking-[-0.04em] text-ink">
+                {card.value}
               </p>
-              <p className="mt-2 font-display text-2xl font-semibold text-ink">{card.value}</p>
-              <p className="mt-2 text-xs leading-5 text-muted">{card.note}</p>
+              <p className="mt-3 max-w-[30ch] text-[11px] leading-5 text-muted">{card.note}</p>
             </div>
           ))}
         </section>
 
-        <footer className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-ink/10 pt-5 text-xs text-muted">
-          <p>Lucky Patcher · Sprint 1 · {new Date().getFullYear()}</p>
-          <p>
-            {preview ? "Design preview" : "Signed in"} ·{" "}
-            <Link href="/status" className="font-semibold text-clover-700 hover:underline">
-              system status
-            </Link>
-          </p>
+        <footer className="flex flex-wrap items-center justify-between gap-3 py-6 font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+          <p>Lucky Patcher / Sprint 01 / {new Date().getFullYear()}</p>
+          <p>{preview ? "Design preview" : "Signed in"}</p>
         </footer>
       </main>
     </div>

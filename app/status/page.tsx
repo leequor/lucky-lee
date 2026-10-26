@@ -10,41 +10,41 @@ export const metadata: Metadata = {
 
 export default function StatusPage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-cream">
-      <div className="pointer-events-none absolute inset-0 bg-grid-soft [mask-image:linear-gradient(to_bottom,black,transparent_78%)]" />
-      <div className="pointer-events-none absolute -right-20 top-10 h-72 w-72 rounded-full bg-clover-200/50 blur-3xl" />
-
-      <div className="relative mx-auto max-w-3xl px-5 py-8 sm:px-8 sm:py-12">
-        <div className="flex items-center justify-between gap-4">
+    <main className="min-h-[100dvh] bg-paper">
+      <div className="mx-auto max-w-[1080px] px-5 sm:px-8">
+        <header className="flex h-16 items-center justify-between border-b border-ink/15">
           <Logo />
           <Link
             href="/"
-            className="text-sm font-semibold text-clover-700 hover:underline"
+            className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted transition-colors hover:text-ink"
           >
             Back to app
           </Link>
-        </div>
+        </header>
 
-        <div className="mt-10 rounded-[2rem] border border-ink/10 bg-paper/90 p-6 shadow-card sm:p-8">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-clover-700">
-            Connection check
-          </p>
-          <h1 className="mt-3 font-display text-3xl font-semibold tracking-tight text-ink">
-            Is everything awake?
-          </h1>
-          <p className="mt-3 max-w-xl text-sm leading-6 text-muted">
-            This page checks the Next.js app and the configured Supabase project. Use it
-            before the demo so the team knows the environment is ready.
-          </p>
+        <section className="grid gap-10 py-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14 lg:py-16">
+          <div>
+            <div className="mb-6 h-[3px] w-8 bg-signal-500" aria-hidden="true" />
+            <p className="label">System / Health</p>
+            <h1 className="mt-4 text-[clamp(2.6rem,5vw,4.4rem)] font-semibold leading-[0.92] tracking-[-0.06em] text-ink">
+              System
+              <br />
+              status.
+            </h1>
+            <p className="mt-6 max-w-[34ch] text-[14px] leading-6 text-muted">
+              Checks the Next.js app and the configured Supabase project. Run this before the
+              demo so the environment is known.
+            </p>
+          </div>
 
-          <div className="mt-7">
+          <div className="lg:pt-2">
             <StatusPanel />
           </div>
-        </div>
+        </section>
 
-        <p className="mt-6 text-center text-xs text-muted">
-          Health checks run on demand and are never cached.
-        </p>
+        <footer className="border-t border-ink/15 py-5 font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+          Health checks run on demand / never cached
+        </footer>
       </div>
     </main>
   );

@@ -8,16 +8,16 @@ const LABELS: Record<AppRole, string> = {
 };
 
 const STYLES: Record<AppRole, string> = {
-  superadmin: "bg-clover-900 text-clover-50",
-  admin: "bg-clover-100 text-clover-800",
-  user: "bg-mist text-ink/70",
+  superadmin: "border-ink bg-ink text-paper",
+  admin: "border-signal-600/40 bg-signal-100 text-signal-700",
+  user: "border-ink/25 bg-transparent text-muted",
 };
 
 export function RoleBadge({ role, className }: { role: AppRole; className?: string }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em]",
+        "inline-flex items-center border px-2 py-1 font-mono text-[10px] font-medium uppercase leading-none tracking-[0.14em]",
         STYLES[role],
         className,
       )}

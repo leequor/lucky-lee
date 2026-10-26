@@ -14,19 +14,18 @@ export function AuthCard({
   footer?: ReactNode;
 }) {
   return (
-    <div className="animate-fade-up rounded-[2rem] border border-ink/10 bg-paper/90 p-6 shadow-card backdrop-blur sm:p-8">
-      <div className="space-y-2">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-clover-700">{eyebrow}</p>
-        <h1 className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-[2rem]">
-          {title}
-        </h1>
-        <p className="text-sm leading-6 text-muted">{description}</p>
-      </div>
+    <div className="animate-reveal">
+      <div className="mb-6 h-[3px] w-8 bg-signal-500" aria-hidden="true" />
+      <p className="label">{eyebrow}</p>
+      <h1 className="mt-4 text-[clamp(2rem,4vw,2.6rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-ink">
+        {title}
+      </h1>
+      <p className="mt-4 max-w-[42ch] text-[14px] leading-6 text-muted">{description}</p>
 
-      <div className="mt-7">{children}</div>
+      <div className="mt-8">{children}</div>
 
       {footer ? (
-        <div className="mt-7 border-t border-ink/10 pt-5 text-center text-sm text-muted">
+        <div className="mt-8 border-t border-ink/15 pt-5 text-[13px] text-muted">
           {footer}
         </div>
       ) : null}

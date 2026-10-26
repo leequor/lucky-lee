@@ -9,51 +9,44 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream: "#F7F3EA",
-        paper: "#FFFDF8",
-        ink: "#1C2321",
-        muted: "#64706B",
-        clover: {
-          50: "#F0FDF4",
-          100: "#DCFCE7",
-          200: "#BBF7D0",
-          500: "#16A34A",
-          600: "#15803D",
-          700: "#166534",
-          800: "#14532D",
-          900: "#052E16",
+        paper: "#F2F2EC",
+        surface: "#FAFAF5",
+        ink: "#12130F",
+        muted: "#616458",
+        line: "#CFD0C4",
+        wash: "#E7E8DE",
+        signal: {
+          50: "#FFF2EC",
+          100: "#FFDFD2",
+          400: "#FF7A4D",
+          500: "#F4511E",
+          600: "#D9410F",
+          700: "#A8320B",
         },
-        coral: {
-          100: "#FFEDD5",
-          400: "#FB923C",
-          500: "#F97316",
-          600: "#EA580C",
-        },
-        mist: "#E7E5DF",
       },
       fontFamily: {
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "Georgia", "serif"],
+        display: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
-      boxShadow: {
-        card: "0 24px 70px -28px rgba(28, 35, 33, 0.32)",
-        soft: "0 10px 34px -18px rgba(28, 35, 33, 0.24)",
-      },
-      backgroundImage: {
-        "grid-soft":
-          "linear-gradient(to right, rgba(28, 35, 33, 0.055) 1px, transparent 1px), linear-gradient(to bottom, rgba(28, 35, 33, 0.055) 1px, transparent 1px)",
-      },
-      backgroundSize: {
-        "grid-soft": "48px 48px",
+      borderRadius: {
+        DEFAULT: "2px",
+        sm: "1px",
+        md: "2px",
+        lg: "2px",
+        xl: "2px",
+        "2xl": "2px",
+        "3xl": "2px",
+        full: "9999px",
       },
       keyframes: {
-        "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(10px)" },
+        reveal: {
+          "0%": { opacity: "0", transform: "translateY(8px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
       },
       animation: {
-        "fade-up": "fade-up 0.55s ease-out both",
+        reveal: "reveal 280ms cubic-bezier(0.16, 1, 0.3, 1) both",
       },
     },
   },

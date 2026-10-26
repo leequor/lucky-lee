@@ -11,18 +11,18 @@ html {
 }
 
 body {
-  @apply bg-cream text-ink antialiased;
+  @apply bg-paper text-ink antialiased;
   min-height: 100vh;
 }
 
 ::selection {
-  background: #bbf7d0;
-  color: #052e16;
+  background: #f4511e;
+  color: #fffaf5;
 }
 
 @layer base {
   * {
-    border-color: theme("colors.ink / 10%");
+    border-color: theme("colors.ink / 14%");
   }
 
   a,
@@ -30,10 +30,37 @@ body {
   input {
     -webkit-tap-highlight-color: transparent;
   }
+
+  :focus-visible {
+    outline: 2px solid theme("colors.signal.500");
+    outline-offset: 3px;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .label {
+    @apply font-mono text-[10px] font-medium uppercase leading-none tracking-[0.16em] text-muted;
+  }
+
+  .rule {
+    @apply border-t border-ink/15;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

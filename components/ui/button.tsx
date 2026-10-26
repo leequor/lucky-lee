@@ -7,16 +7,16 @@ type ButtonSize = "sm" | "md" | "lg";
 
 const VARIANTS: Record<ButtonVariant, string> = {
   primary:
-    "bg-clover-700 text-white shadow-soft hover:bg-clover-800 active:translate-y-px",
+    "border border-ink bg-ink text-paper hover:border-signal-600 hover:bg-signal-700 active:translate-y-px",
   secondary:
-    "border border-ink/15 bg-white/80 text-ink hover:border-clover-700/30 hover:bg-white",
-  ghost: "text-ink/65 hover:bg-ink/5 hover:text-ink",
+    "border border-ink/30 bg-transparent text-ink hover:border-ink hover:bg-ink hover:text-paper active:translate-y-px",
+  ghost: "border border-transparent text-muted hover:text-ink hover:underline hover:underline-offset-4",
 };
 
 const SIZES: Record<ButtonSize, string> = {
-  sm: "h-9 px-4 text-sm",
-  md: "h-11 px-5 text-sm",
-  lg: "h-12 px-6 text-[15px]",
+  sm: "h-8 px-3 text-[12px]",
+  md: "h-10 px-4 text-[13px]",
+  lg: "h-11 px-5 text-[13px]",
 };
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -35,7 +35,7 @@ export function Button({
     <button
       type={type}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clover-600 focus-visible:ring-offset-2 focus-visible:ring-offset-cream disabled:pointer-events-none disabled:opacity-60",
+        "inline-flex items-center justify-center gap-2 rounded-[2px] font-medium transition-colors disabled:pointer-events-none disabled:opacity-45",
         VARIANTS[variant],
         SIZES[size],
         className,

@@ -1,153 +1,150 @@
 # Design System
 
-The app should feel like a calm control room: warm paper, deep clover green, one bright coral
-accent, generous spacing, and a clear hierarchy. The interface is friendly, but it does not hide
-the important state.
+The app reads as an operator's field manual: paper-flat surfaces, hard rules, compact mono labels,
+one signal accent. It should feel built for a team that runs the system, not decorated for a pitch.
 
 ## Brand idea
 
-- **Clover green** is the anchor: trust, luck, and a quiet "we have this handled" feeling.
-- **Cream paper** keeps the app warm and readable during a long demo.
-- **Coral** is reserved for errors and urgent actions, so it never loses meaning.
-- **Fraunces** gives headings a little personality. **Manrope** keeps forms and body copy clear.
+- **Paper and ink** carry the interface. No gradients, glass, floating cards, or decorative blobs.
+- **Signal orange** marks action, open state, and focus. One accent, used sparingly.
+- **Hard edges and thin rules** create hierarchy. Shadows are not used for elevation.
+- **Archivo** sets the voice. **IBM Plex Mono** handles metadata, counts, paths, and status.
+- **The grid is asymmetric**, but mobile collapses to one column with the same reading order.
 
 ## Color palette
 
 | Token | Hex | Use |
 | --- | --- | --- |
-| `cream` | `#F7F3EA` | Page background. |
-| `paper` | `#FFFDF8` | Cards, forms, raised surfaces. |
-| `ink` | `#1C2321` | Primary text. |
-| `muted` | `#64706B` | Secondary text and helper copy. |
-| `clover-900` | `#052E16` | Dark hero panels and primary emphasis. |
-| `clover-800` | `#14532D` | Logo mark and deep green surfaces. |
-| `clover-700` | `#166534` | Primary buttons and links. |
-| `clover-100` | `#DCFCE7` | Soft success and highlight surfaces. |
-| `clover-50` | `#F0FDF4` | Quiet success panels. |
-| `coral-600` | `#EA580C` | Error text and destructive emphasis. |
-| `coral-500` | `#F97316` | Error borders and focus states. |
-| `coral-100` | `#FFEDD5` | Soft error surfaces. |
-| `mist` | `#E7E5DF` | Neutral chips and dividers. |
+| `paper` | `#F2F2EC` | Page background. |
+| `surface` | `#FAFAF5` | Inputs and quiet inset surfaces. |
+| `ink` | `#12130F` | Primary text, primary buttons, ready tags. |
+| `muted` | `#616458` | Secondary text and metadata. |
+| `line` | `#CFD0C4` | Reference divider color. Borders use `ink/15`. |
+| `wash` | `#E7E8DE` | Neutral success surface. |
+| `signal-50` | `#FFF2EC` | Open/warning surface. |
+| `signal-500` | `#F4511E` | Focus ring, accent rule, small marks. |
+| `signal-600` | `#D9410F` | Error and warning borders. |
+| `signal-700` | `#A8320B` | Signal text and dark hover fill. |
 
-Use at most one coral surface per screen. Green is the primary action color.
+No second accent. Ready is ink. Open/warning/error is signal. Do not use color as the only state
+signal: every state also has a text label.
 
 ## Typography
 
 | Role | Family | Notes |
 | --- | --- | --- |
-| Display | Fraunces | Hero headlines, page titles, large numbers. |
-| Body / UI | Manrope | Labels, inputs, buttons, body copy, tables. |
-| Code / IDs | System monospace | Account IDs and technical references. |
+| Display / body | Archivo | Tight tracking on display sizes. No serif. |
+| Labels / metadata | IBM Plex Mono | 10 px uppercase, 0.12–0.16em tracking. |
+| IDs / paths | IBM Plex Mono | Truncate long values, keep them selectable. |
 
 ### Scale
 
 | Token | Size | Use |
 | --- | --- | --- |
-| Hero | 52–54 px desktop / 36 px mobile | Landing welcome. |
-| H1 | 32 px | Auth card title. |
-| H2 | 24 px | Section title. |
-| Body | 15–16 px | Main copy. |
-| Small | 13–14 px | Helper text, secondary labels. |
-| Eyebrow | 11–12 px, uppercase, 0.16–0.22em tracking | Section labels. |
+| Auth statement | 48–99 px, `clamp()` | Left auth panel. |
+| Landing welcome | 48–93 px, `clamp()` | Signed-in hero. |
+| Page title | 42–70 px, `clamp()` | Status and 404. |
+| Section title | 29–40 px | Checklist, shortcuts. |
+| Body | 13–15 px, 1.5–1.7 line-height | Copy and descriptions. |
+| Metadata | 10–11 px | Labels, tags, endpoints. |
 
 ## Spacing and shape
 
-- Spacing scale: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64 px.
-- Auth card padding: 24 px mobile, 32 px desktop.
+- Spacing scale: 4, 8, 12, 16, 20, 24, 32, 40, 48, 56 px.
 - Page gutter: 20 px mobile, 32 px desktop.
-- Radii: 12 px for inputs, 16 px for small cards, 24–36 px for large cards, full radius for
-  buttons and badges.
-- Shadow: `shadow-card` for the main card, `shadow-soft` for smaller surfaces. Do not stack
-  multiple heavy shadows.
+- Content widths: 1400 px app shell, 1080 px utility pages, 420 px auth form.
+- Radius: 2 px for controls and tags. No pills, no 16–32 px cards.
+- Borders: 1 px `ink/15`; accent rules are 3 px signal.
+- Shadow: none. Hierarchy comes from rules, spacing, and type weight.
 
 ## Core components
 
 ### Buttons
 
-- **Primary:** clover-700 background, white text, full pill. Hover clover-800.
-- **Secondary:** white/80 background, ink border, ink text. Hover white.
-- **Ghost:** transparent, muted text. Hover ink/5.
-- Sizes: 36 px (small), 44 px (default), 48 px (large/auth).
-- Disabled: 60% opacity, no pointer events.
-- Focus: 2 px clover ring with a 2 px cream offset.
-- Loading: spinner + pending copy, button disabled.
+- **Primary:** ink fill, paper text, signal-700 hover, 2 px radius.
+- **Secondary:** transparent, 1 px ink/30 border, ink text. Hover fills ink.
+- **Ghost:** text only, underline on hover.
+- Sizes: 32 px small, 40 px default, 44 px auth.
+- Focus: global 2 px signal outline with 3 px offset.
+- Loading: disabled button with a 2 px square pulse and pending copy.
 
 ### Inputs and fields
 
-- Height 48 px, 16 px radius, 1 px ink/10 border.
-- White/75 background; white on focus.
-- Focus: clover-600 border and a 4 px clover-600/10 ring.
-- Error: coral-500 border and coral-500/10 ring.
-- Label is always visible above the field.
-- Helper text sits below the field; error text replaces the helper when both are present.
-- Use `aria-invalid` and `aria-describedby` for every error.
+- Height 44 px, 2 px radius, 1 px ink/25 border, `surface` fill.
+- Focus: ink border plus 1 px ink ring.
+- Error: signal border, signal text below the field.
+- Label always above the field. Label and hint use mono uppercase.
+- Placeholder uses `muted`, not a lighter tint.
+- `aria-invalid` and `aria-describedby` on every error.
 
 ### Alerts
 
-- **Success:** clover-50 surface, clover-800 text, clover-600/20 border.
-- **Error:** coral-100 surface, coral-600 text, coral-500/25 border.
-- **Info:** white/70 surface, ink/70 text, ink/10 border.
-- Alerts use `role="alert"` for errors and `role="status"` otherwise.
+- Flat strip with a 3 px left border. No filled rounded box.
+- **Success:** ink left border, `wash` surface.
+- **Error:** signal left border, `signal-50` surface.
+- **Info:** muted left border, `surface` fill.
+- `role="alert"` for errors, `role="status"` otherwise.
 
-### Navbar
+### Navigation
 
-- 80 px height, cream/80 with blur, 1 px bottom border.
-- Logo left; email, role badge, avatar, and logout right.
-- On mobile, hide the email text but keep the avatar and logout.
-- The landing page navbar is sticky and sits above the grid pattern.
+- 64 px sticky bar, paper background, 1 px bottom rule.
+- Wordmark left; system status link, email, role tag, square avatar, logout right.
+- Mobile hides email and system link. Logout remains visible.
 
-### Role badge
+### Tags
 
-- Superadmin: clover-900 background, clover-50 text.
-- Admin: clover-100 background, clover-800 text.
-- User: mist background, ink/70 text.
-- Small uppercase tracking; never rely on color alone.
+- 2 px radius, 1 px border, mono 10 px uppercase.
+- Superadmin: ink fill, paper text.
+- Admin: signal-50 fill, signal-700 text.
+- User: transparent, ink/25 border, muted text.
 
-### Cards
+### Rows
 
-- Main auth card: paper/90, 32 px radius, 1 px ink/10 border, `shadow-card`.
-- Landing hero: clover-900, white text, large radii, subtle concentric circles.
-- Checklist rows: white/45, 16 px radius, 1 px ink/5 border.
-- Hover for links: border clover-700/20 and white background.
+- Checklist, account details, and status use full-width rows separated by 1 px rules.
+- No card inside a card. Numbers and state tags align to the right.
+- Long IDs truncate; emails wrap.
 
 ## Layout
 
 ### Auth shell
 
-- Desktop: two columns, left brand story (1.05fr) and right form card (0.95fr).
-- Mobile: compact logo row, then the form card.
-- Background: cream with a fading 48 px grid and soft green/coral blobs.
-- The form is always the visual focus on small screens.
+- Desktop: two columns, 1.15fr statement / 0.85fr form, divided by a 1 px rule.
+- Left: logo, sprint label, oversized statement, three facts pinned to the bottom.
+- Right: form centered in a 420 px measure.
+- Mobile: statement and facts stack above the form in one column.
 
-### Landing page
+### Landing
 
-- Navbar, then a 1.28fr/0.72fr hero grid.
-- Left: welcome, email, role, auth state, member since, primary actions.
-- Right: account card with role badge and privacy note.
-- Below: sprint checklist and presentation shortcuts.
-- Footer: year, signed-in state, status link.
+- Asymmetric hero: welcome statement left, account panel right.
+- Checklist left, presentation shortcuts right. On mobile the shortcut list follows the checklist.
+- System facts render as a three-cell strip, not cards.
+- Footer is a mono rule line.
+
+### Status
+
+- Utility layout: title and explanation left, health rows right.
+- Health rows use text labels and `Ready` / `Wait` / `Warn` / `Fail` tags.
+- Raw endpoints sit below the rows as mono links.
 
 ## Motion
 
-- Use one entrance animation (`fade-up`, 0.55 s) on auth cards and status panels.
-- Do not animate form errors or page navigation.
-- Respect reduced motion by keeping the animation subtle; no essential information is carried by
-  motion.
+- One 280 ms reveal on auth content. No scroll hijacks, no infinite loops.
+- All motion collapses under `prefers-reduced-motion: reduce`.
+- Hover and active states change color or translate by 1 px only.
 
 ## Accessibility
 
-- Minimum body contrast: ink on cream, white on clover-900.
-- Every input has a visible label.
-- Errors are text, not color alone.
-- Focus rings are visible on every interactive element.
-- Buttons have descriptive labels ("Log out", "Send reset link", not "Go").
-- The page works at 200% zoom and 360 px width.
-- Do not use placeholder text as the only label.
+- Body text contrast AA; metadata remains at `muted` or darker.
+- Focus ring is always visible and uses the single signal accent.
+- Form labels are never placeholders.
+- State is never communicated by color alone.
+- Touch targets are at least 44 px for primary controls.
+- Layout checked at 360, 768, and 1440 px.
 
-## Files
+## Avoid
 
-- Wireframes: `design/wireframes/`
-- Final mockups: `design/mockups/`
-- Developer notes: `design/README.md`
-- Tokens: `tailwind.config.ts` and `app/globals.css`
-- Components: `components/ui/` and `components/auth/`
+- Warm cream + green + serif (the previous direction).
+- Gradient blobs, glass panels, background grids, oversized rounded cards.
+- Pills, emoji icons, decorative sparkles.
+- More than one accent color.
+- Fake metrics or vague marketing copy.

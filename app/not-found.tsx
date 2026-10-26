@@ -4,27 +4,32 @@ import { Logo } from "@/components/ui/logo";
 
 export default function NotFound() {
   return (
-    <main className="relative grid min-h-screen place-items-center overflow-hidden bg-cream px-5">
-      <div className="pointer-events-none absolute inset-0 bg-grid-soft [mask-image:linear-gradient(to_bottom,black,transparent_78%)]" />
-      <div className="relative max-w-md text-center">
-        <div className="flex justify-center">
-          <Logo />
+    <main className="grid min-h-[100dvh] bg-paper px-5 py-6 sm:px-8">
+      <div className="mx-auto flex w-full max-w-[1080px] flex-col">
+        <Logo />
+
+        <div className="flex flex-1 flex-col justify-center py-16">
+          <div className="mb-6 h-[3px] w-8 bg-signal-500" aria-hidden="true" />
+          <p className="label">404 / Not found</p>
+          <h1 className="mt-4 max-w-[10ch] text-[clamp(3.5rem,10vw,8rem)] font-semibold leading-[0.84] tracking-[-0.07em] text-ink">
+            Not in the plan.
+          </h1>
+          <p className="mt-6 max-w-[42ch] text-[14px] leading-6 text-muted">
+            The link may be old, or the page only exists in a local design preview.
+          </p>
+          <div className="mt-8">
+            <Link
+              href="/"
+              className="inline-flex h-10 items-center justify-center border border-ink bg-ink px-4 text-[13px] font-medium text-paper transition-colors hover:border-signal-600 hover:bg-signal-700"
+            >
+              Back to the app
+            </Link>
+          </div>
         </div>
-        <p className="mt-8 text-xs font-bold uppercase tracking-[0.2em] text-clover-700">
-          404
+
+        <p className="border-t border-ink/15 py-5 font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+          Lucky Patcher / Sprint 01
         </p>
-        <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight text-ink">
-          This page is not in the plan.
-        </h1>
-        <p className="mt-3 text-sm leading-6 text-muted">
-          The link may be old, or the page may only be available in a local design preview.
-        </p>
-        <Link
-          href="/"
-          className="mt-6 inline-flex h-11 items-center justify-center rounded-full bg-clover-700 px-5 text-sm font-semibold text-white shadow-soft transition hover:bg-clover-800"
-        >
-          Back to the app
-        </Link>
       </div>
     </main>
   );

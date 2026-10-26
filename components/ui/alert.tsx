@@ -5,9 +5,9 @@ import { cn } from "@/lib/utils";
 type AlertTone = "error" | "success" | "info";
 
 const TONES: Record<AlertTone, string> = {
-  error: "border-coral-500/25 bg-coral-100/70 text-coral-600",
-  success: "border-clover-600/20 bg-clover-50 text-clover-800",
-  info: "border-ink/10 bg-white/70 text-ink/70",
+  error: "border-l-signal-600 bg-signal-50 text-ink",
+  success: "border-l-ink bg-wash text-ink",
+  info: "border-l-ink/30 bg-surface text-ink/75",
 };
 
 export function Alert({
@@ -22,7 +22,11 @@ export function Alert({
   return (
     <div
       role={tone === "error" ? "alert" : "status"}
-      className={cn("rounded-2xl border px-4 py-3 text-sm leading-6", TONES[tone], className)}
+      className={cn(
+        "rounded-[2px] border-y-0 border-r-0 border-l-[3px] px-4 py-3 text-[13px] leading-5",
+        TONES[tone],
+        className,
+      )}
     >
       {children}
     </div>

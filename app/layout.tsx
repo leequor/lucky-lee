@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
-import { Fraunces, Manrope } from "next/font/google";
+import { Archivo, IBM_Plex_Mono } from "next/font/google";
 
 import { APP_DESCRIPTION, APP_NAME, getSiteUrl } from "@/lib/config";
 
 import "./globals.css";
 
-const sans = Manrope({
+const sans = Archivo({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const display = Fraunces({
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
-  variable: "--font-display",
+  weight: ["400", "500"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -38,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${display.variable}`}>
+    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
       <body className="font-sans">{children}</body>
     </html>
   );
