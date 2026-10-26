@@ -1,12 +1,184 @@
-1. Alexander R. Campita
+# Lucky Patcher
 
-2. Ivanhoe V. Rabaca
+Sprint 1 account-access app for the Lucky Patcher team. It covers registration, login and
+logout, password recovery, a protected landing page, Supabase profiles and roles, database
+security, test evidence, and the Nov 9 presentation pack.
 
-3. Ian Kenneth P. Rafanan
+This is the working copy at [`leequor/lucky-lee`](https://github.com/leequor/lucky-lee). The
+original repo, `leequor/Lucky-Patcher-`, is left untouched.
 
-4. Rian D. Sabrido
+## Team
 
-5. Jaymark A. De Guzman
+| Name | Role |
+| --- | --- |
+| Alexander R. Campita | Scrum Master / project lead |
+| Ivanhoe V. Rabaca | DevSecOps |
+| Ian Kenneth P. Rafanan | UI/UX |
+| Rian D. Sabrido | Backend / full-stack |
+| Jaymark A. De Guzman | QA |
 
+## Stack
 
-<img width="498" height="333" alt="angry-cat-meme-cat" src="https://github.com/user-attachments/assets/8899ccef-9f30-4d45-81d4-affbd527bd0a" />
+- **Next.js 16** with the App Router and React 19
+- **Tailwind CSS** with the design tokens in [`tailwind.config.ts`](tailwind.config.ts)
+- **Supabase Auth + Postgres** with `@supabase/ssr`
+- **Vitest** and Testing Library for automated checks
+- **GitHub Actions** for typecheck, lint, tests, and production build
+
+## Quick start
+
+Requirements: Node.js 20.19+ and npm.
+
+```bash
+npm install
+cp .env.example .env.local
+```
+
+Fill in `.env.local` using [`docs/supabase-setup.md`](docs/supabase-setup.md), then:
+
+```bash
+npm run check:env
+npm run dev
+```
+
+`npm run dev` is the single local run command. Open <http://localhost:3000>. The app redirects
+to `/login` until a Supabase session exists.
+
+If Supabase is not configured, the public screens still render and the forms explain what is
+missing. The database connection test is at <http://localhost:3000/status> and
+`/api/health/supabase`.
+
+### Environment variables
+
+| Variable | Where | Purpose |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SUPABASE_URL` | Browser + server | Supabase project URL. |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Browser + server | Public anon key. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server only | Demo seed script. Never expose it to the browser. |
+| `NEXT_PUBLIC_SITE_URL` | Browser + server | Redirect URL used in auth emails. |
+| `DEMO_PASSWORD` | Local only | Password for the three seeded demo accounts. |
+| `NEXT_PUBLIC_DESIGN_PREVIEW` | Local only | Enables `/design-preview` for screenshots. |
+
+`.env` and `.env.local` are ignored by git. No real keys or passwords belong in the repository.
+
+## Scripts
+
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Start the local Next.js server. |
+| `npm run check:env` | Verify the required Supabase environment variables without printing secrets. |
+| `npm test` | Run the Vitest suite. |
+| `npm run test:watch` | Run Vitest in watch mode. |
+| `npm run typecheck` | Generate Next.js route types and run TypeScript with `--noEmit`. |
+| `npm run lint` | Run ESLint. |
+| `npm run build` | Create a production build. |
+| `npm run seed:demo` | Create or update the three demo accounts via the Supabase Admin API. |
+| `npm run db:push` | Push migrations with the Supabase CLI. |
+
+## Supabase setup
+
+1. Read [`docs/supabase-setup.md`](docs/supabase-setup.md).
+2. Run [`supabase/migrations/202610260001_initial_schema.sql`](supabase/migrations/202610260001_initial_schema.sql).
+3. Add `http://localhost:3000/auth/callback` and `http://localhost:3000/auth/confirm` to the
+   Supabase redirect allow-list.
+4. Copy `.env.example` to `.env.local` and fill in the project values.
+5. Run `npm run seed:demo` if you want the presentation accounts.
+6. Open `/status` and confirm both health checks are green.
+
+The password-reset flow uses **Supabase's built-in recovery links**. We intentionally did not
+build a custom reset-token table. The reason and the recommended email template are in
+[`docs/supabase-setup.md`](docs/supabase-setup.md).
+
+## Demo accounts
+
+The seed script creates these accounts. The password comes from `DEMO_PASSWORD` in `.env.local`.
+
+| Email | Role |
+| --- | --- |
+| `alex@luckypatcher.test` | Superadmin |
+| `admin@luckypatcher.test` | Admin |
+| `user@luckypatcher.test` | User |
+
+## Project structure
+
+```text
+app/
+  (auth)/                 Login, register, forgot, reset pages
+  actions/auth.ts         Server actions for every auth flow
+  api/health/             App and Supabase health endpoints
+  auth/callback/          Code exchange for Supabase email links
+  auth/confirm/           Token-hash verification for custom email templates
+  design-preview/         Local-only landing page preview for screenshots
+  status/                 Human-readable connection check
+  page.tsx                Protected landing page
+components/
+  auth/                   Auth shell, card, and forms
+  landing/                Landing page and live status panel
+  ui/                     Button, input, alert, logo, navbar, role badge
+lib/
+  auth/                   Validation, error mapping, service calls, session helpers
+  supabase/               Browser, server, and proxy clients
+supabase/
+  migrations/             Ordered SQL migrations
+design/                   Wireframes, mockups, and design notes
+docs/                     Setup, test, security, demo, and process documents
+scripts/                  Env checker and demo seed script
+tests/                    Vitest suites
+```
+
+## Team workflow
+
+1. Pick an issue and move it to **In Progress**.
+2. Create a branch from `main`; never work directly on `main`.
+3. Open a PR and write `Closes #<issue number>`.
+4. A teammate reviews it. One approval is required.
+5. Merge after approval. The issue closes automatically and the card moves to Done.
+
+Branch names use a short type prefix, for example `feat/login-page`, `fix/reset-error`, or
+`docs/test-report`.
+
+## Rules
+
+- Never commit keys, passwords, service-role keys, or `.env` files.
+- Nobody approves their own PR.
+- Every PR links to an issue and includes test evidence.
+- Keep changes small enough for a teammate to review.
+- The Definition of Done is in [`docs/working-agreement.md`](docs/working-agreement.md).
+
+## Tests and evidence
+
+- [Test plan](docs/test-plan.md)
+- [Test cases](docs/test-cases.md)
+- [Test report](docs/test-report.md)
+- [Security notes](docs/security.md)
+
+Run everything locally with:
+
+```bash
+npm run typecheck
+npm run lint
+npm test
+npm run build
+```
+
+## Design
+
+- [Design system](docs/design-system.md)
+- [Wireframes](design/wireframes)
+- [Final mockups](design/mockups)
+- [Design notes for the developer](design/README.md)
+
+## Presentation pack
+
+- [Demo script and rehearsal log](docs/demo-script.md)
+- [Sprint 1 issue status](docs/issue-status.md)
+- Backup screenshots: `docs/screenshots/` (captured from the local app)
+
+## Health endpoints
+
+| Endpoint | Meaning |
+| --- | --- |
+| `GET /api/health` | The Next.js app is running. |
+| `GET /api/health/supabase` | The configured Supabase REST endpoint responds. |
+
+The `/status` page calls both endpoints in the browser and shows the result with latency.
