@@ -8,8 +8,8 @@
 | Tester | Automated run with local Supabase and Chrome |
 | App version | `main` working copy |
 | Unit and component test files | 19 |
-| Unit and component tests | 136 passed |
-| Coverage | 90.74% statements, 82.33% branches, 87.05% functions |
+| Unit and component tests | 139 passed |
+| Coverage | 90.88% statements, 82.52% branches, 87.05% functions |
 | RLS integration tests | 7 passed against local Supabase |
 | Browser E2E tests | 17 passed in Chrome |
 | TypeScript | Passed |
@@ -45,7 +45,7 @@ The integration and E2E suites used a local Supabase stack and the local `.env.l
 | `tests/health.test.ts` | 4 | Passed |
 | `tests/health-routes.test.ts` | 4 | Passed |
 | `tests/utils.test.ts` | 10 | Passed |
-| `tests/config.test.ts` | 4 | Passed |
+| `tests/config.test.ts` | 7 | Passed |
 | `tests/supabase-env.test.ts` | 8 | Passed |
 | `tests/supabase-middleware.test.ts` | 4 | Passed |
 | `tests/supabase-server.test.ts` | 4 | Passed |

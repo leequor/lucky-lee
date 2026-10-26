@@ -3,6 +3,7 @@
 | Document | What it answers |
 | --- | --- |
 | [Supabase setup](supabase-setup.md) | How to connect the project, run the migration, configure reset emails, and seed demo users. |
+| [Deployment](deployment.md) | Hosted Supabase, Vercel, auth redirects, seeding, and verification. |
 | [Architecture](architecture.md) | How the Next.js app, server actions, Supabase clients, and database fit together. |
 | [Design system](design-system.md) | Colors, fonts, spacing, components, states, and accessibility rules. |
 | [Working agreement](working-agreement.md) | Team workflow and the Definition of Done. |

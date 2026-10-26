@@ -148,6 +148,15 @@ Branch names use a short type prefix, for example `feat/login-page`, `fix/reset-
 - Keep changes small enough for a teammate to review.
 - The Definition of Done is in [`docs/working-agreement.md`](docs/working-agreement.md).
 
+## Deployment
+
+Production uses Supabase Auth/Postgres and Vercel.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fleequor%2Flucky-lee&env=NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY&envDescription=Supabase%20project%20URL%20and%20anon%20key)
+
+Exact steps, environment variables, auth redirect URLs, seeding, and verification are in
+[`docs/deployment.md`](docs/deployment.md).
+
 ## Tests and evidence
 
 - [Testing guide](docs/testing.md)
