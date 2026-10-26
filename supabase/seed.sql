@@ -1,0 +1,11 @@
+-- Demo auth users cannot be inserted safely with plain SQL because Supabase Auth
+-- owns password hashing and identity records. Use the supported Admin API script:
+--
+--   npm run seed:demo
+--
+-- It creates or updates these accounts without committing a password:
+--   alex@luckypatcher.test   superadmin
+--   admin@luckypatcher.test  admin
+--   user@luckypatcher.test   user
+--
+-- The script reads DEMO_PASSWORD and SUPABASE_SERVICE_ROLE_KEY from .env.local.

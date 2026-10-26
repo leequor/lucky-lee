@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-labelledby="title desc">
+  <title id="title">Register wireframe</title>
+  <desc id="desc">Low-fidelity register layout with a brand panel and a display name, email, and password card.</desc>
+  <rect width="1280" height="800" fill="#F5F5F3"/>
+  <text x="64" y="42" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#6B7280">WIREFRAME / REGISTER</text>
+  <text x="64" y="64" font-family="Arial, sans-serif" font-size="12" fill="#9CA3AF">Desktop 1280 x 800 / three-field form</text>
+
+  <rect x="64" y="104" width="28" height="28" rx="8" fill="#D1D5DB"/>
+  <text x="104" y="124" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1" fill="#374151">LUCKY PATCHER</text>
+
+  <rect x="64" y="196" width="400" height="24" rx="6" fill="#D1D5DB"/>
+  <rect x="64" y="234" width="320" height="24" rx="6" fill="#D1D5DB"/>
+  <rect x="64" y="282" width="430" height="10" rx="5" fill="#E5E7EB"/>
+  <rect x="64" y="302" width="350" height="10" rx="5" fill="#E5E7EB"/>
+
+  <circle cx="80" cy="376" r="16" fill="#E5E7EB"/>
+  <text x="75" y="381" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#6B7280">01</text>
+  <rect x="112" y="364" width="166" height="10" rx="5" fill="#D1D5DB"/>
+  <rect x="112" y="384" width="316" height="8" rx="4" fill="#E5E7EB"/>
+
+  <circle cx="80" cy="448" r="16" fill="#E5E7EB"/>
+  <text x="75" y="453" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#6B7280">02</text>
+  <rect x="112" y="436" width="214" height="10" rx="5" fill="#D1D5DB"/>
+  <rect x="112" y="456" width="330" height="8" rx="4" fill="#E5E7EB"/>
+
+  <circle cx="80" cy="520" r="16" fill="#E5E7EB"/>
+  <text x="75" y="525" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#6B7280">03</text>
+  <rect x="112" y="508" width="240" height="10" rx="5" fill="#D1D5DB"/>
+  <rect x="112" y="528" width="290" height="8" rx="4" fill="#E5E7EB"/>
+
+  <rect x="64" y="620" width="190" height="34" rx="17" fill="none" stroke="#D1D5DB" stroke-dasharray="5 5"/>
+  <text x="82" y="642" font-family="Arial, sans-serif" font-size="11" fill="#9CA3AF">Development role note</text>
+
+  <rect x="720" y="70" width="496" height="660" rx="28" fill="#FFFFFF" stroke="#D1D5DB"/>
+  <rect x="760" y="112" width="100" height="10" rx="5" fill="#E5E7EB"/>
+  <rect x="760" y="146" width="300" height="26" rx="6" fill="#D1D5DB"/>
+  <rect x="760" y="188" width="400" height="10" rx="5" fill="#E5E7EB"/>
+  <rect x="760" y="208" width="300" height="10" rx="5" fill="#E5E7EB"/>
+
+  <rect x="760" y="254" width="112" height="10" rx="5" fill="#D1D5DB"/>
+  <rect x="760" y="276" width="416" height="52" rx="12" fill="#F9FAFB" stroke="#D1D5DB" stroke-dasharray="5 5"/>
+  <text x="780" y="307" font-family="Arial, sans-serif" font-size="12" fill="#9CA3AF">Display name (optional)</text>
+
+  <rect x="760" y="354" width="48" height="10" rx="5" fill="#D1D5DB"/>
+  <rect x="760" y="376" width="416" height="52" rx="12" fill="#F9FAFB" stroke="#D1D5DB" stroke-dasharray="5 5"/>
+  <text x="780" y="407" font-family="Arial, sans-serif" font-size="12" fill="#9CA3AF">you@team.com</text>
+
+  <rect x="760" y="454" width="70" height="10" rx="5" fill="#D1D5DB"/>
+  <rect x="1040" y="454" width="136" height="10" rx="5" fill="#E5E7EB"/>
+  <rect x="760" y="476" width="416" height="52" rx="12" fill="#F9FAFB" stroke="#D1D5DB" stroke-dasharray="5 5"/>
+  <text x="780" y="507" font-family="Arial, sans-serif" font-size="12" fill="#9CA3AF">Create a password</text>
+
+  <rect x="760" y="560" width="416" height="54" rx="27" fill="#D1D5DB"/>
+  <text x="908" y="592" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#6B7280">CREATE ACCOUNT</text>
+
+  <rect x="760" y="650" width="416" height="1" fill="#E5E7EB"/>
+  <rect x="850" y="676" width="236" height="10" rx="5" fill="#E5E7EB"/>
+
+  <rect x="740" y="748" width="456" height="30" rx="15" fill="none" stroke="#D1D5DB" stroke-dasharray="5 5"/>
+  <text x="762" y="768" font-family="Arial, sans-serif" font-size="11" fill="#9CA3AF">Inline validation appears below each field</text>
+</svg>
