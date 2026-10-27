@@ -244,6 +244,29 @@ describe.skipIf(!configured)("profiles RLS against a live Supabase project", () 
     expect(invoiceUpdate.data ?? []).toHaveLength(0);
   });
 
+  it("does not let a technician collect an invoice through the billing RPC", async () => {
+    const { data: invoice } = await supabaseAdmin
+      .from("invoices")
+      .select("id,status")
+      .eq("status", "sent")
+      .limit(1)
+      .single();
+
+    const { error } = await userOne.client.rpc("mark_invoice_paid", {
+      p_invoice_id: invoice!.id,
+    });
+
+    expect(error).not.toBeNull();
+
+    const { data } = await supabaseAdmin
+      .from("invoices")
+      .select("status")
+      .eq("id", invoice!.id)
+      .single();
+
+    expect(data?.status).toBe("sent");
+  });
+
   it("lets a manager adjust inventory", async () => {
     const { data: part } = await supabaseAdmin.from("parts").select("id,stock").limit(1).single();
 

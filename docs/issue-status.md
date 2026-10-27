@@ -6,7 +6,7 @@
 > current system.
 
 This table maps the original issues in `leequor/Lucky-Patcher-` to the tracking issues in
-`leequor/lucky-lee` and to the evidence in this repository.
+`leequor/lucky-patcher-finished` and to the evidence in this repository.
 
 | New issue | Original | Title | Evidence | Status |
 | --- | --- | --- | --- | --- |
@@ -28,7 +28,7 @@ This table maps the original issues in `leequor/Lucky-Patcher-` to the tracking 
 | #16 | #40 | Test cases for reset and landing | `docs/test-cases.md` | Done |
 | #17 | #41 | Run the full test and report | `docs/test-report.md`, 139 unit, 7 RLS, 17 browser checks | Done; hosted auth and RLS verified; real inbox email remains |
 | #18 | #42 | Working Agreement and Definition of Done | `docs/working-agreement.md` | Document done; team sign-off table is blank |
-| #19 | #43 | Demo script and rehearsal | `docs/demo-script.md`, `docs/screenshots/` | Script, hosted dry run, and backup screenshots done; full team rehearsal planned for Nov 7 |
+| #19 | #43 | Demo script and rehearsal | `docs/demo-script.md`, `design/mockups/` | Script, hosted dry run, and backup screenshots done; full team rehearsal planned for Nov 7 |
 
 ## Notes
 
@@ -47,7 +47,7 @@ This table maps the original issues in `leequor/Lucky-Patcher-` to the tracking 
 - Hosted login, logout, protected redirect, reset link, new-password login, reused-link rejection,
   and all 7 RLS checks passed.
 - The interface was rebuilt as Patchwork: a carbon workshop interface with a programmable 3D
-  exploded-device bench, signal-orange actions, and a public tracker. Final mockups in
+  three-layer teardown, signal-orange actions, and a public tracker. Final mockups in
   `design/mockups/` are captured from the running app.
 - Remaining external actions: real-inbox email delivery, team acknowledgement of the working
   agreement (#18), and the full team rehearsal (#19).

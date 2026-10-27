@@ -22,7 +22,7 @@ invoice/payment, staff roles, and public tracking. About 12 minutes including qu
 - [ ] `/status` shows both checks ready.
 - [ ] Browser tabs ready: `/`, `/tickets`, `/tickets/new`, `/customers`, `/inventory`, `/invoices`,
       `/team`, `/track`, `/status`.
-- [ ] Backup screenshots in `docs/screenshots/` are open.
+- [ ] Backup screenshots in `design/mockups/` are open.
 - [ ] Demo password is in the password manager.
 - [ ] Notifications off; browser zoom 100%.
 
@@ -58,7 +58,7 @@ decorative hero.”
 2. Use an existing customer with a device.
 3. Enter a real fault, set priority to High, estimate $125, labour $25, assign a technician.
 4. Create the ticket.
-5. On the ticket page, point out the generated `PW-####` number and public code.
+5. On the ticket page, point out the generated `PW-####` number and tracking code.
 
 ### 5:30–8:00 — Workflow, parts, invoice, payment
 
