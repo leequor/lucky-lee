@@ -42,7 +42,7 @@ the service-role-only server action.
    device.
 3. Existing-customer mode verifies the device belongs to the customer. New-customer mode creates
    the customer and device first.
-4. Postgres assigns `PW-####` and a public tracking code through `set_ticket_defaults()`.
+4. Postgres assigns `PW-####` and a tracking code through `set_ticket_defaults()`.
 5. An `intake` event is written, then the action redirects to the ticket.
 
 ### Bench work
@@ -59,12 +59,12 @@ the service-role-only server action.
 1. `createTicketInvoiceAction` calls `create_ticket_invoice()`.
 2. The function totals labour + parts, applies 12% tax, upserts the invoice, marks the ticket ready,
    and records an event.
-3. `mark_invoice_paid()` sets the invoice paid and moves the ticket to picked up/collected.
+3. `mark_invoice_paid()` sets the invoice paid and moves the ticket to picked up/collected. Billing RPCs are manager/owner-only at the action and through a database trigger.
    `picked_up` is rejected by the status action unless the invoice is paid.
 
 ### Public tracking
 
-1. `/track` accepts the public code plus email or phone.
+1. `/track` accepts the tracking code plus email or phone.
 2. `track_ticket(p_code, p_contact)` is a security-definer RPC.
 3. It returns only the ticket number, status, issue, device, first name, and customer-visible events.
 4. Anonymous users have no table access; they can only call that RPC.
@@ -80,9 +80,9 @@ the service-role-only server action.
 | `/customers` | Staff | Customer directory. |
 | `/customers/new` | Staff | Create a customer. |
 | `/customers/[id]` | Staff | Contact, devices, repair history. |
-| `/inventory` | Staff | Parts, stock, reorder levels, adjustments. |
-| `/invoices` | Staff | Invoice ledger and payment. |
-| `/team` | Staff | Staff directory; role/invite controls for owner/manager. |
+| `/inventory` | Staff read; owner/manager write | Parts, stock, reorder levels, adjustments. |
+| `/invoices` | Staff read; owner/manager collect | Invoice ledger and payment. |
+| `/team` | Staff read; owner/manager manage | Staff directory; owners manage owner roles, managers manage other roles. |
 | `/track` | Public | Customer repair tracking. |
 | `/login` | Public | Staff sign-in. |
 | `/register` | Public | Invite-only explanation. |
@@ -146,7 +146,7 @@ invoices
 1. **Next.js App Router** keeps the authenticated workspace and public tracker in one deployment.
 2. **Supabase Auth** owns passwords, reset tokens, email confirmation, and session cookies.
 3. **Postgres functions for money and stock** prevent double-submit and client-tampering bugs.
-4. **One public code + contact check** avoids customer accounts while still protecting repair data.
+4. **One tracking code + contact check** avoids customer accounts while still protecting repair data.
 5. **React Three Fiber** gives the dashboard a real product-specific 3D object without shipping a
    model or external asset dependency.
 6. **Invite-only staff** removes the old public sign-up path from the internal workspace.

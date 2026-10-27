@@ -14,7 +14,7 @@ first; the 3D bench is the product's identity, not decoration around a marketing
   navigation, no shadows at rest.
 - **Measured geometry.** Panels use 16 px corners, controls 10 px, action buttons and status tags
   are full-radius.
-- **Geist** sets all text. **Geist Mono** is reserved for ticket codes, public codes, IDs, and
+- **Geist** sets all text. **Geist Mono** is reserved for ticket codes, tracking codes, IDs, and
   amounts that need alignment.
 
 ## Color palette
@@ -97,7 +97,7 @@ Sentence case everywhere. Numbers in tables and totals use `font-variant-numeric
 ### Public tracker
 
 - Same brand and 3D bench, but no workspace chrome.
-- Form takes the public code plus email or phone.
+- Form takes the tracking code plus email or phone.
 - The result shows device, issue, current stage, and only customer-visible timeline events.
 - Never shows address, payment details, internal notes, or staff-only fields.
 
@@ -134,7 +134,7 @@ Sentence case everywhere. Numbers in tables and totals use `font-variant-numeric
 
 ### Ticket detail
 
-- Header: ticket number, status, priority, public code, copy.
+- Header: ticket number, status, priority, tracking code, copy.
 - Left: repair brief, parts, timeline, notes.
 - Right: bench controls (status, assignment, estimate, labour, diagnosis), customer/device card,
   invoice card.

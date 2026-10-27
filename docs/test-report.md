@@ -10,7 +10,7 @@
 | Unit and component test files | 35 |
 | Unit and component tests | 189 passed |
 | Coverage | 63.67% statements, 58.36% branches, 80.5% functions, 67.07% lines |
-| RLS integration tests | 14 passed against local Supabase in CI |
+| RLS integration tests | 15 passed against local Supabase in CI |
 | Browser E2E tests | 16 passed against local Supabase in CI |
 | TypeScript | Passed |
 | ESLint | Passed |
@@ -20,7 +20,7 @@
 | Human mockup comparison | Pending |
 
 **Overall:** the current Patchwork build passes typecheck, lint, 189 unit/component tests, the coverage
-gate, the production build, 14 RLS/integration checks, and 16 browser checks. The hosted Vercel
+gate, the production build, 15 RLS/integration checks, and 16 browser checks. The hosted Vercel
 deployment is live at <https://lucky-lee.vercel.app>. The only remaining external gap is real email
 delivery to a real inbox.
 

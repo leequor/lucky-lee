@@ -14,11 +14,17 @@ the repair desk, the 3D bench, and the public tracker.
 | `mockups/landing-preview.png` | Repair desk | Real signed-in dashboard with the 3D bench. |
 | `mockups/status.png` | System status | App and Supabase health checks with the bench panel. |
 
+Backup copies live only here; the docs link to this folder.
+
 Regenerate from a running production build:
 
 ```bash
 npm run capture:mockups
 ```
+
+## Wireframes
+
+Early layout studies live in `wireframes/`: `login.svg`, `register.svg`, and `reset-password.svg`.
 
 ## Developer notes
 
@@ -51,19 +57,19 @@ npm run capture:mockups
 ### Customers and inventory
 
 - A customer owns devices; a ticket links to both.
-- Inventory adjustment is ±1 per click; stock cannot go below zero.
+- Inventory adjustment is one unit per click; stock cannot go below zero.
 - Low stock means `stock <= reorder_level`.
 
 ### Team
 
-- Owner and manager can change roles and create confirmed staff accounts.
-- Technician access is day-to-day work only.
-- New staff receive a temporary password; ask them to change it from “Forgot password”.
+- Owners and managers create confirmed staff accounts. Owners manage owner roles; managers manage non-owner roles.
+- Technicians work tickets and customers; inventory and invoice collection are read-only.
+- New staff receive a temporary password; ask them to change it from **Forgot password**.
 
 ### Public tracker
 
 - `/track` is outside the workspace shell and needs no account.
-- The `track_ticket` RPC requires the public code plus email or phone.
+- The `track_ticket` RPC requires the tracking code plus email or phone.
 - Only customer-visible events are returned, and only first name + device + status are exposed.
 
 ### Responsive rules
@@ -81,7 +87,3 @@ Full tokens are in [docs/design-system.md](../docs/design-system.md). Short vers
 - Ready green `#5BE0A0`; low stock amber `#F0B54A`; error red `#FF6B6B`.
 - Text: Geist. Codes: Geist Mono.
 
-## Screenshots
-
-`docs/screenshots/` contains the backup set captured from the running app. The same images are
-copied to `design/mockups/`.

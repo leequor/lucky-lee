@@ -1,8 +1,8 @@
 {
-  "name": "lucky-lee",
+  "name": "patchwork",
   "version": "1.0.0",
   "private": true,
-  "description": "Lucky Patcher Sprint 1 app: Next.js, Tailwind CSS, and Supabase Auth.",
+  "description": "Repair-shop operations system for intake, tickets, inventory, invoices, staff, and public tracking.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -18,7 +18,8 @@
     "capture:mockups": "node scripts/capture-mockups.mjs",
     "seed:demo": "node scripts/seed-demo-users.mjs",
     "seed:repair": "node scripts/seed-repair-data.mjs",
-    "db:push": "supabase db push"
+    "db:push": "supabase db push",
+    "check:docs": "node scripts/check-doc-links.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

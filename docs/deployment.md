@@ -18,7 +18,7 @@ Do not commit these values.
 ## 2. Deploy the app
 
 1. Open <https://vercel.com/new>.
-2. Import `leequor/lucky-lee`.
+2. Import `leequor/lucky-patcher-finished`.
 3. Framework preset: **Next.js**. Leave build settings unchanged.
 4. Add environment variables:
 
@@ -36,7 +36,7 @@ Do not commit these values.
 staff creation from `/team`. Never expose it through a `NEXT_PUBLIC_*` variable or client bundle.
 
 5. Click **Deploy**.
-6. Copy the production URL, for example `https://lucky-lee.vercel.app`.
+6. Copy the production URL, for example `https://lucky-lee.vercel.app`. The existing project keeps this slug; renaming the Git repository does not change the Vercel URL.
 
 ## 3. Configure Supabase redirects
 

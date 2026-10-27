@@ -1,4 +1,4 @@
-import { copyFileSync, existsSync, mkdirSync } from "node:fs";
+import { existsSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 
 import { chromium } from "@playwright/test";
@@ -25,9 +25,7 @@ const pages = [
 ];
 
 const mockupsDir = join(process.cwd(), "design", "mockups");
-const screenshotsDir = join(process.cwd(), "docs", "screenshots");
 mkdirSync(mockupsDir, { recursive: true });
-mkdirSync(screenshotsDir, { recursive: true });
 
 const browser = await chromium.launch({ executablePath, headless: true });
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
@@ -38,7 +36,6 @@ try {
     await page.waitForTimeout(3000);
     const target = join(mockupsDir, name);
     await page.screenshot({ path: target, fullPage: true });
-    copyFileSync(target, join(screenshotsDir, name));
     console.log(`captured ${name}`);
   }
 
@@ -53,7 +50,6 @@ try {
 
   const landing = join(mockupsDir, "landing-preview.png");
   await page.screenshot({ path: landing, fullPage: true });
-  copyFileSync(landing, join(screenshotsDir, "landing-preview.png"));
   console.log("captured landing-preview.png");
 } finally {
   await browser.close();
