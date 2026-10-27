@@ -27,11 +27,13 @@ Do not commit these values.
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL | Production, Preview, Development |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/publishable key | Production, Preview, Development |
 | `NEXT_PUBLIC_SITE_URL` | Final Vercel URL, no trailing slash | Production |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server-only key for seed scripts and staff creation | Production, Preview |
 
 `NEXT_PUBLIC_SITE_URL` is optional because the app falls back to Vercel's
 `VERCEL_PROJECT_PRODUCTION_URL`. Set it explicitly once the final domain is known.
 
-Do **not** add `SUPABASE_SERVICE_ROLE_KEY` to Vercel. The app does not need it at runtime.
+`SUPABASE_SERVICE_ROLE_KEY` is server-only. The app uses it for seed scripts and for owner/manager
+staff creation from `/team`. Never expose it through a `NEXT_PUBLIC_*` variable or client bundle.
 
 5. Click **Deploy**.
 6. Copy the production URL, for example `https://lucky-lee.vercel.app`.
@@ -62,6 +64,7 @@ Then:
 
 ```bash
 npm run seed:demo
+npm run seed:repair
 ```
 
 Delete `.env.local` after seeding. Rotate the demo password after the presentation.

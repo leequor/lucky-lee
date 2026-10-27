@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import { AuthCard } from "@/components/auth/auth-card";
 import { LoginForm } from "@/components/auth/login-form";
@@ -7,9 +6,6 @@ import { LoginForm } from "@/components/auth/login-form";
 export const metadata: Metadata = {
   title: "Log in",
 };
-
-const linkClass =
-  "font-medium text-ink underline decoration-[#345347] underline-offset-4 transition-colors hover:decoration-accent";
 
 function readParam(value: string | string[] | undefined) {
   return typeof value === "string" ? value : undefined;
@@ -24,14 +20,11 @@ export default async function LoginPage({
 
   return (
     <AuthCard
-      title="Sign in to Lucky Patcher"
-      description="Use the email and password on your team account. The session stays in a secure cookie."
+      title="Sign in to Patchwork"
+      description="Use the staff email and password for the repair desk. The session stays in a secure cookie."
       footer={
         <p>
-          New to the team?{" "}
-          <Link href="/register" className={linkClass}>
-            Create an account
-          </Link>
+          Staff accounts are invite-only. Ask an owner or manager if you need access.
         </p>
       }
     >

@@ -1,5 +1,10 @@
 # Sprint 1 Issue Status
 
+> **Historical note:** this table is the Sprint 1 account-system audit. Patchwork now extends that
+> foundation with repair tickets, customers, devices, inventory, invoices, staff roles, and public
+> tracking. See the root [`README.md`](../README.md) and [`architecture.md`](architecture.md) for the
+> current system.
+
 This table maps the original issues in `leequor/Lucky-Patcher-` to the tracking issues in
 `leequor/lucky-lee` and to the evidence in this repository.
 
@@ -41,10 +46,9 @@ This table maps the original issues in `leequor/Lucky-Patcher-` to the tracking 
 - The app is deployed at <https://lucky-lee.vercel.app> with a hosted Supabase project.
 - Hosted login, logout, protected redirect, reset link, new-password login, reused-link rejection,
   and all 7 RLS checks passed.
-- The interface was rebuilt a fourth time; the shipped system is the Lucky Vault interface in
-  [`design-system.md`](design-system.md). It uses a midnight-jade ground, a live 3D leaf field,
-  and a jade progress accent. Final mockups in `design/mockups/` are captured from the running
-  app.
+- The interface was rebuilt as Patchwork: a carbon workshop interface with a programmable 3D
+  exploded-device bench, signal-orange actions, and a public tracker. Final mockups in
+  `design/mockups/` are captured from the running app.
 - Remaining external actions: real-inbox email delivery, team acknowledgement of the working
   agreement (#18), and the full team rehearsal (#19).
 - The Vercel project is Git-connected to `main`; the first merged build auto-deploys to production.

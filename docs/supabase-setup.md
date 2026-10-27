@@ -89,7 +89,7 @@ The app supports two link styles:
 In **Authentication → Email Templates → Reset Password**, use:
 
 ```html
-<h2>Reset your Lucky Patcher password</h2>
+<h2>Reset your Patchwork password</h2>
 <p>Use the link below to choose a new password. The link expires and can only be used once.</p>
 <p>
   <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&next=/reset-password">

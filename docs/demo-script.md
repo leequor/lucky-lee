@@ -1,180 +1,109 @@
-# Nov 9 Demo Script and Rehearsal Log
+# Demo Script and Rehearsal Log
 
-**Goal:** show a working Sprint 1 account flow, prove the database and security choices, and end
-with test evidence. The demo should take about 12 minutes, including one minute of questions.
+**Goal:** show Patchwork as a working repair-shop system: intake, repair workflow, inventory,
+invoice/payment, staff roles, and public tracking. About 12 minutes including questions.
 
 ## Speaker assignments
 
-| Segment | Speaker | Why |
-| --- | --- | --- |
-| Welcome and board | Alexander R. Campita | Scrum Master / project lead |
-| Register | Rian D. Sabrido | Backend / full-stack |
-| Login | Rian D. Sabrido | Backend / full-stack |
-| Landing page | Rian D. Sabrido | Backend / full-stack |
-| Password reset | Ivanhoe V. Rabaca | DevSecOps |
-| Supabase data and security | Ivanhoe V. Rabaca | DevSecOps |
-| Test results | Jaymark A. De Guzman | QA |
-| Design notes and close | Ian Kenneth P. Rafanan + Alexander | UI/UX + lead |
+| Segment | Speaker |
+| --- | --- |
+| Welcome and board | Alexander R. Campita |
+| Repair desk and 3D bench | Alexander R. Campita |
+| Intake | Rian D. Sabrido |
+| Workflow, parts, and invoice | Rian D. Sabrido |
+| Database, RLS, and tracking security | Ivanhoe V. Rabaca |
+| Test results | Jaymark A. De Guzman |
+| Design notes and close | Ian Kenneth P. Rafanan + Alexander |
 
 ## Before the presentation
 
-- [ ] `npx supabase start` and `npm run seed:demo` have created the three local demo accounts.
-- [ ] `npm run dev` is running, or the live URL <https://lucky-lee.vercel.app> is open as backup.
+- [ ] `npm run seed:demo` and `npm run seed:repair` completed.
+- [ ] `npm run dev` is running, or <https://lucky-lee.vercel.app> is open as backup.
 - [ ] `/status` shows both checks ready.
-- [ ] The local inbox is open at <http://127.0.0.1:54324> for the reset email.
-- [ ] The browser has tabs ready: `/`, `/register`, `/login`, `/forgot-password`, `/status`,
-      the Supabase **Authentication → Users** page, and the Supabase **Table Editor → profiles**
-      page.
-- [ ] Backup screenshots in `docs/screenshots/` are open in a separate window.
-- [ ] The demo password is in the password manager, not on a slide.
-- [ ] Phone hotspot is available if the venue Wi-Fi fails.
-- [ ] Notifications are off. Browser zoom is 100%.
+- [ ] Browser tabs ready: `/`, `/tickets`, `/tickets/new`, `/customers`, `/inventory`, `/invoices`,
+      `/team`, `/track`, `/status`.
+- [ ] Backup screenshots in `docs/screenshots/` are open.
+- [ ] Demo password is in the password manager.
+- [ ] Notifications off; browser zoom 100%.
 
 ## Run of show
 
-### 0:00–1:00 — Welcome and the board
+### 0:00–1:30 — Welcome and the board
 
 **Alexander**
 
-> "We are Lucky Patcher. Sprint 1 was about getting account access right: register, log in,
-> land somewhere useful, and recover a password. We tracked every task as an issue, worked on a
-> branch, and merged through a pull request."
+> “We built Patchwork, a repair-shop operations system. It is not a progress dashboard: it runs
+> intake, the repair bench, parts inventory, invoicing, staff roles, and a public repair tracker.”
 
-Show the issue list / board and the merged PR. Point out that each issue has acceptance criteria
-and a linked PR.
+Show the issue board / merged PR, then the live dashboard.
 
-### 1:00–3:00 — Register
+### 1:30–3:00 — Repair desk and 3D bench
 
-**Rian**
+**Alexander**
 
-1. Open `/register`.
-2. Enter a display name, a fresh email, and a password shorter than six characters.
-3. Submit. Point out the inline password error.
-4. Fix the password and submit.
-5. If email confirmation is disabled, the app lands on `/`. Otherwise, show the "check your
-   email" message.
-6. Open Supabase **Authentication → Users** and show the new user.
-7. Open **Table Editor → profiles** and show the matching profile row.
+1. Open `/`.
+2. Point out open jobs, ready-for-pickup, revenue this month, and low stock.
+3. Click **Display**, **Battery**, **Logic board**, **Camera** on the exploded bench.
+4. Point out the live queue, bench load, and reorder alerts.
+5. Open **Public tracker** in a new tab and leave it for later.
 
-**Say:** "The password never reaches our tables. Supabase Auth owns it."
+**Say:** “The 3D phone is the actual product model: display, battery, board, camera. It is not a
+decorative hero.”
 
-### 3:00–4:30 — Login and landing page
+### 3:00–5:30 — Intake
 
 **Rian**
 
-1. Open `/login`.
-2. Enter a wrong password first. Show "Wrong email or password."
-3. Enter the correct demo credentials.
-4. The landing page shows the signed-in email, role, and account details.
-5. Point out the **Log out** button and the sprint checklist.
-6. Open `/status` in a second tab and show both green checks.
-7. Return to `/` and click **Log out**.
-8. Try to open `/` again; the app sends you to `/login`.
+1. Open `/tickets/new`.
+2. Use an existing customer with a device.
+3. Enter a real fault, set priority to High, estimate $125, labour $25, assign a technician.
+4. Create the ticket.
+5. On the ticket page, point out the generated `PW-####` number and public code.
 
-**Say:** "The landing page is server-rendered and checks the session before it renders."
+### 5:30–8:00 — Workflow, parts, invoice, payment
 
-### 4:30–6:30 — Password reset
+**Rian**
 
-**Ivanhoe**
+1. Move status to **Diagnosing**, add a status note.
+2. Add a bench note visible to the customer.
+3. Add a part; point out the stock decrement on `/inventory`.
+4. Show the parts total and generate the invoice (labour + parts + 12% tax).
+5. Mark paid and collected; point out the status change and paid ledger.
 
-1. Open `/forgot-password`.
-2. Enter the regular demo user's email and submit.
-3. Show the generic success message.
-4. Open the reset email in the local inbox at <http://127.0.0.1:54324>. Local Supabase catches
-   every message even when the demo address uses the `.test` domain.
-5. Open the reset link. If delivery is slow, switch to the backup screenshot.
-6. Set a new password and submit.
-7. Log in with the new password.
-8. Open the same reset link again and show the expired/used rejection.
+### 8:00–9:30 — Customers, devices, inventory
 
-**Say:** "We use Supabase's built-in recovery flow. There is no custom token table, so the
-provider handles hashing, expiry, and single-use enforcement."
+**Rian / Ivanhoe**
 
-### 6:30–8:30 — Supabase data and security
+1. Open a customer with repair history.
+2. Show devices, ticket history, and contact details.
+3. Add a device.
+4. Open `/inventory` and use the ± stock controls.
+5. Show the low-stock/reorder state.
+
+### 9:30–10:30 — Security and public tracking
 
 **Ivanhoe**
 
-1. Open the `profiles` table and show the role column.
-2. Open the migration and point out `enable row level security`.
-3. Explain the three policies: own row, admin read, admin update.
-4. Explain that the service-role key is server-only and not in the browser.
-5. Show the three demo accounts and their roles.
-6. Point out the development-role caveat and the production checklist.
+1. Show `/team` roles: Owner, Manager, Technician.
+2. Explain RLS: anonymous users cannot read repair tables.
+3. Open `/track`, enter `TRACK1041` + `maya.chen@example.com`.
+4. Show only status/device/timeline; no address or payment details.
+5. Open `/status` and show both checks ready.
 
-**Say:** "A normal user cannot change their own role. The production checklist removes the
-development shortcut."
+### 10:30–11:30 — Tests and close
 
-### 8:30–10:30 — Test results
+**Jaymark + Ian**
 
-**Jaymark**
-
-1. Show the test report summary: 139 unit/component checks, 7 RLS checks, and 17 browser checks.
-2. Show the test plan and test cases.
-3. Explain the test levels: unit, component, database RLS, browser E2E, manual integration, visual.
-4. Be honest that real email delivery to a real inbox is the only remaining manual check.
-5. Show the health check endpoint and the build result.
-
-### 10:30–11:30 — Design and close
-
-**Ian Kenneth + Alexander**
-
-1. Show the design system and one wireframe/mockup pair.
-2. Point out the Lucky Vault interface: midnight-jade ground, the live 3D leaf field, jade
-   progress, the responsive auth shell, and the landing page.
-3. Close with the Sprint 1 outcome: register, login/logout, reset, landing, roles, RLS, tests,
-   and documentation.
-4. Invite questions.
+1. Show `npm run typecheck`, `npm run lint`, `npm run test:coverage`, and the build result.
+2. Show Playwright E2E and local Supabase RLS evidence.
+3. Point out the design system: carbon ground, orange signal, 3D bench, mobile drawer.
+4. Close with the system outcome: a real repair workflow, not a static mockup.
 
 ## Backup plan
 
 | If this fails | Do this |
 | --- | --- |
-| Supabase is unavailable | Use the backup screenshots and explain the `/status` failure mode. |
-| Email is slow | Show the prepared reset email screenshot and walk through the reset page. |
-| A form shows an error | Read the message out loud; it is part of the UX. Do not refresh repeatedly. |
-| The venue Wi-Fi fails | Use the local build and the phone hotspot. |
-| The board is not reachable | Show the issue status doc and the merged PR screenshot. |
-
-## Backup screenshots
-
-The local screenshot set is in `docs/screenshots/`:
-
-- `login.png`
-- `register.png`
-- `forgot-password.png`
-- `reset-password.png`
-- `landing-preview.png`
-- `status.png`
-
-## Rehearsal log
-
-| Date | Type | Result | Notes |
-| --- | --- | --- | --- |
-| 2026-10-26 | Technical dry run | Passed for public screens, hosted login/logout, hosted reset, and design preview | Local Next.js build, hosted Supabase, screenshots captured. Real email delivery to a real inbox still needs one manual run. |
-| 2026-11-07 | Full team rehearsal | Planned | Run the complete script on the presentation laptop with the local stack and the live URL as backup. |
-
-## Rehearsal checklist
-
-- [x] Script order matches the issue: board, register, login, landing, reset, Supabase data,
-      test results.
-- [x] Every segment has a speaker.
-- [x] Backup screenshots are prepared.
-- [x] Public screens and hosted auth flow were walked through.
-- [x] Hosted login, logout, reset, reused-link rejection, and RLS verified.
-- [ ] Full team rehearsal with real email delivery.
-- [ ] Final timing on the presentation laptop.
-- [ ] One person is responsible for the browser tabs and one for the backup window.
-
-## Timing target
-
-| Segment | Target |
-| --- | --- |
-| Welcome and board | 1:00 |
-| Register | 2:00 |
-| Login and landing | 1:30 |
-| Password reset | 2:00 |
-| Supabase data and security | 2:00 |
-| Test results | 2:00 |
-| Design and close | 1:00 |
-| Questions | 1:00 |
-| **Total** | **12:30** |
+| Supabase is unavailable | Use backup screenshots and explain the `/status` failure mode. |
+| Vercel is unreachable | Run locally with `npm run dev` and local Supabase. |
+| A mutation fails | Show the ticket timeline and the last successful database state. |
+| Live data is dirty | Re-run `npm run seed:repair` on an empty database or use the backup screenshots. |

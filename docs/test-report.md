@@ -4,14 +4,14 @@
 
 | Item | Result |
 | --- | --- |
-| Date | 2026-10-26 |
+| Date | 2026-10-27 |
 | Tester | Automated run with local and hosted Supabase and Chrome |
-| App version | `test/full-test-suite` + Vercel production |
-| Unit and component test files | 19 |
-| Unit and component tests | 139 passed |
-| Coverage | 90.15% statements, 81.98% branches, 86.04% functions |
-| RLS integration tests | 7 local + 7 hosted passed |
-| Browser E2E tests | 17 local + 7 hosted smoke passed |
+| App version | Patchwork on `main` + Vercel production |
+| Unit and component test files | 32 |
+| Unit and component tests | 180 passed |
+| Coverage | 60.46% statements, 55.14% branches, 73.47% functions, 63.87% lines |
+| RLS integration tests | 10 passed against hosted Supabase |
+| Browser E2E tests | 16 passed against hosted Supabase |
 | TypeScript | Passed |
 | ESLint | Passed |
 | Production build | Passed |
@@ -19,10 +19,10 @@
 | Hosted email delivery | Not tested; demo addresses are not real inboxes |
 | Human mockup comparison | Pending |
 
-**Overall:** the automated unit, component, database, and browser layers pass. The hosted Vercel
-deployment is live at <https://lucky-lee.vercel.app>, and hosted login, logout, protected redirect,
-password reset, and reused-link rejection pass. The remaining gap is real email delivery to a
-real inbox.
+**Overall:** the current Patchwork build passes typecheck, lint, 180 unit/component tests, the coverage
+gate, the production build, 10 hosted RLS/integration checks, and 16 hosted browser checks. The
+hosted Vercel deployment is live at <https://lucky-lee.vercel.app>. The remaining gap is real email
+delivery to a real inbox and a local-Supabase rerun inside CI.
 
 ## Commands run
 

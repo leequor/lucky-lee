@@ -100,56 +100,17 @@ describe("loginAction", () => {
 });
 
 describe("registerAction", () => {
-  it("redirects when Supabase returns a session", async () => {
-    mocks.registerWithPassword.mockResolvedValue({
-      ok: true,
-      data: { needsEmailConfirmation: false },
-    });
-
-    await expect(
-      registerAction(
-        initialAuthState,
-        formData({ email: "new@example.com", password: "secret123", fullName: "New Person" }),
-      ),
-    ).rejects.toThrow("NEXT_REDIRECT;/");
-  });
-
-  it("asks the user to confirm when Supabase returns no session", async () => {
-    mocks.registerWithPassword.mockResolvedValue({
-      ok: true,
-      data: { needsEmailConfirmation: true },
-    });
-
+  it("keeps public sign-up invite-only", async () => {
     const state = await registerAction(
       initialAuthState,
-      formData({ email: "new@example.com", password: "secret123", fullName: "" }),
-    );
-
-    expect(state).toEqual({
-      status: "success",
-      message:
-        "Account created. Check your email for the confirmation link, then return here to log in.",
-    });
-    expect(mocks.redirect).not.toHaveBeenCalled();
-  });
-
-  it("passes field errors through to the form", async () => {
-    mocks.registerWithPassword.mockResolvedValue({
-      ok: false,
-      message: "Password is required.",
-      fieldErrors: { password: "Password is required." },
-    });
-
-    const state = await registerAction(
-      initialAuthState,
-      formData({ email: "new@example.com", password: "" }),
+      formData({ email: "new@example.com", password: "secret123", fullName: "New Person" }),
     );
 
     expect(state).toEqual({
       status: "error",
-      message: "Password is required.",
-      fieldErrors: { password: "Password is required." },
+      message: "Staff accounts are invite-only. Ask an owner or manager to create your account.",
     });
+    expect(mocks.registerWithPassword).not.toHaveBeenCalled();
   });
 });
 

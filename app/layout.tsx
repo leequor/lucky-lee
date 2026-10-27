@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#060B09",
+  themeColor: "#08090B",
   colorScheme: "dark",
 };
 
@@ -43,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${sans.variable} ${mono.variable}`}>
       <body className="font-sans">{children}</body>
     </html>
   );

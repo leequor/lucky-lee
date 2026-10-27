@@ -4,10 +4,10 @@
 
 | Layer | Command | Needs Supabase | What it proves |
 | --- | --- | --- | --- |
-| Unit and component | `npm test` | No | Validation, auth service, server actions, routes, forms, session, health |
-| Coverage gate | `npm run test:coverage` | No | Same suite plus 60% minimum statement, branch, function, and line coverage |
-| RLS integration | `npm run test:integration` | Yes | Profile trigger, user/admin/anon policies, role update blocking |
-| Browser E2E | `npm run test:e2e` | Yes | Register, login, logout, duplicate email, reset single-use link, health, responsive, accessibility |
+| Unit and component | `npm test` | No | Validation, auth service, repair formatting/queries, server actions, pages, forms, session, health |
+| Coverage gate | `npm run test:coverage` | No | Same suite plus the statement, branch, function, and line thresholds |
+| RLS integration | `npm run test:integration` | Yes | Profile trigger, role policies, repair-table isolation, public tracking RPC |
+| Browser E2E | `npm run test:e2e` | Yes | Invite-only access, login/logout, reset single-use link, dashboard, responsive, accessibility |
 
 The integration and E2E suites read `.env.local`. They skip or fail only when the local stack is missing.
 
@@ -33,6 +33,7 @@ Then seed and run:
 
 ```bash
 npm run seed:demo
+npm run seed:repair
 npm run test:integration
 npm run test:e2e
 ```
