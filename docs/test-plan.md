@@ -32,8 +32,9 @@ recover a forgotten password without exposing secrets or breaking the demo.
 
 | Environment | Purpose | Notes |
 | --- | --- | --- |
-| Local Next.js + Supabase project | Integration and demo | Requires `.env.local` and the migration. |
-| Local UI with mocked auth service | Automated tests | No network required. |
+| Local Next.js + hosted Supabase project | Integration and demo | Requires `.env.local` and the migration. |
+| Local Next.js + local Supabase stack | Automated integration and E2E | `npx supabase start`, seed, then Playwright. |
+| Local UI with mocked auth service | Unit and component tests | No network required. |
 | Production build | Build and type safety | Run with dummy public env values in CI. |
 
 ## 4. Entry criteria
@@ -129,11 +130,18 @@ profiles.
 
 ## 8. Test levels
 
-1. **Unit tests:** validation, error mapping, auth service calls with mocked Supabase, health
-   checks, and the landing page rendering.
-2. **Component tests:** forms render the correct fields, alerts, and links.
-3. **Manual integration:** run against the real Supabase project using the demo accounts.
-4. **Visual check:** compare the app with the mockups at mobile and desktop widths.
+1. **Unit tests:** validation, error mapping, auth service calls with mocked Supabase, server
+   actions, route handlers, session helpers, environment validation, health checks, and page
+   rendering.
+2. **Component tests:** forms render the correct fields, alerts, field errors, and links; status
+   panel states.
+3. **Database integration:** RLS policies, profile trigger, role promotion blocking, and
+   service-role behavior against local Supabase.
+4. **Browser E2E:** register, login, logout, duplicate email, password reset single use, health,
+   responsive widths, and critical accessibility checks in Chrome.
+5. **Manual integration:** run against the real Supabase project using the demo accounts,
+   including real email delivery.
+6. **Visual check:** compare the app with the mockups at mobile and desktop widths.
 
 ## 9. Defect policy
 
@@ -158,8 +166,9 @@ screenshot when useful.
 
 ## 11. Risks
 
-- No live Supabase credentials in the working environment; integration cases must be run by a
-  teammate with project access.
+- No live Supabase credentials in the working environment; hosted integration cases must be run
+  by a teammate with project access. Local Supabase covers the automated database and browser
+  paths.
 - Email delivery can be delayed or rate-limited.
 - A used/expired link test needs a deliberately old link or a second request.
 - The demo password must be set locally and never committed.

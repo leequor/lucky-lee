@@ -7,6 +7,8 @@ security, test evidence, and the Nov 9 presentation pack.
 This is the working copy at [`leequor/lucky-lee`](https://github.com/leequor/lucky-lee). The
 original repo, `leequor/Lucky-Patcher-`, is left untouched.
 
+**Live demo:** <https://lucky-lee.vercel.app>
+
 ## Team
 
 | Name | Role |
@@ -67,8 +69,12 @@ missing. The database connection test is at <http://localhost:3000/status> and
 | --- | --- |
 | `npm run dev` | Start the local Next.js server. |
 | `npm run check:env` | Verify the required Supabase environment variables without printing secrets. |
+| `npm run capture:mockups` | Capture the six design mockups from a running production build. |
 | `npm test` | Run the Vitest suite. |
 | `npm run test:watch` | Run Vitest in watch mode. |
+| `npm run test:coverage` | Run the unit suite with the coverage gate. |
+| `npm run test:integration` | Run RLS and profile trigger checks against local Supabase. |
+| `npm run test:e2e` | Run Playwright browser tests in Chrome. |
 | `npm run typecheck` | Generate Next.js route types and run TypeScript with `--noEmit`. |
 | `npm run lint` | Run ESLint. |
 | `npm run build` | Create a production build. |
@@ -115,6 +121,7 @@ components/
   auth/                   Auth shell, card, and forms
   landing/                Landing page and live status panel
   ui/                     Button, input, alert, logo, navbar, role badge
+  visual/                 Dependency-free 3D canvas leaf field
 lib/
   auth/                   Validation, error mapping, service calls, session helpers
   supabase/               Browser, server, and proxy clients
@@ -145,8 +152,18 @@ Branch names use a short type prefix, for example `feat/login-page`, `fix/reset-
 - Keep changes small enough for a teammate to review.
 - The Definition of Done is in [`docs/working-agreement.md`](docs/working-agreement.md).
 
+## Deployment
+
+Production uses Supabase Auth/Postgres and Vercel.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fleequor%2Flucky-lee&env=NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY&envDescription=Supabase%20project%20URL%20and%20anon%20key)
+
+Exact steps, environment variables, auth redirect URLs, seeding, and verification are in
+[`docs/deployment.md`](docs/deployment.md).
+
 ## Tests and evidence
 
+- [Testing guide](docs/testing.md)
 - [Test plan](docs/test-plan.md)
 - [Test cases](docs/test-cases.md)
 - [Test report](docs/test-report.md)
@@ -157,11 +174,20 @@ Run everything locally with:
 ```bash
 npm run typecheck
 npm run lint
-npm test
+npm run test:coverage
 npm run build
+npm run test:integration
+npm run test:e2e
 ```
 
+The integration and browser suites need a local Supabase stack. See
+[`docs/testing.md`](docs/testing.md) for the setup and the exact commands.
+
 ## Design
+
+The shipped interface is the Lucky Vault system: a midnight-jade ground, a warm-white ink, one
+jade accent, and a dependency-free 3D canvas leaf field on the auth, landing, status, and not-found
+screens.
 
 - [Design system](docs/design-system.md)
 - [Wireframes](design/wireframes)
@@ -179,6 +205,6 @@ npm run build
 | Endpoint | Meaning |
 | --- | --- |
 | `GET /api/health` | The Next.js app is running. |
-| `GET /api/health/supabase` | The configured Supabase REST endpoint responds. |
+| `GET /api/health/supabase` | The configured Supabase Auth health endpoint responds. |
 
 The `/status` page calls both endpoints in the browser and shows the result with latency.

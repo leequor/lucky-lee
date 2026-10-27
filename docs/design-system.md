@@ -1,153 +1,159 @@
 # Design System
 
-The app should feel like a calm control room: warm paper, deep clover green, one bright coral
-accent, generous spacing, and a clear hierarchy. The interface is friendly, but it does not hide
-the important state.
+The app uses the **Lucky Vault** interface: a midnight-jade ground, warm-white type, one jade
+accent, and a gold core in the product mark. It is still a working tool, but the account screen
+now has a signature 3D element instead of a plain panel.
 
 ## Brand idea
 
-- **Clover green** is the anchor: trust, luck, and a quiet "we have this handled" feeling.
-- **Cream paper** keeps the app warm and readable during a long demo.
-- **Coral** is reserved for errors and urgent actions, so it never loses meaning.
-- **Fraunces** gives headings a little personality. **Manrope** keeps forms and body copy clear.
+- **Four leaves, one account.** The clover is the product mark. A real-time 3D leaf field is the
+  one decorative element, and it is built from the same four loops as the mark.
+- **One ground, one ink, one accent.** Chrome is near-black green; jade marks progress, live state,
+  and the primary brand moments. Gold appears only in the mark core.
+- **Surfaces are flat.** Panels separate by one tone step and a 1 px line. No shadows at rest, no
+  glass, no blurred navigation.
+- **Soft geometry.** Panels use 16 px corners, controls 10 px, and action buttons are full-radius.
+- **Geist** sets all text. **Geist Mono** is reserved for IDs and code.
+- **No decorative noise.** The only pattern is a faint SVG dot field inside the 3D scene panel.
 
 ## Color palette
 
 | Token | Hex | Use |
 | --- | --- | --- |
-| `cream` | `#F7F3EA` | Page background. |
-| `paper` | `#FFFDF8` | Cards, forms, raised surfaces. |
-| `ink` | `#1C2321` | Primary text. |
-| `muted` | `#64706B` | Secondary text and helper copy. |
-| `clover-900` | `#052E16` | Dark hero panels and primary emphasis. |
-| `clover-800` | `#14532D` | Logo mark and deep green surfaces. |
-| `clover-700` | `#166534` | Primary buttons and links. |
-| `clover-100` | `#DCFCE7` | Soft success and highlight surfaces. |
-| `clover-50` | `#F0FDF4` | Quiet success panels. |
-| `coral-600` | `#EA580C` | Error text and destructive emphasis. |
-| `coral-500` | `#F97316` | Error borders and focus states. |
-| `coral-100` | `#FFEDD5` | Soft error surfaces. |
-| `mist` | `#E7E5DF` | Neutral chips and dividers. |
+| `paper` | `#060B09` | Page ground. |
+| `surface` | `#0D1512` | Panels, inputs, navigation. |
+| `ink` | `#F1F4F0` | Text and primary action fill. |
+| `muted` | `#A0AEA6` | Secondary text, labels, metadata. |
+| `line` | `#1C2A24` | Panel borders and row rules. |
+| `wash` | `#131E19` | Secondary button fill, quiet insets. |
+| `accent` | `#4CE3A6` | Progress, live state, role highlight. |
+| `gold` | `#E6C77B` | Clover core and small scene nodes only. |
+| `positive` | `#4CE3A6` | Ready dot and status text. |
+| `positive-soft` | `#0D2A20` | Ready tag fill. |
+| `negative` | `#F07A70` | Error borders, dots, text. |
+| `negative-soft` | `#2B1517` | Error alert fill. |
+| `warn` | `#E9BC70` | Preview banner text. |
+| `warn-soft` | `#2A2114` | Preview banner fill. |
 
-Use at most one coral surface per screen. Green is the primary action color.
+Colour is data, status, or the one primary action. It never decorates chrome.
 
 ## Typography
 
-| Role | Family | Notes |
+| Role | Family | Size / weight |
 | --- | --- | --- |
-| Display | Fraunces | Hero headlines, page titles, large numbers. |
-| Body / UI | Manrope | Labels, inputs, buttons, body copy, tables. |
-| Code / IDs | System monospace | Account IDs and technical references. |
+| App title | Geist | 24 px phone, 32 px desktop / 600, tracking -0.045em |
+| Auth title | Geist | 27 px phone, 30 px desktop / 600 |
+| Public utility title | Geist | 34 px phone, 44 px desktop / 600 |
+| Section heading | Geist | 17 px / 500 |
+| Body | Geist | 13–14 px / 400, line-height 1.5–1.7 |
+| Field label | Geist | 14 px / 500 |
+| Metadata and hints | Geist | 11–13 px / 400 |
+| IDs and code | Geist Mono | 12–13 px, truncate long values |
 
-### Scale
-
-| Token | Size | Use |
-| --- | --- | --- |
-| Hero | 52–54 px desktop / 36 px mobile | Landing welcome. |
-| H1 | 32 px | Auth card title. |
-| H2 | 24 px | Section title. |
-| Body | 15–16 px | Main copy. |
-| Small | 13–14 px | Helper text, secondary labels. |
-| Eyebrow | 11–12 px, uppercase, 0.16–0.22em tracking | Section labels. |
+Sentence case everywhere. No uppercase labels, no letter-spaced capitals. Numbers that align use
+`font-variant-numeric: tabular-nums` (`.figure`).
 
 ## Spacing and shape
 
-- Spacing scale: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64 px.
-- Auth card padding: 24 px mobile, 32 px desktop.
-- Page gutter: 20 px mobile, 32 px desktop.
-- Radii: 12 px for inputs, 16 px for small cards, 24–36 px for large cards, full radius for
-  buttons and badges.
-- Shadow: `shadow-card` for the main card, `shadow-soft` for smaller surfaces. Do not stack
-  multiple heavy shadows.
+- Spacing scale: 4, 8, 12, 16, 20, 24, 32, 40, 48 px.
+- Page gutter: 20 px phone, 24 px desktop.
+- Content width: 1120 px canvas, 440 px auth form.
+- Radius: panels 16 px, controls 10 px, action buttons and status tags full.
+- Borders: 1 px `line`. No 2 px accent bars, no double rules.
+- Shadow: none at rest. Focus uses a 2 px jade outline.
+- The 3D panel uses a flat `#08110D` field with a 28 px SVG dot pattern.
 
 ## Core components
 
 ### Buttons
 
-- **Primary:** clover-700 background, white text, full pill. Hover clover-800.
-- **Secondary:** white/80 background, ink border, ink text. Hover white.
-- **Ghost:** transparent, muted text. Hover ink/5.
-- Sizes: 36 px (small), 44 px (default), 48 px (large/auth).
-- Disabled: 60% opacity, no pointer events.
-- Focus: 2 px clover ring with a 2 px cream offset.
-- Loading: spinner + pending copy, button disabled.
+- **Primary:** `ink` fill, `paper` text, full radius. Hover turns white.
+- **Secondary:** `wash` fill, 1 px `line` border, ink text. Hover border `#335245`.
+- **Ghost:** text only; hover fills `wash`.
+- Sizes: 32 px small, 36 px default, 44 px large/auth.
+- Disabled: 45% opacity, no pointer events.
+- Pending: label swaps to the pending copy with a static mark.
 
-### Inputs and fields
+### Inputs
 
-- Height 48 px, 16 px radius, 1 px ink/10 border.
-- White/75 background; white on focus.
-- Focus: clover-600 border and a 4 px clover-600/10 ring.
-- Error: coral-500 border and coral-500/10 ring.
-- Label is always visible above the field.
-- Helper text sits below the field; error text replaces the helper when both are present.
-- Use `aria-invalid` and `aria-describedby` for every error.
+- Height 44 px, 10 px radius, 1 px `line`, `paper` fill inside the card.
+- Focus: border turns jade and the field returns to `paper`.
+- Error: red border, red 12 px message with `role="alert"`.
+- Label 14 px above the field; hint 12 px muted on the label row.
+- Autofill is forced back to the dark surface so Chrome cannot paint a white field.
 
 ### Alerts
 
-- **Success:** clover-50 surface, clover-800 text, clover-600/20 border.
-- **Error:** coral-100 surface, coral-600 text, coral-500/25 border.
-- **Info:** white/70 surface, ink/70 text, ink/10 border.
-- Alerts use `role="alert"` for errors and `role="status"` otherwise.
+- 16 px radius, flat tinted fill, 1 px state border, no left bar.
+- **Success:** `positive-soft` / `positive-ink`.
+- **Error:** `negative-soft` / `negative-ink`.
+- **Info:** `wash` / ink.
+- `role="alert"` for errors, `role="status"` otherwise.
 
-### Navbar
+### Status tags
 
-- 80 px height, cream/80 with blur, 1 px bottom border.
-- Logo left; email, role badge, avatar, and logout right.
-- On mobile, hide the email text but keep the avatar and logout.
-- The landing page navbar is sticky and sits above the grid pattern.
+- Full radius, 12 px medium, with a 6 px dot for state.
+- **Ready:** `positive-soft` fill, `positive-ink` text, jade dot.
+- **Open / neutral:** `wash` fill, `muted` text, grey dot.
+- **Error:** `negative-soft` fill, `negative-ink` text.
+- State is always spelled out; colour is never the only signal.
 
-### Role badge
+### Navigation
 
-- Superadmin: clover-900 background, clover-50 text.
-- Admin: clover-100 background, clover-800 text.
-- User: mist background, ink/70 text.
-- Small uppercase tracking; never rely on color alone.
+- 64 px solid ground, 1 px bottom rule, no blur.
+- Clover mark in a 36 px wash tile, wordmark at 15 px/600.
+- Right cluster: status pill, email, role tag, round avatar, secondary Log out.
+- Below 768 px the email, role, and status link hide; the avatar and Log out stay.
 
-### Cards
+## The 3D scene
 
-- Main auth card: paper/90, 32 px radius, 1 px ink/10 border, `shadow-card`.
-- Landing hero: clover-900, white text, large radii, subtle concentric circles.
-- Checklist rows: white/45, 16 px radius, 1 px ink/5 border.
-- Hover for links: border clover-700/20 and white background.
+`components/visual/lucky-scene.tsx` is a dependency-free canvas renderer.
+
+- Four torus loops form the clover; a gold stem and core complete the mark.
+- Depth-sorted segments use alpha for distance, so the shape reads in 3D without WebGL.
+- Orbiting dust is deterministic, not random per frame.
+- Pointer movement tilts the field; touch does not block page scrolling.
+- It pauses when the tab is hidden, caps device pixel ratio at 2, and renders a still frame when
+  `prefers-reduced-motion` is set.
+- The canvas is `aria-hidden`; all meaning is in the surrounding text.
 
 ## Layout
 
 ### Auth shell
 
-- Desktop: two columns, left brand story (1.05fr) and right form card (0.95fr).
-- Mobile: compact logo row, then the form card.
-- Background: cream with a fading 48 px grid and soft green/coral blobs.
-- The form is always the visual focus on small screens.
+- Split screen at 1024 px and wider: a brand statement, the live 3D scene, and three security
+  facts on the left; the form card on the right.
+- Phone and tablet: logo and status row, a 128 px 3D banner, then the form card, then a quiet
+  footer.
+- Form card: 440 px measure, 16 px radius, one column of fields, recovery link on the password
+  label row.
 
-### Landing page
+### Landing
 
-- Navbar, then a 1.28fr/0.72fr hero grid.
-- Left: welcome, email, role, auth state, member since, primary actions.
-- Right: account card with role badge and privacy note.
-- Below: sprint checklist and presentation shortcuts.
-- Footer: year, signed-in state, status link.
+- Solid navigation bar, then a 1120 px canvas.
+- Hero: title, sign-in identity, readiness figure, role tag, status action, and a live 3D panel.
+- `Sprint 1 checklist`: heading row with `x of 5 ready`, an 8 px jade progress bar, then rows
+  with title, one-line note, and a status tag.
+- `Your account`: identity, role, email state, provider, member date, account ID, account health.
+- `Access and environment`: three cells divided by 1 px lines, one short fact each.
+- Footer rule with product, sprint, and session state.
+
+### Status page
+
+- Public utility page with the same shell and a 3D connection panel on desktop.
+- Health rows keep the app and Supabase checks first; the runbook follows.
 
 ## Motion
 
-- Use one entrance animation (`fade-up`, 0.55 s) on auth cards and status panels.
-- Do not animate form errors or page navigation.
-- Respect reduced motion by keeping the animation subtle; no essential information is carried by
-  motion.
+- Entrance: a 14 px rise and fade, staggered by 90 ms across hero, checklist, and environment.
+- Canvas: continuous slow rotation plus pointer tilt; reduced motion gets one still frame.
+- Buttons: colour and 1 px press movement only.
+- All animation is disabled under `prefers-reduced-motion`.
 
-## Accessibility
+## Rejected looks
 
-- Minimum body contrast: ink on cream, white on clover-900.
-- Every input has a visible label.
-- Errors are text, not color alone.
-- Focus rings are visible on every interactive element.
-- Buttons have descriptive labels ("Log out", "Send reset link", not "Go").
-- The page works at 200% zoom and 360 px width.
-- Do not use placeholder text as the only label.
+Do not bring these back:
 
-## Files
-
-- Wireframes: `design/wireframes/`
-- Final mockups: `design/mockups/`
-- Developer notes: `design/README.md`
-- Tokens: `tailwind.config.ts` and `app/globals.css`
-- Components: `components/ui/` and `components/auth/`
+- cream + clover green + coral + Fraunces
+- black + safety yellow + Bricolage + Space Mono
+- light grey + white cards + blue progress-only accent (the previous quiet UI)

@@ -24,11 +24,12 @@ describe("LandingView", () => {
     expect(screen.getAllByText("Superadmin").length).toBeGreaterThan(0);
   });
 
-  it("renders the sprint checklist and presentation shortcuts", () => {
+  it("renders the sprint checklist and environment summary", () => {
     render(<LandingView user={user} />);
 
     expect(screen.getByText("Sprint 1 checklist")).toBeInTheDocument();
-    expect(screen.getByText("Keep the demo calm")).toBeInTheDocument();
+    expect(screen.getByText("Access and environment")).toBeInTheDocument();
+    expect(screen.getByText("4 of 5 ready")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /check system status/i })).toBeInTheDocument();
   });
 });

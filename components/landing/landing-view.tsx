@@ -2,14 +2,9 @@ import Link from "next/link";
 
 import { Navbar } from "@/components/ui/navbar";
 import { RoleBadge } from "@/components/ui/role-badge";
-import type { AppRole, AuthUser } from "@/lib/auth/types";
-import { cn, formatDate } from "@/lib/utils";
-
-const ROLE_LABELS: Record<AppRole, string> = {
-  superadmin: "Superadmin",
-  admin: "Admin",
-  user: "User",
-};
+import { LuckyScene } from "@/components/visual/lucky-scene";
+import type { AuthUser } from "@/lib/auth/types";
+import { formatDate, initials } from "@/lib/utils";
 
 const CHECKLIST = [
   {
@@ -24,7 +19,7 @@ const CHECKLIST = [
   },
   {
     title: "Database guardrails",
-    body: "Profiles, roles, and row level security are in the migration.",
+    body: "Profiles, roles, and row level security live in the migration.",
     done: true,
   },
   {
@@ -39,232 +34,260 @@ const CHECKLIST = [
   },
 ];
 
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-      <dt className="text-[11px] font-bold uppercase tracking-[0.16em] text-clover-200/75">
-        {label}
-      </dt>
-      <dd className="mt-2 text-sm font-semibold text-white">{value}</dd>
-    </div>
-  );
-}
+const SYSTEM = [
+  {
+    label: "Session",
+    value: "Secure cookie",
+    note: "Supabase issues the session. This app never stores a password.",
+  },
+  {
+    label: "Data",
+    value: "Row level security",
+    note: "Profiles and roles are scoped to the signed-in user.",
+  },
+  {
+    label: "Quality",
+    value: "Automated",
+    note: "Unit, RLS, browser, and security checks run on every push.",
+  },
+];
+
+const readyCount = CHECKLIST.filter((item) => item.done).length;
+const progress = Math.round((readyCount / CHECKLIST.length) * 100);
+
+const secondaryLink =
+  "inline-flex h-9 items-center justify-center rounded-full border border-line bg-wash px-3.5 text-[13px] font-medium text-ink transition-colors hover:border-[#335245] hover:bg-[#18261f]";
 
 export function LandingView({ user, preview = false }: { user: AuthUser; preview?: boolean }) {
-  const firstName = user.fullName?.split(/\s+/)[0] || user.email.split("@")[0] || "teammate";
   const displayName = user.fullName || user.email;
+  const avatar = initials(displayName) || "LP";
 
   return (
-    <div className="min-h-screen bg-cream">
-      <div className="pointer-events-none fixed inset-0 bg-grid-soft opacity-70 [mask-image:linear-gradient(to_bottom,black,transparent_72%)]" />
+    <div className="min-h-[100dvh] bg-paper">
       <Navbar user={user} preview={preview} />
 
-      <main className="relative mx-auto max-w-6xl px-5 pb-16 pt-8 sm:px-8 sm:pt-10">
+      <main className="mx-auto max-w-canvas px-5 pb-[max(2.5rem,env(safe-area-inset-bottom))] sm:px-6">
         {preview ? (
-          <div className="mb-5 rounded-full border border-coral-500/20 bg-coral-100/70 px-4 py-2 text-center text-xs font-semibold text-coral-600">
-            Design preview with a sample account. Set NEXT_PUBLIC_DESIGN_PREVIEW=true locally to view it.
+          <div className="mt-4 rounded-xl border border-warn/20 bg-warn-soft px-3.5 py-2.5 text-[13px] text-warn">
+            Design preview · sample account
           </div>
         ) : null}
 
-        <section className="grid gap-6 lg:grid-cols-[1.28fr_.72fr]">
-          <div className="relative overflow-hidden rounded-[2.25rem] bg-clover-900 p-7 text-white shadow-card sm:p-9">
-            <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full border border-white/10" />
-            <div className="pointer-events-none absolute -bottom-24 right-16 h-64 w-64 rounded-full border border-white/10" />
-            <div className="pointer-events-none absolute right-8 top-8 text-[120px] font-display leading-none text-white/[0.04]">
-              ✦
+        <section className="pt-6 sm:pt-9">
+          <div className="grid gap-4 lg:grid-cols-[1.16fr_0.84fr]">
+            <div className="reveal relative overflow-hidden rounded-2xl border border-line bg-surface p-5 sm:p-7">
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2 text-[12px] text-muted">
+                    <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
+                    Signed in now
+                  </div>
+                  <h1 className="mt-3 text-[24px] font-semibold leading-[1.02] tracking-[-0.045em] text-ink sm:text-[32px]">
+                    Account overview
+                  </h1>
+                  <p className="mt-2 text-[13px] leading-5 text-muted sm:text-[14px]">
+                    Signed in as <span className="text-ink">{user.email}</span> · Member since{" "}
+                    {formatDate(user.createdAt)}
+                  </p>
+                </div>
+                <RoleBadge role={user.role} />
+              </div>
+
+              <div className="mt-8 flex flex-wrap items-end justify-between gap-5 border-t border-line pt-5">
+                <div>
+                  <p className="text-[12px] text-muted">Sprint 1 readiness</p>
+                  <p className="figure mt-1 text-[54px] font-semibold leading-none tracking-[-0.06em] text-ink sm:text-[64px]">
+                    {progress}
+                    <span className="ml-0.5 align-top text-[22px] font-medium tracking-normal text-accent">
+                      %
+                    </span>
+                  </p>
+                  <p className="mt-2 text-[13px] text-muted">Four checks cleared, one signature left.</p>
+                </div>
+                <Link href="/status" className={secondaryLink}>
+                  Check system status
+                </Link>
+              </div>
+
+              <dl className="mt-6 grid grid-cols-3 divide-x divide-line border-t border-line pt-4">
+                <div className="pr-3">
+                  <dt className="text-[11px] text-muted">Role</dt>
+                  <dd className="mt-1 truncate text-[13px] font-medium text-ink">
+                    {user.role === "superadmin"
+                      ? "Superadmin"
+                      : user.role === "admin"
+                        ? "Admin"
+                        : "User"}
+                  </dd>
+                </div>
+                <div className="px-3">
+                  <dt className="text-[11px] text-muted">Session</dt>
+                  <dd className="mt-1 truncate text-[13px] font-medium text-ink">Cookie</dd>
+                </div>
+                <div className="pl-3">
+                  <dt className="text-[11px] text-muted">Data</dt>
+                  <dd className="mt-1 truncate text-[13px] font-medium text-ink">RLS</dd>
+                </div>
+              </dl>
             </div>
 
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-clover-200">
-              Sprint 1 control room
-            </p>
-            <h1 className="mt-5 max-w-2xl font-display text-4xl font-semibold leading-[1.04] tracking-tight text-balance sm:text-[3.35rem]">
-              Welcome back, {firstName}.
-            </h1>
-            <p className="mt-5 max-w-xl text-[15px] leading-7 text-clover-100/80">
-              You are signed in as <span className="font-semibold text-white">{user.email}</span>.
-              Everything the team needs for account access and release readiness is in one place.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/status"
-                className="inline-flex h-11 items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-clover-900 transition hover:bg-clover-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-clover-900"
-              >
-                Check system status
-              </Link>
-              <a
-                href="#sprint-checklist"
-                className="inline-flex h-11 items-center justify-center rounded-full border border-white/20 px-5 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-clover-900"
-              >
-                View sprint checklist
-              </a>
+            <div className="reveal reveal-delay-1 relative min-h-[250px] overflow-hidden rounded-2xl border border-line bg-[#08110d] lg:min-h-[340px]">
+              <div className="scene-field pointer-events-none absolute inset-0" aria-hidden="true" />
+              <LuckyScene className="absolute inset-0" />
+              <div className="pointer-events-none absolute left-5 top-5 flex items-center gap-2 text-[11px] text-muted">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
+                Session active
+              </div>
+              <div className="pointer-events-none absolute inset-x-5 bottom-5 flex items-end justify-between gap-4">
+                <div>
+                  <p className="text-[11px] text-muted">Fortune core</p>
+                  <p className="text-[14px] font-medium text-ink">Live 3D leaf field</p>
+                </div>
+                <p className="figure text-[11px] text-muted">3D · canvas</p>
+              </div>
             </div>
-
-            <dl className="mt-10 grid gap-3 sm:grid-cols-3">
-              <Stat label="Role" value={ROLE_LABELS[user.role]} />
-              <Stat label="Auth" value="Active session" />
-              <Stat label="Member since" value={formatDate(user.createdAt)} />
-            </dl>
           </div>
-
-          <aside className="rounded-[2.25rem] border border-ink/10 bg-paper/90 p-6 shadow-soft sm:p-7">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">
-                  Current account
-                </p>
-                <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-ink">
-                  {displayName}
-                </h2>
-              </div>
-              <RoleBadge role={user.role} />
-            </div>
-
-            <dl className="mt-6 space-y-4 border-t border-ink/10 pt-5 text-sm">
-              <div className="flex items-start justify-between gap-4">
-                <dt className="text-muted">Email</dt>
-                <dd className="max-w-[210px] break-all text-right font-semibold text-ink">
-                  {user.email}
-                </dd>
-              </div>
-              <div className="flex items-start justify-between gap-4">
-                <dt className="text-muted">Member since</dt>
-                <dd className="text-right font-semibold text-ink">{formatDate(user.createdAt)}</dd>
-              </div>
-              <div className="flex items-start justify-between gap-4">
-                <dt className="text-muted">Account ID</dt>
-                <dd className="max-w-[160px] truncate text-right font-mono text-xs text-ink/60">
-                  {user.id}
-                </dd>
-              </div>
-            </dl>
-
-            <div className="mt-6 rounded-2xl bg-clover-50 p-4">
-              <p className="text-sm font-semibold text-clover-900">Passwords stay private</p>
-              <p className="mt-1 text-sm leading-6 text-clover-800/80">
-                Supabase hashes credentials. This app never stores a password in its own database.
-              </p>
-            </div>
-          </aside>
         </section>
 
-        <section id="sprint-checklist" className="mt-6 grid gap-6 md:grid-cols-[1.15fr_.85fr]">
-          <div className="rounded-[2rem] border border-ink/10 bg-paper/90 p-6 shadow-soft sm:p-7">
-            <div className="flex flex-wrap items-center justify-between gap-3">
+        <section className="mt-4 grid gap-4 lg:grid-cols-[1.28fr_0.72fr]">
+          <div className="reveal reveal-delay-1 overflow-hidden rounded-2xl border border-line bg-surface">
+            <div className="flex flex-wrap items-end justify-between gap-3 p-5 sm:p-6">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-clover-700">
-                  Definition of done
+                <h2 className="text-[17px] font-medium text-ink">Sprint 1 checklist</h2>
+                <p className="mt-1 text-[13px] text-muted">
+                  What the account system covers before the November 9 demo.
                 </p>
-                <h2 className="mt-1 font-display text-2xl font-semibold tracking-tight text-ink">
-                  Sprint 1 checklist
-                </h2>
               </div>
-              <span className="rounded-full bg-clover-100 px-3 py-1 text-xs font-bold text-clover-800">
-                4 / 5 ready
-              </span>
+              <p className="figure text-[13px] text-muted">{`${readyCount} of ${CHECKLIST.length} ready`}</p>
             </div>
 
-            <ul className="mt-5 space-y-3">
+            <div
+              className="h-1.5 w-full bg-wash"
+              role="progressbar"
+              aria-valuenow={readyCount}
+              aria-valuemin={0}
+              aria-valuemax={CHECKLIST.length}
+              aria-label="Sprint checklist progress"
+            >
+              <div className="h-full bg-accent" style={{ width: `${progress}%` }} />
+            </div>
+
+            <ul>
               {CHECKLIST.map((item) => (
                 <li
                   key={item.title}
-                  className="flex items-start gap-3 rounded-2xl border border-ink/5 bg-white/45 p-3.5"
+                  className="flex items-start justify-between gap-4 border-t border-line px-5 py-3.5 first:border-t-0 sm:px-6"
                 >
-                  <span
-                    className={cn(
-                      "mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full text-xs font-bold",
-                      item.done
-                        ? "bg-clover-100 text-clover-800"
-                        : "border border-dashed border-ink/20 text-ink/30",
-                    )}
-                    aria-hidden="true"
-                  >
-                    {item.done ? "✓" : "·"}
-                  </span>
                   <div>
-                    <p className="text-sm font-semibold text-ink">{item.title}</p>
-                    <p className="mt-0.5 text-xs leading-5 text-muted">{item.body}</p>
+                    <p className="text-[14px] font-medium text-ink">{item.title}</p>
+                    <p className="mt-0.5 max-w-[60ch] text-[13px] leading-5 text-muted">
+                      {item.body}
+                    </p>
                   </div>
+                  <span
+                    className={
+                      item.done
+                        ? "mt-0.5 inline-flex shrink-0 items-center gap-1.5 rounded-full bg-positive-soft px-2.5 py-1 text-[12px] font-medium text-positive-ink"
+                        : "mt-0.5 inline-flex shrink-0 items-center gap-1.5 rounded-full bg-wash px-2.5 py-1 text-[12px] font-medium text-muted"
+                    }
+                  >
+                    <span
+                      className={
+                        item.done
+                          ? "h-1.5 w-1.5 rounded-full bg-positive"
+                          : "h-1.5 w-1.5 rounded-full bg-[#5a6b62]"
+                      }
+                      aria-hidden="true"
+                    />
+                    {item.done ? "Ready" : "Open"}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="rounded-[2rem] border border-ink/10 bg-paper/90 p-6 shadow-soft sm:p-7">
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-clover-700">
-              Presentation shortcuts
-            </p>
-            <h2 className="mt-1 font-display text-2xl font-semibold tracking-tight text-ink">
-              Keep the demo calm
-            </h2>
-            <p className="mt-3 text-sm leading-6 text-muted">
-              Jump straight to the screens you need during the Nov 9 walkthrough.
-            </p>
+          <div className="reveal reveal-delay-2 flex flex-col overflow-hidden rounded-2xl border border-line bg-surface">
+            <div className="flex items-center justify-between gap-4 border-b border-line px-5 py-4 sm:px-6">
+              <h2 className="text-[17px] font-medium text-ink">Your account</h2>
+              <span className="text-[11px] text-muted">Scoped by RLS</span>
+            </div>
 
-            <div className="mt-5 space-y-3">
-              {[
-                { href: "/status", label: "System status", note: "Health checks" },
-                { href: "/login", label: "Login screen", note: "Sign in" },
-                { href: "/register", label: "Register screen", note: "Create account" },
-                { href: "/forgot-password", label: "Reset request", note: "Recovery" },
-              ].map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="flex items-center justify-between gap-3 rounded-2xl border border-ink/8 bg-white/45 px-4 py-3 transition hover:border-clover-700/20 hover:bg-white"
-                >
-                  <span>
-                    <span className="block text-sm font-semibold text-ink">{link.label}</span>
-                    <span className="block text-xs text-muted">{link.note}</span>
-                  </span>
-                  <span className="text-clover-700" aria-hidden="true">
-                    →
-                  </span>
-                </Link>
-              ))}
+            <div className="flex items-center gap-3 px-5 py-5 sm:px-6">
+              <div
+                className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[#2B4338] bg-wash text-[13px] font-semibold text-accent"
+                aria-hidden="true"
+              >
+                {avatar}
+              </div>
+              <div className="min-w-0">
+                <p className="truncate text-[15px] font-medium text-ink">{displayName}</p>
+                <p className="mt-0.5 break-all text-[12px] text-muted">{user.email}</p>
+              </div>
+            </div>
+
+            <dl className="mt-auto divide-y divide-line border-t border-line">
+              <div className="flex items-center justify-between gap-4 px-5 py-3 sm:px-6">
+                <dt className="text-[12px] text-muted">Role</dt>
+                <dd className="text-[13px] text-ink">
+                  {user.role === "superadmin"
+                    ? "Superadmin"
+                    : user.role === "admin"
+                      ? "Admin"
+                      : "User"}
+                </dd>
+              </div>
+              <div className="flex items-center justify-between gap-4 px-5 py-3 sm:px-6">
+                <dt className="text-[12px] text-muted">Email</dt>
+                <dd className="text-[13px] text-ink">Verified</dd>
+              </div>
+              <div className="flex items-center justify-between gap-4 px-5 py-3 sm:px-6">
+                <dt className="text-[12px] text-muted">Provider</dt>
+                <dd className="text-[13px] text-ink">Supabase Auth</dd>
+              </div>
+              <div className="flex items-center justify-between gap-4 px-5 py-3 sm:px-6">
+                <dt className="text-[12px] text-muted">Member since</dt>
+                <dd className="text-[13px] text-ink">{formatDate(user.createdAt)}</dd>
+              </div>
+              <div className="px-5 py-3 sm:px-6">
+                <dt className="text-[12px] text-muted">Account ID</dt>
+                <dd className="mt-1 truncate font-mono text-[12px] text-muted">{user.id}</dd>
+              </div>
+            </dl>
+
+            <div className="border-t border-line bg-wash/40 px-5 py-4 sm:px-6">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[11px] text-muted">Account health</p>
+                <span className="inline-flex items-center gap-1.5 text-[12px] text-positive-ink">
+                  <span className="h-1.5 w-1.5 rounded-full bg-positive" aria-hidden="true" />
+                  Clear
+                </span>
+              </div>
+              <p className="mt-2 text-[12px] leading-5 text-muted">
+                Email confirmed, role assigned, and recovery enabled.
+              </p>
             </div>
           </div>
         </section>
 
-        <section className="mt-6 grid gap-4 sm:grid-cols-3">
-          {[
-            {
-              label: "Auth provider",
-              value: "Supabase",
-              note: "Email and password with secure sessions.",
-            },
-            {
-              label: "Database guardrail",
-              value: "RLS on",
-              note: "Profiles are scoped to the signed-in user.",
-            },
-            {
-              label: "Quality gate",
-              value: "Automated",
-              note: "Validation and auth helpers have unit tests.",
-            },
-          ].map((card) => (
-            <div
-              key={card.label}
-              className="rounded-[1.75rem] border border-ink/10 bg-paper/70 p-5 shadow-soft"
-            >
-              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
-                {card.label}
-              </p>
-              <p className="mt-2 font-display text-2xl font-semibold text-ink">{card.value}</p>
-              <p className="mt-2 text-xs leading-5 text-muted">{card.note}</p>
-            </div>
-          ))}
+        <section className="reveal reveal-delay-2 mt-9">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <h2 className="text-[17px] font-medium text-ink">Access and environment</h2>
+            <p className="text-[12px] text-muted">Every layer checked before the demo.</p>
+          </div>
+          <div className="mt-3 grid overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-3 sm:gap-px">
+            {SYSTEM.map((card) => (
+              <div key={card.label} className="bg-surface px-5 py-4 sm:px-6 sm:py-5">
+                <p className="text-[11px] text-muted">{card.label}</p>
+                <p className="mt-1 text-[15px] font-medium text-ink">{card.value}</p>
+                <p className="mt-1.5 max-w-[34ch] text-[13px] leading-5 text-muted">{card.note}</p>
+              </div>
+            ))}
+          </div>
         </section>
 
-        <footer className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-ink/10 pt-5 text-xs text-muted">
-          <p>Lucky Patcher · Sprint 1 · {new Date().getFullYear()}</p>
-          <p>
-            {preview ? "Design preview" : "Signed in"} ·{" "}
-            <Link href="/status" className="font-semibold text-clover-700 hover:underline">
-              system status
-            </Link>
-          </p>
+        <footer className="mt-8 flex flex-wrap items-center justify-between gap-2 border-t border-line pt-4 text-[12px] text-muted">
+          <p>Lucky Patcher · Sprint 01 · {new Date().getFullYear()}</p>
+          <p>{preview ? "Design preview" : "Signed in"}</p>
         </footer>
       </main>
     </div>

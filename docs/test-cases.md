@@ -53,8 +53,8 @@ is sent.
 user lands on `/`; otherwise the page says to check email. A profile row exists with the default
 development role.
 
-**Coverage:** `tests/auth-service.test.ts` → registration success and role metadata. Live
-Supabase check is manual.
+**Coverage:** `tests/auth-service.test.ts` → registration success and role metadata;
+`e2e/auth.spec.ts` → registration and landing redirect. Hosted email confirmation is manual.
 
 ### TC-REG-05 — Duplicate email
 
@@ -64,8 +64,8 @@ Supabase check is manual.
 
 **Expected:** A clear "Email already registered." message appears. No second account is created.
 
-**Coverage:** `tests/auth-service.test.ts` and `tests/auth-errors.test.ts`. Live Supabase check is
-manual.
+**Coverage:** `tests/auth-service.test.ts`, `tests/auth-errors.test.ts`, and
+`e2e/auth.spec.ts` → duplicate email. Hosted Supabase check is manual.
 
 ## Login and logout
 
@@ -79,7 +79,8 @@ manual.
 **Expected:** The browser reaches `/`, the landing page shows the same email, and the session
 cookie is present.
 
-**Coverage:** `tests/auth-service.test.ts` → login success. Live Supabase check is manual.
+**Coverage:** `tests/auth-service.test.ts` → login success; `e2e/auth.spec.ts` → login and
+session. Hosted Supabase check is manual.
 
 ### TC-LOG-02 — Wrong password
 
@@ -91,8 +92,8 @@ cookie is present.
 **Expected:** The page stays on `/login` and shows "Wrong email or password." The password is not
 echoed back.
 
-**Coverage:** `tests/auth-service.test.ts` and `tests/auth-errors.test.ts`. Live Supabase check is
-manual.
+**Coverage:** `tests/auth-service.test.ts` and `tests/auth-errors.test.ts`;
+`e2e/auth.spec.ts` → wrong password. Hosted Supabase check is manual.
 
 ### TC-LOG-03 — Empty login fields
 
@@ -115,7 +116,8 @@ manual.
 data is rendered.
 
 **Coverage:** `tests/auth-service.test.ts` → logout; `tests/landing-view.test.tsx` → logout
-control. Live session check is manual.
+control; `e2e/auth.spec.ts` → login, logout, and protected redirect. Hosted session check is
+manual.
 
 ## Password reset
 
@@ -165,8 +167,9 @@ delivery is a manual Supabase check.
 **Expected:** The password is updated, the old password no longer works, and the new password
 works. The user is sent to `/login` with a success message.
 
-**Coverage:** `tests/auth-service.test.ts` → update password success. Live Supabase check is
-manual.
+**Coverage:** `tests/auth-service.test.ts` → update password success; `e2e/auth.spec.ts` →
+single-use recovery link, old password rejection, and new password login. Hosted Supabase check
+is manual.
 
 ### TC-RST-05 — Expired or already-used link
 
@@ -178,8 +181,8 @@ manual.
 **Expected:** The app rejects the link with "This reset link is invalid, expired, or has already
 been used. Request a new one." and offers a new request.
 
-**Coverage:** `tests/auth-errors.test.ts` and `tests/auth-service.test.ts` → missing session. Live
-link expiry is a manual Supabase check.
+**Coverage:** `tests/auth-errors.test.ts`, `tests/auth-service.test.ts` → missing session;
+`e2e/auth.spec.ts` → reused link. Hosted link expiry is a manual Supabase check.
 
 ### TC-RST-06 — Empty new password
 
@@ -201,8 +204,8 @@ link expiry is a manual Supabase check.
 
 **Expected:** The browser redirects to `/login`. No profile or email is rendered.
 
-**Coverage:** Manual integration check; the page calls `redirect("/login")` when `getCurrentUser`
-returns null.
+**Coverage:** `tests/home-page.test.tsx` → redirect; `e2e/auth.spec.ts` → logged-out browser
+access.
 
 ### TC-LAND-02 — Logged-in access
 
@@ -213,7 +216,7 @@ returns null.
 **Expected:** The page shows the signed-in email, role badge, account details, sprint checklist,
 and a working **Log out** button.
 
-**Coverage:** `tests/landing-view.test.tsx`.
+**Coverage:** `tests/landing-view.test.tsx` and `e2e/auth.spec.ts` → signed-in landing page.
 
 ### TC-LAND-03 — Responsive visual check
 
@@ -224,7 +227,8 @@ and a working **Log out** button.
 **Expected:** No horizontal scroll. Forms remain readable. Buttons are reachable. The design
 matches `design/mockups/`.
 
-**Coverage:** Manual visual check with backup screenshots in `docs/screenshots/`.
+**Coverage:** `e2e/responsive.spec.ts` → 360, 768, and 1440 px; `e2e/a11y.spec.ts` → critical
+violations. Human mockup comparison remains manual.
 
 ## Health and security
 
@@ -236,8 +240,7 @@ matches `design/mockups/`.
 
 **Expected:** HTTP 200 with `{"status":"ok","service":"web",...}` and no cache.
 
-**Coverage:** The endpoint is exercised during the local smoke test; the health helper is covered
-by `tests/health.test.ts`.
+**Coverage:** `tests/health-routes.test.ts` and `e2e/status.spec.ts`.
 
 ### TC-HLT-02 — Supabase health endpoint
 
@@ -248,7 +251,9 @@ by `tests/health.test.ts`.
 **Expected:** `connected` with a latency value when the project responds. If keys are missing, a
 clear `not_configured` message; if the project is down, `unavailable`.
 
-**Coverage:** `tests/health.test.ts`; live project check is manual.
+**Coverage:** `tests/health.test.ts`, `tests/health-routes.test.ts`, and `e2e/status.spec.ts`;
+hosted project check is manual. The check calls `/auth/v1/health`, which is public. The REST root
+requires a service-role key on hosted projects and is not used.
 
 ### TC-SEC-01 — RLS smoke test
 
@@ -260,7 +265,8 @@ clear `not_configured` message; if the project is down, `unavailable`.
 
 **Expected:** No unauthorized rows are visible. The service-role key is never used in the browser.
 
-**Coverage:** Manual Supabase check using the migration in `supabase/migrations/`.
+**Coverage:** `tests/integration/rls.test.ts` against local Supabase. Hosted RLS check remains
+manual using the migration in `supabase/migrations/`.
 
 ### TC-SEC-02 — Secret scan
 
@@ -271,4 +277,4 @@ clear `not_configured` message; if the project is down, `unavailable`.
 **Expected:** Only `.env.example` placeholders and documentation references exist. The
 service-role key is absent from the browser bundle.
 
-**Coverage:** Manual review; CI also runs on every push.
+**Coverage:** CI runs TruffleHog on every push; the deployed browser bundle scan remains manual.

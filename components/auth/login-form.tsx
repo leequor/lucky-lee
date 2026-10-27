@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 
 import { loginAction } from "@/app/actions/auth";
 import { Alert } from "@/components/ui/alert";
@@ -17,6 +17,7 @@ export function LoginForm({
   errorNotice?: string;
 }) {
   const [state, formAction] = useActionState(loginAction, initialAuthState);
+  const [email, setEmail] = useState("");
   const message =
     state.status === "error" ? state.message : state.status === "success" ? state.message : errorNotice || notice;
   const tone = state.status === "error" || errorNotice ? "error" : "success";
@@ -34,6 +35,8 @@ export function LoginForm({
         autoComplete="email"
         inputMode="email"
         error={state.fieldErrors?.email}
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
         required
       />
 

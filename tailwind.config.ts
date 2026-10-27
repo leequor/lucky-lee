@@ -9,51 +9,46 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream: "#F7F3EA",
-        paper: "#FFFDF8",
-        ink: "#1C2321",
-        muted: "#64706B",
-        clover: {
-          50: "#F0FDF4",
-          100: "#DCFCE7",
-          200: "#BBF7D0",
-          500: "#16A34A",
-          600: "#15803D",
-          700: "#166534",
-          800: "#14532D",
-          900: "#052E16",
+        paper: "#060B09",
+        surface: "#0D1512",
+        ink: "#F1F4F0",
+        muted: "#A0AEA6",
+        line: "#1C2A24",
+        wash: "#131E19",
+        accent: "#4CE3A6",
+        gold: "#E6C77B",
+        positive: {
+          DEFAULT: "#4CE3A6",
+          soft: "#0D2A20",
+          ink: "#B9F8DD",
         },
-        coral: {
-          100: "#FFEDD5",
-          400: "#FB923C",
-          500: "#F97316",
-          600: "#EA580C",
+        negative: {
+          DEFAULT: "#F07A70",
+          soft: "#2B1517",
+          ink: "#FFD3CF",
         },
-        mist: "#E7E5DF",
+        warn: {
+          DEFAULT: "#E9BC70",
+          soft: "#2A2114",
+        },
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "Georgia", "serif"],
+        sans: ["var(--font-geist-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
-      boxShadow: {
-        card: "0 24px 70px -28px rgba(28, 35, 33, 0.32)",
-        soft: "0 10px 34px -18px rgba(28, 35, 33, 0.24)",
+      borderRadius: {
+        none: "0px",
+        sm: "6px",
+        DEFAULT: "10px",
+        md: "10px",
+        lg: "16px",
+        xl: "20px",
+        "2xl": "26px",
+        full: "9999px",
       },
-      backgroundImage: {
-        "grid-soft":
-          "linear-gradient(to right, rgba(28, 35, 33, 0.055) 1px, transparent 1px), linear-gradient(to bottom, rgba(28, 35, 33, 0.055) 1px, transparent 1px)",
-      },
-      backgroundSize: {
-        "grid-soft": "48px 48px",
-      },
-      keyframes: {
-        "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(10px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-      },
-      animation: {
-        "fade-up": "fade-up 0.55s ease-out both",
+      maxWidth: {
+        canvas: "1120px",
+        form: "440px",
       },
     },
   },

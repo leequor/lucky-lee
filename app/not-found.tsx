@@ -1,30 +1,43 @@
 import Link from "next/link";
 
 import { Logo } from "@/components/ui/logo";
+import { LuckyScene } from "@/components/visual/lucky-scene";
 
 export default function NotFound() {
   return (
-    <main className="relative grid min-h-screen place-items-center overflow-hidden bg-cream px-5">
-      <div className="pointer-events-none absolute inset-0 bg-grid-soft [mask-image:linear-gradient(to_bottom,black,transparent_78%)]" />
-      <div className="relative max-w-md text-center">
-        <div className="flex justify-center">
-          <Logo />
+    <main className="relative min-h-[100dvh] overflow-hidden bg-paper px-5 py-6 sm:px-6">
+      <div className="mx-auto flex min-h-[calc(100dvh-3rem)] w-full max-w-canvas flex-col">
+        <Logo />
+
+        <div className="grid flex-1 items-center gap-8 py-14 lg:grid-cols-[1fr_0.9fr]">
+          <div>
+            <p className="figure text-[13px] text-accent">404</p>
+            <h1 className="mt-3 text-[42px] font-semibold leading-[0.98] tracking-[-0.05em] text-ink sm:text-[56px]">
+              This leaf fell off.
+            </h1>
+            <p className="mt-4 max-w-[46ch] text-[14px] leading-6 text-muted">
+              The link may be old, or the page only exists in a local design preview. Head back to
+              the account overview and try again.
+            </p>
+            <div className="mt-7">
+              <Link
+                href="/"
+                className="inline-flex h-11 items-center justify-center rounded-full bg-ink px-5 text-[14px] font-medium text-paper transition-colors hover:bg-white"
+              >
+                Back to the app
+              </Link>
+            </div>
+          </div>
+
+          <div className="relative min-h-[260px] overflow-hidden rounded-2xl border border-line bg-[#08110d]">
+            <div className="scene-field pointer-events-none absolute inset-0" aria-hidden="true" />
+            <LuckyScene className="absolute inset-0" />
+          </div>
         </div>
-        <p className="mt-8 text-xs font-bold uppercase tracking-[0.2em] text-clover-700">
-          404
+
+        <p className="border-t border-line pt-4 text-[12px] text-muted">
+          Lucky Patcher · Sprint 01
         </p>
-        <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight text-ink">
-          This page is not in the plan.
-        </h1>
-        <p className="mt-3 text-sm leading-6 text-muted">
-          The link may be old, or the page may only be available in a local design preview.
-        </p>
-        <Link
-          href="/"
-          className="mt-6 inline-flex h-11 items-center justify-center rounded-full bg-clover-700 px-5 text-sm font-semibold text-white shadow-soft transition hover:bg-clover-800"
-        >
-          Back to the app
-        </Link>
       </div>
     </main>
   );

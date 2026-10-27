@@ -3,6 +3,45 @@ import Link from "next/link";
 import { APP_NAME } from "@/lib/config";
 import { cn } from "@/lib/utils";
 
+function Clover({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 32 32"
+      aria-hidden="true"
+      className={cn("h-5 w-5", className)}
+      fill="none"
+    >
+      <g fill="currentColor">
+        <path
+          d="M16 16C16 11.6 12.8 8 8.8 8C6 8 4.4 9.8 4.8 12.1C5.2 14.7 8.4 16 12 16Z"
+          opacity="0.62"
+        />
+        <path
+          d="M16 16C16 11.6 12.8 8 8.8 8C6 8 4.4 9.8 4.8 12.1C5.2 14.7 8.4 16 12 16Z"
+          opacity="0.88"
+          transform="rotate(90 16 16)"
+        />
+        <path
+          d="M16 16C16 11.6 12.8 8 8.8 8C6 8 4.4 9.8 4.8 12.1C5.2 14.7 8.4 16 12 16Z"
+          transform="rotate(180 16 16)"
+        />
+        <path
+          d="M16 16C16 11.6 12.8 8 8.8 8C6 8 4.4 9.8 4.8 12.1C5.2 14.7 8.4 16 12 16Z"
+          opacity="0.78"
+          transform="rotate(270 16 16)"
+        />
+      </g>
+      <path
+        d="M16 18.3C15.8 22 15 24.6 13.5 27"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+      <circle cx="16" cy="16" r="2.1" fill="#E6C77B" />
+    </svg>
+  );
+}
+
 export function Logo({
   className,
   href = "/",
@@ -14,41 +53,23 @@ export function Logo({
 }) {
   const content = (
     <>
-      <span className="grid h-10 w-10 place-items-center rounded-2xl bg-clover-800 text-clover-100 shadow-soft">
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 40 40"
-          className="h-6 w-6"
-          fill="none"
-        >
-          <path
-            d="M20 19.4C17.9 14.7 14.3 12 10.7 12 7.2 12 4.5 14.7 4.5 18.1c0 3.1 2.1 5.5 5.1 6.2-3 .7-5.1 3.1-5.1 6.2 0 3.4 2.7 6.1 6.2 6.1 3.6 0 7.2-2.7 9.3-7.4 2.1 4.7 5.7 7.4 9.3 7.4 3.5 0 6.2-2.7 6.2-6.1 0-3.1-2.1-5.5-5.1-6.2 3-.7 5.1-3.1 5.1-6.2 0-3.4-2.7-6.1-6.2-6.1-3.6 0-7.2 2.7-9.3 7.4Z"
-            fill="currentColor"
-          />
-          <path
-            d="M20 20v14"
-            stroke="#166534"
-            strokeLinecap="round"
-            strokeWidth="2.4"
-          />
-        </svg>
+      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-line bg-wash text-accent">
+        <Clover />
       </span>
       {!markOnly ? (
-        <span className="font-display text-xl font-semibold tracking-tight text-ink">
-          {APP_NAME}
-        </span>
+        <span className="text-[15px] font-semibold tracking-[-0.01em] text-ink">{APP_NAME}</span>
       ) : null}
     </>
   );
 
   if (!href) {
-    return <div className={cn("flex items-center gap-3", className)}>{content}</div>;
+    return <div className={cn("flex items-center gap-2.5", className)}>{content}</div>;
   }
 
   return (
     <Link
       href={href}
-      className={cn("flex items-center gap-3", className)}
+      className={cn("flex items-center gap-2.5", className)}
       aria-label={`${APP_NAME} home`}
     >
       {content}

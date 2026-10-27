@@ -8,16 +8,18 @@ export const metadata: Metadata = {
   title: "Create account",
 };
 
+const linkClass =
+  "font-medium text-ink underline decoration-[#345347] underline-offset-4 transition-colors hover:decoration-accent";
+
 export default function RegisterPage() {
   return (
     <AuthCard
-      eyebrow="Join the team"
       title="Create your account"
-      description="Register with your email and a password. In development, new accounts receive the superadmin role so the team can test every screen."
+      description="Create the account you use for the dashboard and recovery. Development signups receive superadmin for testing."
       footer={
         <p>
           Already have an account?{" "}
-          <Link href="/login" className="font-semibold text-clover-700 hover:underline">
+          <Link href="/login" className={linkClass}>
             Sign in
           </Link>
         </p>
