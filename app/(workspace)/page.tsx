@@ -44,7 +44,7 @@ export default async function DashboardPage() {
       />
 
       <section className="mt-6 grid gap-4 xl:grid-cols-[1.42fr_0.58fr]">
-        <RepairBench className="reveal min-h-[380px] xl:min-h-[440px]" />
+        <RepairBench className="reveal min-h-[430px] xl:min-h-[520px]" />
 
         <Panel className="reveal reveal-delay-1 flex flex-col overflow-hidden">
           <div className="flex items-start justify-between gap-4 border-b border-line px-5 py-4">

@@ -34,13 +34,13 @@ describe("RepairBench", () => {
     expect(battery).toHaveAttribute("aria-pressed", "false");
     await browser.click(battery);
     expect(battery).toHaveAttribute("aria-pressed", "true");
-    expect(screen.getByText("Exploded iPhone 15 Pro")).toBeInTheDocument();
+    expect(screen.getByText(/iPhone 15 Pro/)).toBeInTheDocument();
   });
 
   it("hides layer controls in compact mode", async () => {
     render(<RepairBench compact />);
     expect(await screen.findByTestId("repair-scene")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Battery/ })).not.toBeInTheDocument();
-    expect(screen.getByText("Patchwork bench")).toBeInTheDocument();
+    expect(screen.getByText("Live 3D")).toBeInTheDocument();
   });
 });

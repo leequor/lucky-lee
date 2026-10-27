@@ -34,6 +34,8 @@ npm run capture:mockups
 - `app/(workspace)/page.tsx` loads `getDashboardData()`.
 - The 3D bench is `components/patchwork/repair-bench.tsx`; it is client-only and dynamically loads
   the React Three Fiber scene.
+- The scene is a three-layer teardown: display, chassis internals, and back panel, with a live
+  repair screen and a reflective studio stage.
 - The four layer buttons only change the scene. Repair state is always shown in text.
 - Use `PrimaryLink` for New ticket and `SecondaryLink` for the public tracker.
 
