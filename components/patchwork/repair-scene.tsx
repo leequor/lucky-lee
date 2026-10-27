@@ -1055,14 +1055,17 @@ export default function RepairScene({
   activeLayer,
   reduced = false,
   compact = false,
+  paused = false,
 }: {
   activeLayer: LayerId;
   reduced?: boolean;
   compact?: boolean;
+  paused?: boolean;
 }) {
   return (
     <Canvas
       shadows
+      frameloop={paused ? "never" : "always"}
       dpr={[1, 1.5]}
       camera={{
         position: compact ? [2.2, 1.6, 9] : [3.2, 2.1, 12],

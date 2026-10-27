@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useSyncExternalStore, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -58,9 +58,33 @@ export function RepairBench({
   );
   const [active, setActive] = useState<LayerId>("screen");
   const positioned = className?.includes("absolute") || className?.includes("fixed");
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  const [everVisible, setEverVisible] = useState(false);
+
+  useEffect(() => {
+    const element = rootRef.current;
+    if (!element || typeof IntersectionObserver === "undefined") {
+      setVisible(true);
+      setEverVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const intersecting = entries[0]?.isIntersecting ?? true;
+        setVisible(intersecting);
+        if (intersecting) setEverVisible(true);
+      },
+      { rootMargin: "160px" },
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div
+      ref={rootRef}
       className={cn(
         "overflow-hidden rounded-2xl border border-line bg-[#0B0D10]",
         positioned ? null : "relative",
@@ -69,7 +93,16 @@ export function RepairBench({
     >
       <div className="scene-field pointer-events-none absolute inset-0 opacity-70" aria-hidden="true" />
 
-      {mounted ? <RepairScene activeLayer={active} reduced={reduced} compact={compact} /> : <BenchFallback />}
+      {mounted && (visible || everVisible) ? (
+        <RepairScene
+          activeLayer={active}
+          reduced={reduced}
+          compact={compact}
+          paused={!visible}
+        />
+      ) : (
+        <BenchFallback />
+      )}
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#07090C] via-[#07090C]/65 to-transparent" />
 
