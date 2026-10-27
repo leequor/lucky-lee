@@ -57,11 +57,13 @@ export function RepairBench({
     getServerReducedMotion,
   );
   const [active, setActive] = useState<LayerId>("screen");
+  const positioned = className?.includes("absolute") || className?.includes("fixed");
 
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-2xl border border-line bg-[#0B0D10]",
+        "overflow-hidden rounded-2xl border border-line bg-[#0B0D10]",
+        positioned ? null : "relative",
         className,
       )}
     >

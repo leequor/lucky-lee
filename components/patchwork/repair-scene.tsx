@@ -950,10 +950,10 @@ function CameraRig({ compact }: { compact: boolean }) {
     const narrow = aspect < 1.15;
     const fov = compact ? 30 : 28;
     const halfTan = Math.tan((fov * Math.PI) / 360);
-    const fitHeight = (compact ? 5.9 : narrow ? 6.2 : 6.4) / (2 * halfTan);
-    const fitWidth = (compact ? 5.9 : narrow ? 5.9 : 8.2) / (2 * halfTan * aspect);
+    const fitHeight = (compact ? 6.5 : narrow ? 6.2 : 6.4) / (2 * halfTan);
+    const fitWidth = (compact ? 6.6 : narrow ? 5.9 : 8.2) / (2 * halfTan * aspect);
     const distance = Math.max(fitHeight, fitWidth) * 1.05;
-    const target = new THREE.Vector3(compact || narrow ? -1.15 : 0, narrow ? 0.42 : 0.2, 0);
+    const target = new THREE.Vector3(compact || narrow ? -0.95 : 0, narrow ? 0.42 : 0.2, 0);
     const direction = new THREE.Vector3(0.48, 0.22, 0.85).normalize();
     const position = target.clone().addScaledVector(direction, distance);
 
