@@ -135,9 +135,10 @@ export default async function TicketsPage({ searchParams }: { searchParams: Sear
           </div>
         ) : (
           <>
-            <div className="hidden grid-cols-[0.8fr_1.4fr_1fr_0.8fr_0.9fr_0.7fr] gap-4 border-b border-line px-5 py-2.5 text-[10px] text-muted md:grid">
+            <div className="hidden grid-cols-[0.7fr_1fr_1.4fr_0.75fr_0.7fr_0.9fr_0.65fr] gap-4 border-b border-line px-5 py-2.5 text-[10px] text-muted lg:grid">
               <span>Ticket</span>
               <span>Customer / device</span>
+              <span>Issue</span>
               <span>Status</span>
               <span>Priority</span>
               <span>Technician</span>
@@ -148,7 +149,7 @@ export default async function TicketsPage({ searchParams }: { searchParams: Sear
                 <Link
                   key={ticket.id}
                   href={`/tickets/${ticket.id}`}
-                  className="group grid gap-3 px-5 py-4 transition-colors hover:bg-wash/45 md:grid-cols-[0.8fr_1.4fr_1fr_0.8fr_0.9fr_0.7fr] md:items-center md:gap-4"
+                  className="group grid gap-3 px-5 py-4 transition-colors hover:bg-wash/45 lg:grid-cols-[0.7fr_1fr_1.4fr_0.75fr_0.7fr_0.9fr_0.65fr] lg:items-center lg:gap-4"
                 >
                   <div>
                     <p className="figure text-[12px] font-medium text-ink">{ticket.ticket_number}</p>
@@ -160,18 +161,15 @@ export default async function TicketsPage({ searchParams }: { searchParams: Sear
                       {ticket.device.brand} {ticket.device.model}
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 md:block">
+                  <p className="line-clamp-2 text-[11px] leading-5 text-muted">{ticket.issue}</p>
+                  <div>
                     <StatusPill status={ticket.status} />
-                    <p className="mt-1.5 hidden truncate text-[10px] text-muted md:block">{ticket.issue}</p>
                   </div>
                   <PriorityPill priority={ticket.priority} />
-                  <div className="min-w-0">
-                    <p className="truncate text-[12px] text-ink">{ticket.assignee?.full_name || "Unassigned"}</p>
-                    <p className="mt-0.5 text-[10px] text-muted">
-                      {ticket.assignee ? "Assigned" : "Needs owner"}
-                    </p>
-                  </div>
-                  <p className="figure text-[11px] text-muted md:text-right">{formatRelative(ticket.updated_at)}</p>
+                  <p className="truncate text-[12px] text-ink">
+                    {ticket.assignee?.full_name || <span className="text-muted">Unassigned</span>}
+                  </p>
+                  <p className="figure text-[11px] text-muted lg:text-right">{formatRelative(ticket.updated_at)}</p>
                 </Link>
               ))}
             </div>

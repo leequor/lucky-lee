@@ -193,14 +193,6 @@ export function WorkspaceShell({
             </label>
           </form>
 
-          <Link
-            href="/tickets/new"
-            className="ml-auto inline-flex h-9 items-center gap-1.5 rounded-full bg-ink px-3.5 text-[12px] font-semibold text-paper transition-colors hover:bg-white md:ml-3"
-          >
-            <PlusIcon className="h-3.5 w-3.5" />
-            New
-          </Link>
-
           <form action={logoutAction} className="lg:hidden">
             <button
               type="submit"
