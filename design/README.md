@@ -69,7 +69,7 @@ Early layout studies live in `wireframes/`: `login.svg`, `register.svg`, and `re
 ### Public tracker
 
 - `/track` is outside the workspace shell and needs no account.
-- The `track_ticket` RPC requires the tracking code plus email or phone.
+- The `track_ticket` RPC requires only the tracking code. The sequential `PW-` number is not accepted.
 - Only customer-visible events are returned, and only first name + device + status are exposed.
 
 ### Responsive rules

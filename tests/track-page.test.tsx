@@ -36,7 +36,7 @@ describe("TrackPage", () => {
 
     expect(screen.getByRole("heading", { name: "Track your repair." })).toBeInTheDocument();
     expect(screen.getByLabelText("Tracking code")).toBeInTheDocument();
-    expect(screen.getByLabelText("Email or phone")).toBeInTheDocument();
+    expect(screen.queryByLabelText("Email or phone")).not.toBeInTheDocument();
     expect(screen.getByText("3D bench")).toBeInTheDocument();
     expect(vi.mocked(getTrackedTicket)).not.toHaveBeenCalled();
   });
@@ -45,7 +45,7 @@ describe("TrackPage", () => {
     vi.mocked(getTrackedTicket).mockResolvedValue(tracked as never);
     render(
       await TrackPage({
-        searchParams: Promise.resolve({ code: "TRACK1041", contact: "maya@example.com" }),
+        searchParams: Promise.resolve({ code: "TRACK1041" }),
       }),
     );
 
@@ -60,12 +60,12 @@ describe("TrackPage", () => {
     vi.mocked(getTrackedTicket).mockResolvedValue(null);
     render(
       await TrackPage({
-        searchParams: Promise.resolve({ code: "NOPE", contact: "nobody@example.com" }),
+        searchParams: Promise.resolve({ code: "NOPE" }),
       }),
     );
 
     expect(screen.getByRole("alert")).toHaveTextContent(
-      "No ticket matched that code and contact.",
+      "No ticket matched that code. Check the 10-character code on your receipt.",
     );
   });
 });

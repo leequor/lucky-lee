@@ -217,7 +217,7 @@ export function TicketIntakeForm({
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line pt-5">
         <p className="max-w-[52ch] text-[11px] leading-5 text-muted">
           Intake creates a public tracking code automatically. The customer can follow the repair
-          with their tracking code and email or phone.
+          with just that code.
         </p>
         <SubmitButton pendingText="Creating ticket...">Create ticket</SubmitButton>
       </div>

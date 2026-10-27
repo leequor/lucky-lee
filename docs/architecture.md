@@ -64,10 +64,10 @@ the service-role-only server action.
 
 ### Public tracking
 
-1. `/track` accepts the tracking code plus email or phone.
-2. `track_ticket(p_code, p_contact)` is a security-definer RPC.
+1. `/track` accepts the unguessable tracking code on its own. No email, phone, or account is needed.
+2. `track_ticket(p_code)` is a security-definer RPC.
 3. It returns only the ticket number, status, issue, device, first name, and customer-visible events.
-4. Anonymous users have no table access; they can only call that RPC.
+4. Anonymous users have no table access; they can only call that RPC. The sequential `PW-` number is not accepted, so the tracker cannot be enumerated.
 
 ## Routes
 
@@ -146,7 +146,7 @@ invoices
 1. **Next.js App Router** keeps the authenticated workspace and public tracker in one deployment.
 2. **Supabase Auth** owns passwords, reset tokens, email confirmation, and session cookies.
 3. **Postgres functions for money and stock** prevent double-submit and client-tampering bugs.
-4. **One tracking code + contact check** avoids customer accounts while still protecting repair data.
+4. **One unguessable tracking code** avoids customer accounts while still protecting repair data. The code is the sole credential, so it must stay private.
 5. **React Three Fiber** gives the dashboard a real product-specific 3D object without shipping a
    model or external asset dependency.
 6. **Invite-only staff** removes the old public sign-up path from the internal workspace.

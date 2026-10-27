@@ -385,11 +385,10 @@ export async function getCustomerOptions(): Promise<CustomerOption[]> {
 }
 
 export const getTrackedTicket = cache(
-  async (code: string, contact: string): Promise<TrackedTicket | null> => {
+  async (code: string): Promise<TrackedTicket | null> => {
     const supabase = await createSupabaseServerClient();
     const { data, error } = await supabase.rpc("track_ticket", {
       p_code: code,
-      p_contact: contact,
     });
 
     if (error) fail(error.message);

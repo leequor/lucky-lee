@@ -63,8 +63,9 @@ export default async function NewCustomerPage({
           <Panel className="reveal reveal-delay-2 p-5">
             <h2 className="text-[14px] font-medium text-ink">Public tracking</h2>
             <p className="mt-2 text-[12px] leading-5 text-muted">
-              Add an email or phone if the customer should be able to follow the repair at{" "}
-              <span className="text-ink">/track</span>. The code is generated on the ticket.
+              Add an email or phone for normal customer contact. The tracking code is generated on
+              the ticket, so the customer can follow the repair at{" "}
+              <span className="text-ink">/track</span> without an account.
             </p>
           </Panel>
         </div>
