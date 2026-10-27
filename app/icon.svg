@@ -1,11 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="16" fill="#0D1512"/>
-  <g transform="translate(32 32) scale(1.42) translate(-16 -16)" fill="#4CE3A6">
-    <path d="M16 16C16 11.6 12.8 8 8.8 8C6 8 4.4 9.8 4.8 12.1C5.2 14.7 8.4 16 12 16Z" opacity=".62"/>
-    <path d="M16 16C16 11.6 12.8 8 8.8 8C6 8 4.4 9.8 4.8 12.1C5.2 14.7 8.4 16 12 16Z" opacity=".88" transform="rotate(90 16 16)"/>
-    <path d="M16 16C16 11.6 12.8 8 8.8 8C6 8 4.4 9.8 4.8 12.1C5.2 14.7 8.4 16 12 16Z" transform="rotate(180 16 16)"/>
-    <path d="M16 16C16 11.6 12.8 8 8.8 8C6 8 4.4 9.8 4.8 12.1C5.2 14.7 8.4 16 12 16Z" opacity=".78" transform="rotate(270 16 16)"/>
+  <rect width="64" height="64" rx="16" fill="#08090B"/>
+  <g transform="translate(8 8) scale(1.5)">
+    <rect x="3" y="3" width="12" height="12" rx="3" fill="#F2EFE7" opacity=".9"/>
+    <rect x="17" y="3" width="12" height="12" rx="3" fill="#F2EFE7" opacity=".42"/>
+    <rect x="3" y="17" width="12" height="12" rx="3" fill="#F2EFE7" opacity=".62"/>
+    <rect x="17" y="17" width="12" height="12" rx="3" fill="#FF6B35"/>
+    <path d="M16 4.5V27.5M4.5 16H27.5" stroke="#08090B" stroke-width="1.4" stroke-dasharray="2 2"/>
   </g>
-  <path d="M32 38.6C31.7 45 30.2 49.4 27.4 53.5" stroke="#4CE3A6" stroke-width="3" stroke-linecap="round" fill="none"/>
-  <circle cx="32" cy="32" r="4" fill="#E6C77B"/>
 </svg>

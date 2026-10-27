@@ -1,7 +1,7 @@
-export const APP_NAME = "Lucky Patcher";
-export const APP_TAGLINE = "A calmer control room for the work that matters.";
+export const APP_NAME = "Patchwork";
+export const APP_TAGLINE = "The repair desk that keeps every job moving.";
 export const APP_DESCRIPTION =
-  "Lucky Patcher is the Sprint 1 team dashboard for account access, roles, and release readiness.";
+  "Patchwork is a repair-shop operations system for intake, repair tickets, parts, invoices, and customer tracking.";
 
 export function getSiteUrl() {
   const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();

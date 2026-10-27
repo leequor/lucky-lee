@@ -8,7 +8,7 @@
 
 html {
   scroll-behavior: smooth;
-  background: #060b09;
+  background: #08090b;
 }
 
 body {
@@ -17,32 +17,34 @@ body {
 }
 
 ::selection {
-  background: #1d4d3c;
-  color: #f1f4f0;
+  background: #4a2317;
+  color: #f2efe7;
 }
 
 @layer base {
   * {
-    border-color: #1c2a24;
+    border-color: #252a32;
   }
 
   a,
   button,
-  input {
+  input,
+  select,
+  textarea {
     -webkit-tap-highlight-color: transparent;
   }
 
   :focus-visible {
-    outline: 2px solid #4ce3a6;
+    outline: 2px solid #ff6b35;
     outline-offset: 3px;
   }
 
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus {
-    -webkit-text-fill-color: #f1f4f0;
-    box-shadow: 0 0 0 1000px #0d1512 inset; /* taste-skill-ignore shadow */
-    caret-color: #f1f4f0;
+    -webkit-text-fill-color: #f2efe7;
+    box-shadow: 0 0 0 1000px #111317 inset; /* taste-skill-ignore shadow */
+    caret-color: #f2efe7;
   }
 
   ::-webkit-scrollbar {
@@ -51,13 +53,13 @@ body {
   }
 
   ::-webkit-scrollbar-track {
-    background: #060b09;
+    background: #08090b;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #22352c;
+    background: #2b313a;
     border-radius: 9999px;
-    border: 2px solid #060b09;
+    border: 2px solid #08090b;
   }
 }
 
@@ -71,8 +73,8 @@ body {
   }
 
   .scene-field {
-    background-color: #08110d;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Ccircle cx='1' cy='1' r='1' fill='%234CE3A6' fill-opacity='.18'/%3E%3C/svg%3E");
+    background-color: #0b0d10;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23FF6B35' fill-opacity='.16'/%3E%3C/svg%3E");
     background-size: 28px 28px;
   }
 

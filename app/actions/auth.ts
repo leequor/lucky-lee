@@ -62,6 +62,13 @@ export async function registerAction(
   _previousState: AuthState,
   formData: FormData,
 ): Promise<AuthState> {
+  if (process.env.NEXT_PUBLIC_ALLOW_STAFF_SIGNUP !== "true") {
+    return {
+      status: "error",
+      message: "Staff accounts are invite-only. Ask an owner or manager to create your account.",
+    };
+  }
+
   const clientResult = await getClient();
 
   if (!clientResult.ok) {

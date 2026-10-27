@@ -96,12 +96,14 @@ describe.skipIf(!configured)("profiles RLS against a live Supabase project", () 
     });
   });
 
-  it("lets a regular user read only their own profile", async () => {
+  it("lets a regular user read the staff directory", async () => {
     const { data, error } = await userOne.client.from("profiles").select("id, email");
 
     expect(error).toBeNull();
-    expect(data).toHaveLength(1);
-    expect(data?.[0]?.id).toBe(userOne.id);
+    expect(data?.length).toBeGreaterThanOrEqual(3);
+    expect(data?.map((row) => row.id)).toEqual(
+      expect.arrayContaining([userOne.id, userTwo.id, adminUser.id]),
+    );
   });
 
   it("does not let a regular user update their own role", async () => {
@@ -167,5 +169,37 @@ describe.skipIf(!configured)("profiles RLS against a live Supabase project", () 
 
     expect(error).toBeNull();
     expect(data).toHaveLength(3);
+  });
+
+  it("denies anonymous repair-table reads", async () => {
+    const anon = createClient(url!, anonKey!, {
+      auth: { autoRefreshToken: false, persistSession: false },
+    });
+
+    const { data, error } = await anon.from("tickets").select("id").limit(1);
+
+    expect(data ?? []).toHaveLength(0);
+    expect(error).not.toBeNull();
+  });
+
+  it("lets staff read the repair queue", async () => {
+    const { data, error } = await userOne.client.from("tickets").select("id").limit(5);
+
+    expect(error).toBeNull();
+    expect((data ?? []).length).toBeGreaterThan(0);
+  });
+
+  it("tracks a seeded ticket through the public RPC", async () => {
+    const anon = createClient(url!, anonKey!, {
+      auth: { autoRefreshToken: false, persistSession: false },
+    });
+
+    const { data, error } = await anon.rpc("track_ticket", {
+      p_code: "TRACK1041",
+      p_contact: "maya.chen@example.com",
+    });
+
+    expect(error).toBeNull();
+    expect(data).toMatchObject({ ticket_number: "PW-1041", status: "in_repair" });
   });
 });

@@ -2,135 +2,159 @@
 
 ## Overview
 
-Lucky Patcher is a single Next.js App Router application. Supabase provides authentication,
-Postgres, and row level security. There is no separate Express server in the final working copy;
-the earlier backend prototype is preserved in the copied branches, and its validation and error
-handling ideas were ported into the tested TypeScript service layer.
+Patchwork is a single Next.js App Router application. Supabase provides authentication, Postgres,
+and row level security. The same deployment serves the staff workspace, the public repair tracker,
+and the health endpoints.
 
 ```text
 Browser
-  │
-  ├─ Next.js App Router (server components + client forms)
-  │     ├─ Server actions → Supabase Auth / profiles
-  │     ├─ /api/health → app health
-  │     └─ /api/health/supabase → REST health
-  │
-  └─ @supabase/ssr cookies ←→ Supabase Auth
-                                  │
-                                  └─ Postgres: public.profiles + RLS
+  |
+  |-- Next.js App Router (server components + client forms)
+  |     |-- /login, /forgot-password, /reset-password  -> Supabase Auth
+  |     |-- /(workspace)/*                              -> staff RLS queries + server actions
+  |     |-- /track                                      -> track_ticket() RPC (anon)
+  |     |-- /api/health                                 -> app health
+  |     `-- /api/health/supabase                        -> Supabase REST health
+  |
+  `-- @supabase/ssr session cookies
+        |
+        `-- Postgres: profiles, customers, devices, tickets,
+            ticket_events, parts, ticket_parts, invoices + RLS
 ```
 
 ## Request flow
 
-### Registration
-
-1. `/register` renders the client form.
-2. The form calls `registerAction` on the server.
-3. `registerWithPassword` validates, normalizes the email, and calls
-   `supabase.auth.signUp`.
-4. The database trigger inserts a `profiles` row.
-5. If email confirmation is off, the action redirects to `/`; otherwise it returns a
-   "check your email" message.
-
-### Login
+### Staff login
 
 1. `/login` submits `loginAction`.
 2. `loginWithPassword` calls `supabase.auth.signInWithPassword`.
-3. `@supabase/ssr` writes the session cookies.
+3. `@supabase/ssr` writes session cookies.
 4. The action redirects to `/`.
-5. `/` reads the user on the server and renders the landing page.
+5. The `(workspace)` layout calls `requireStaff()`; without a session it redirects to `/login`.
 
-### Logout
+Staff accounts are invite-only. Owners and managers create confirmed accounts from `/team` through
+the service-role-only server action.
 
-1. `logoutAction` calls `supabase.auth.signOut()`.
-2. Session cookies are cleared.
-3. The action redirects to `/login`.
+### Ticket intake
 
-### Password recovery
+1. `/tickets/new` loads customers/devices and staff from the server.
+2. `createTicketAction` validates the fault, priority, estimate, labour, due date, customer, and
+   device.
+3. Existing-customer mode verifies the device belongs to the customer. New-customer mode creates
+   the customer and device first.
+4. Postgres assigns `PW-####` and a public tracking code through `set_ticket_defaults()`.
+5. An `intake` event is written, then the action redirects to the ticket.
 
-1. `/forgot-password` calls `forgotPasswordAction`.
-2. The server calls `supabase.auth.resetPasswordForEmail` with a redirect to
-   `/auth/callback?next=/reset-password`.
-3. The recommended email template sends the user to `/auth/confirm?token_hash=...&type=recovery`.
-4. `/auth/confirm` calls `verifyOtp`, creates the session, and redirects to `/reset-password`.
-5. The reset form calls `resetPasswordAction` → `updateUser({ password })`.
-6. The action signs out and redirects to `/login?message=...`.
+### Bench work
 
-The older `/auth/callback` code exchange is also supported for PKCE email links.
+- `updateTicketStatusAction` moves the status and writes a customer-visible timeline event.
+- `addTicketPartAction` calls `add_ticket_part()`, which checks stock, writes the join row, decrements
+  inventory, and records an internal event in one database transaction.
+- `updateTicketDetailsAction` updates diagnosis, priority, technician, estimate, labour, and target
+  date.
+- Notes are stored as `ticket_events`; the team chooses whether the customer can see them.
+
+### Invoice and payment
+
+1. `createTicketInvoiceAction` calls `create_ticket_invoice()`.
+2. The function totals labour + parts, applies 12% tax, upserts the invoice, marks the ticket ready,
+   and records an event.
+3. `mark_invoice_paid()` sets the invoice paid and moves the ticket to picked up/collected.
+
+### Public tracking
+
+1. `/track` accepts the public code plus email or phone.
+2. `track_ticket(p_code, p_contact)` is a security-definer RPC.
+3. It returns only the ticket number, status, issue, device, first name, and customer-visible events.
+4. Anonymous users have no table access; they can only call that RPC.
 
 ## Routes
 
 | Route | Access | Purpose |
 | --- | --- | --- |
-| `/` | Signed in | Protected landing page. Redirects to `/login` without a session. |
-| `/login` | Public | Email/password sign-in. |
-| `/register` | Public | Create an account. |
+| `/` | Staff | Repair desk dashboard. |
+| `/tickets` | Staff | Search/filter the repair queue. |
+| `/tickets/new` | Staff | Intake. |
+| `/tickets/[id]` | Staff | Repair brief, status, parts, timeline, invoice. |
+| `/customers` | Staff | Customer directory. |
+| `/customers/new` | Staff | Create a customer. |
+| `/customers/[id]` | Staff | Contact, devices, repair history. |
+| `/inventory` | Staff | Parts, stock, reorder levels, adjustments. |
+| `/invoices` | Staff | Invoice ledger and payment. |
+| `/team` | Staff | Staff directory; role/invite controls for owner/manager. |
+| `/track` | Public | Customer repair tracking. |
+| `/login` | Public | Staff sign-in. |
+| `/register` | Public | Invite-only explanation. |
 | `/forgot-password` | Public | Request a reset link. |
-| `/reset-password` | Recovery session | Set a new password, or show an expired-link message. |
-| `/status` | Public | Human-readable health checks. |
-| `/design-preview` | Local flag | Landing page preview for screenshots. 404 unless enabled. |
-| `/auth/callback` | Public | Exchange a PKCE code for a session. |
-| `/auth/confirm` | Public | Verify a token hash from a custom email template. |
+| `/reset-password` | Recovery session | Set a new password. |
+| `/status` | Public | Health checks and runbook. |
+| `/auth/callback` | Public | PKCE code exchange. |
+| `/auth/confirm` | Public | Token-hash verification. |
 | `/api/health` | Public | App health JSON. |
-| `/api/health/supabase` | Public | Supabase REST health JSON. |
+| `/api/health/supabase` | Public | Supabase health JSON. |
 
 ## Data model
 
-```sql
-public.profiles
-  id          uuid primary key → auth.users(id)
-  email       text not null
-  full_name   text
-  role        app_role not null default 'user'
-  created_at  timestamptz not null default now()
-  updated_at  timestamptz not null default now()
+```text
+profiles
+  id, email, full_name, role (superadmin | admin | user), created_at, updated_at
+
+customers
+  id, full_name, email, phone, company, notes, timestamps
+
+devices
+  id, customer_id -> customers, category, brand, model, serial, color, notes, timestamps
+
+tickets
+  id, ticket_number, public_code, customer_id, device_id,
+  status (intake | diagnosing | waiting_parts | in_repair | ready | picked_up | cancelled),
+  priority (low | normal | high | urgent), issue, diagnosis,
+  assigned_to -> profiles, labour_cents, estimate_cents, final_cents,
+  due_at, completed_at, created_by -> profiles, timestamps
+
+ticket_events
+  id, ticket_id, actor_id -> profiles, kind, status, body,
+  is_customer_visible, created_at
+
+parts
+  id, sku, name, category, stock, reorder_level, cost_cents, price_cents, supplier, timestamps
+
+ticket_parts
+  ticket_id, part_id, quantity, unit_price_cents
+
+invoices
+  id, ticket_id, invoice_number, labour_cents, parts_cents, subtotal_cents,
+  tax_cents, total_cents, status (draft | sent | paid | void), issued_at, paid_at
 ```
-
-`app_role` values: `superadmin`, `admin`, `user`.
-
-RLS:
-
-- Users read their own row.
-- Admins and superadmins read all rows.
-- Admins and superadmins update rows.
-- No client policy allows a user to change their own role.
-
-## Environment handling
-
-- `lib/supabase/env.ts` reads and validates the public URL/key.
-- The URL must be HTTPS, or HTTP on localhost.
-- Missing configuration produces a friendly message instead of a crash.
-- Server-only keys are never imported by client code.
-- The proxy skips session refresh when Supabase is not configured, so public pages still load.
 
 ## Security boundaries
 
 | Boundary | Control |
 | --- | --- |
-| Browser → server | Server actions validate every field; no client-only trust. |
-| Server → Supabase | Anon key + user session for normal work; service role only in the seed script. |
-| Database | RLS on `profiles`; security-definer `is_admin()` helper. |
-| Email links | Token hash or PKCE code exchange; expired/used links are rejected. |
-| Secrets | `.env.local` is ignored; no service-role value in `NEXT_PUBLIC_*`. |
+| Browser -> server | Server actions validate every field; no client-only trust. |
+| Server -> Supabase | Anon key + staff session for normal work; service role only for seed and staff creation. |
+| Repair tables | RLS enabled; authenticated staff can work, anonymous users cannot read. |
+| Public tracker | Security-definer RPC returns only customer-safe fields. |
+| Profiles | Staff can read the staff directory; only owner/manager can change roles. |
+| Stock | `add_ticket_part()` runs with row locks and rejects insufficient stock. |
+| Invoices | Generated and paid through database functions, not client-supplied totals. |
+| Secrets | `.env.local` ignored; service role is server-only. |
 
 ## Design decisions
 
-1. **Next.js App Router instead of the Express prototype.** One command, one deployment unit, and
-   server components can read the session without an extra API hop.
-2. **Supabase Auth instead of a custom password table.** Hashing, email delivery, token expiry,
-   and single-use enforcement are handled by the provider.
-3. **Built-in password reset instead of issue #32's custom table.** The issue explicitly allowed
-   this. It removes a class of token-handling bugs.
-4. **Profiles table plus RLS.** It gives the app a place for role data without exposing auth
-   internals.
-5. **Development-only design preview.** `/design-preview` is gated by an environment flag and is
-   not an auth bypass.
+1. **Next.js App Router** keeps the authenticated workspace and public tracker in one deployment.
+2. **Supabase Auth** owns passwords, reset tokens, email confirmation, and session cookies.
+3. **Postgres functions for money and stock** prevent double-submit and client-tampering bugs.
+4. **One public code + contact check** avoids customer accounts while still protecting repair data.
+5. **React Three Fiber** gives the dashboard a real product-specific 3D object without shipping a
+   model or external asset dependency.
+6. **Invite-only staff** removes the old public sign-up path from the internal workspace.
 
 ## Future work
 
-- Admin user-management screen.
-- Profile editing with a safe column-level update policy.
-- Email confirmation on by default in production.
-- Rate limiting and CAPTCHA on auth endpoints.
-- Playwright E2E tests against a seeded Supabase project.
-- Deployment pipeline and custom domain.
+- Email/SMS notifications for status changes.
+- Supplier purchase orders and receiving.
+- Barcode/QR label printing for devices and tickets.
+- Multi-location inventory and transfers.
+- Custom tax rates and discounts.
+- Audit log export and analytics.

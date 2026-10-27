@@ -13,41 +13,15 @@ test.describe("account access", () => {
     await page.goto("/");
 
     await expect(page).toHaveURL(/\/login$/);
-    await expect(page.getByRole("heading", { name: "Sign in to Lucky Patcher" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Sign in to Patchwork" })).toBeVisible();
   });
 
-  test("a new account can register, see the landing page, and log out", async ({ page }) => {
-    const email = uniqueEmail("register");
-
+  test("the public registration page is invite-only", async ({ page }) => {
     await page.goto("/register");
-    await page.getByLabel("Display name").fill("E2E Register");
-    await page.getByLabel("Email").fill(email);
-    await page.getByLabel("Password").fill("RegisterPass123!");
-    await page.getByRole("button", { name: "Create account" }).click();
 
-    await expect(page).toHaveURL("/");
-    await expect(page.getByText(email).first()).toBeVisible();
-    await expect(page.getByRole("button", { name: "Log out" })).toBeVisible();
-
-    await page.getByRole("button", { name: "Log out" }).click();
-
-    await expect(page).toHaveURL(/\/login$/);
-
-    await page.goto("/");
-    await expect(page).toHaveURL(/\/login$/);
-  });
-
-  test("a duplicate email shows a clear registration error", async ({ page }) => {
-    const email = uniqueEmail("duplicate");
-    await createConfirmedUser(email, "DuplicatePass123!");
-
-    await page.goto("/register");
-    await page.getByLabel("Email").fill(email);
-    await page.getByLabel("Password").fill("DuplicatePass123!");
-    await page.getByRole("button", { name: "Create account" }).click();
-
-    await expect(page.getByText("Email already registered.")).toBeVisible();
-    await expect(page).toHaveURL(/\/register$/);
+    await expect(page.getByRole("heading", { name: "Staff accounts are invite-only" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Create account" })).toHaveCount(0);
+    await expect(page.getByRole("link", { name: "Back to sign in" })).toBeVisible();
   });
 
   test("a wrong password stays on the login page", async ({ page }) => {
@@ -70,7 +44,7 @@ test.describe("account access", () => {
 
     await expect(page).toHaveURL("/");
     await expect(page.getByText(demoUsers.user).first()).toBeVisible();
-    await expect(page.getByText("User").first()).toBeVisible();
+    await expect(page.getByText("Technician").first()).toBeVisible();
 
     await page.getByRole("button", { name: "Log out" }).click();
     await expect(page).toHaveURL(/\/login$/);

@@ -18,11 +18,11 @@ presentation. They are not redrawn.
 
 | File | Route shown | Notes |
 | --- | --- | --- |
-| `login.png` | `/login` | Public sign-in screen. |
-| `register.png` | `/register` | Public account creation screen. |
+| `login.png` | `/login` | Split-shell staff sign-in with the 3D bench. |
+| `register.png` | `/register` | Invite-only staff access screen. |
 | `forgot-password.png` | `/forgot-password` | Reset request screen. |
 | `reset-password.png` | `/design-preview/reset-password` | Sample recovery session, marked as preview. |
-| `landing-preview.png` | `/` | Real signed-in landing page with the regular demo user. |
+| `landing-preview.png` | `/` | Real signed-in repair desk as the regular technician account. |
 | `status.png` | `/status` | App and hosted Supabase health checks, both ready. |
 
 Hosted login, logout, password reset, reused-link rejection, and RLS have been verified separately.

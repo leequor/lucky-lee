@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { RepairBench } from "@/components/patchwork/repair-bench";
 import { StatusPanel } from "@/components/landing/status-panel";
 import { Logo } from "@/components/ui/logo";
-import { LuckyScene } from "@/components/visual/lucky-scene";
 
 export const metadata: Metadata = {
   title: "System status",
@@ -19,8 +19,8 @@ const RUNBOOK = [
     body: "Confirm the project URL and anon key on the deployment, then run the check again.",
   },
   {
-    title: "Before the demo",
-    body: "Seed the demo accounts and open this page on the presentation laptop so both checks are warm.",
+    title: "Before service",
+    body: "Open this page on the front-desk machine so both checks are warm before customers arrive.",
   },
 ];
 
@@ -34,7 +34,7 @@ export default function StatusPage() {
             href="/"
             className="inline-flex items-center gap-2 rounded-full border border-line px-3 py-1.5 text-[12px] text-muted transition-colors hover:border-[#335245] hover:text-ink"
           >
-            Back to app
+            Back to desk
           </Link>
         </div>
       </header>
@@ -58,11 +58,10 @@ export default function StatusPage() {
             </div>
           </div>
 
-          <div className="reveal reveal-delay-1 relative hidden min-h-[280px] overflow-hidden rounded-2xl border border-line bg-[#08110d] lg:block">
-            <div className="scene-field pointer-events-none absolute inset-0" aria-hidden="true" />
-            <LuckyScene className="absolute inset-0" />
+          <div className="reveal reveal-delay-1 relative hidden min-h-[280px] overflow-hidden rounded-2xl border border-line bg-[#0B0D10] lg:block">
+            <RepairBench compact className="absolute inset-0 border-0" />
             <div className="pointer-events-none absolute inset-x-5 bottom-5">
-              <p className="text-[11px] text-muted">Connection field</p>
+              <p className="text-[11px] text-muted">Bench check</p>
               <p className="mt-1 text-[14px] font-medium text-ink">Two checks. One clear answer.</p>
             </div>
           </div>

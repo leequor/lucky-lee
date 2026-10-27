@@ -17,15 +17,19 @@
     "check:env": "node scripts/check-env.mjs",
     "capture:mockups": "node scripts/capture-mockups.mjs",
     "seed:demo": "node scripts/seed-demo-users.mjs",
+    "seed:repair": "node scripts/seed-repair-data.mjs",
     "db:push": "supabase db push"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.2",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.118.0",
     "clsx": "^2.1.1",
     "next": "16.4.3",
     "react": "19.3.1",
-    "react-dom": "19.3.1"
+    "react-dom": "19.3.1",
+    "three": "^0.180.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
@@ -36,6 +40,7 @@
     "@types/node": "^24.0.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.180.0",
     "@vitest/coverage-v8": "^4.1.12",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.0.0",
