@@ -35,7 +35,7 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
 try {
   for (const [path, name] of pages) {
     await page.goto(`${baseUrl}${path}`, { waitUntil: "networkidle" });
-    await page.waitForTimeout(1800);
+    await page.waitForTimeout(3000);
     const target = join(mockupsDir, name);
     await page.screenshot({ path: target, fullPage: true });
     copyFileSync(target, join(screenshotsDir, name));
@@ -49,7 +49,7 @@ try {
     page.waitForURL(`${baseUrl}/`),
     page.getByRole("button", { name: "Sign in" }).click(),
   ]);
-  await page.waitForTimeout(1800);
+  await page.waitForTimeout(4000);
 
   const landing = join(mockupsDir, "landing-preview.png");
   await page.screenshot({ path: landing, fullPage: true });

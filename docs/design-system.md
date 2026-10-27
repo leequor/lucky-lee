@@ -101,17 +101,26 @@ Sentence case everywhere. Numbers in tables and totals use `font-variant-numeric
 - The result shows device, issue, current stage, and only customer-visible timeline events.
 - Never shows address, payment details, internal notes, or staff-only fields.
 
-## The 3D repair bench
+## The 3D bench
 
 `components/patchwork/repair-bench.tsx` and `repair-scene.tsx`.
 
-- A repair bench with a standing display, open titanium frame, battery pack, logic board with
-  chips and gold connectors, camera module, screws, a precision driver, a spudger, and a parts tray.
-- An orange ribbon cable runs from the display to the board.
-- The four layer buttons select a part; the selected part lifts off the bench and settles back.
-- Pointer movement tilts the whole rig; the scene pauses under `prefers-reduced-motion`.
-- Built with React Three Fiber and Three.js; no external HDR, model, or texture downloads.
-- Compact mode hides the layer controls for auth banners and small panels.
+- A studio teardown in three floating layers: the display, the chassis with its internals, and the
+  back panel. No external model or texture downloads.
+- The display is a live repair screen: 62% progress ring, ticket PW-1041, four repair stages, the
+  technician, and the ETA.
+- The chassis exposes a graphite battery, a green logic board with shield cans, a copper coil, gold
+  traces, camera module, taptic engine, screws, and pull tabs.
+- Titanium frames use a clearcoat finish; the screen glass and back panel catch soft studio
+  lightformers. A dim reflective stage, orange light pool, guide lines, and floating dust finish the
+  shot.
+- Bloom is limited to the screen ring and orange accents; a vignette keeps the corners dark.
+- The four layer buttons select a part; the selected part lifts out of the chassis with a warm work
+  light. The display lifts toward the camera.
+- A fitted perspective camera keeps all three layers in frame on wide, narrow, and compact cards.
+- Pointer movement tilts the rig; idle motion stops under `prefers-reduced-motion`.
+- Compact mode drops the back panel and layer controls for auth and status panels; narrow cards drop
+  the back panel too.
 - Canvas is decorative; every state is repeated in text.
 
 ## Layout
