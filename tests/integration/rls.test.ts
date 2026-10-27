@@ -202,4 +202,78 @@ describe.skipIf(!configured)("profiles RLS against a live Supabase project", () 
     expect(error).toBeNull();
     expect(data).toMatchObject({ ticket_number: "PW-1041", status: "in_repair" });
   });
+
+  it("only lets an owner grant owner access", async () => {
+    const { error } = await adminUser.client
+      .from("profiles")
+      .update({ role: "superadmin" })
+      .eq("id", adminUser.id);
+
+    expect(error).not.toBeNull();
+
+    const { data } = await supabaseAdmin
+      .from("profiles")
+      .select("role")
+      .eq("id", adminUser.id)
+      .single();
+
+    expect(data?.role).toBe("admin");
+  });
+
+  it("does not let a technician write inventory or invoices", async () => {
+    const { data: part } = await supabaseAdmin.from("parts").select("id,stock").limit(1).single();
+    const { data: invoice } = await supabaseAdmin
+      .from("invoices")
+      .select("id,status")
+      .limit(1)
+      .single();
+
+    const stockUpdate = await userOne.client
+      .from("parts")
+      .update({ stock: part!.stock })
+      .eq("id", part!.id)
+      .select("id");
+
+    const invoiceUpdate = await userOne.client
+      .from("invoices")
+      .update({ status: invoice!.status })
+      .eq("id", invoice!.id)
+      .select("id");
+
+    expect(stockUpdate.data ?? []).toHaveLength(0);
+    expect(invoiceUpdate.data ?? []).toHaveLength(0);
+  });
+
+  it("lets a manager adjust inventory", async () => {
+    const { data: part } = await supabaseAdmin.from("parts").select("id,stock").limit(1).single();
+
+    const { data, error } = await adminUser.client
+      .from("parts")
+      .update({ stock: part!.stock })
+      .eq("id", part!.id)
+      .select("id");
+
+    expect(error).toBeNull();
+    expect(data ?? []).toHaveLength(1);
+  });
+
+  it("requires a real email or phone for tracking", async () => {
+    const anon = createClient(url!, anonKey!, {
+      auth: { autoRefreshToken: false, persistSession: false },
+    });
+
+    const byPhone = await anon.rpc("track_ticket", {
+      p_code: "track1041",
+      p_contact: "415-555-0142",
+    });
+    const byJunk = await anon.rpc("track_ticket", {
+      p_code: "TRACK1041",
+      p_contact: "not-a-contact",
+    });
+
+    expect(byPhone.error).toBeNull();
+    expect(byPhone.data).toMatchObject({ ticket_number: "PW-1041" });
+    expect(byJunk.error).toBeNull();
+    expect(byJunk.data).toBeNull();
+  });
 });

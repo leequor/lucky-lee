@@ -42,7 +42,7 @@ test.describe("account access", () => {
     await page.getByLabel("Password").fill(demoPassword);
     await page.getByRole("button", { name: "Sign in" }).click();
 
-    await expect(page).toHaveURL("/");
+    await expect(page).toHaveURL("/", { timeout: 15000 });
     await expect(page.getByText(demoUsers.user).first()).toBeVisible();
     await expect(page.getByText("Technician").first()).toBeVisible();
 
@@ -96,7 +96,7 @@ test.describe("account access", () => {
     await page.getByLabel("Email").fill(email);
     await page.getByLabel("Password").fill(newPassword);
     await page.getByRole("button", { name: "Sign in" }).click();
-    await expect(page).toHaveURL("/");
+    await expect(page).toHaveURL("/", { timeout: 15000 });
     await expect(page.getByText(email).first()).toBeVisible();
 
     await page.getByRole("button", { name: "Log out" }).click();

@@ -30,14 +30,21 @@ const staff = [
 ];
 
 describe("TicketIntakeForm", () => {
-  it("starts with an existing customer and device", async () => {
+  it("starts with no customer selected and asks for a device", async () => {
     const browser = userEvent.setup();
     render(<TicketIntakeForm customers={customers} staff={staff} />);
 
-    expect(screen.getByLabelText("Customer")).toHaveValue("customer-1");
-    expect(screen.getByLabelText("Device")).toHaveValue("device-1");
+    expect(screen.getByLabelText("Customer")).toHaveValue("");
+    expect(screen.getByLabelText("Device")).toBeDisabled();
     expect(screen.getByLabelText("What is wrong?")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Create ticket" })).toBeInTheDocument();
+
+    await browser.selectOptions(screen.getByLabelText("Customer"), "customer-1");
+    expect(screen.getByLabelText("Device")).toHaveValue("");
+    expect(screen.getByLabelText("Device")).not.toBeDisabled();
+
+    await browser.selectOptions(screen.getByLabelText("Device"), "device-1");
+    expect(screen.getByLabelText("Device")).toHaveValue("device-1");
 
     await browser.selectOptions(screen.getByLabelText("Customer"), "customer-2");
     expect(screen.getByLabelText("Device")).toBeDisabled();

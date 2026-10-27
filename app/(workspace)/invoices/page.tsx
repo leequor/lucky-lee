@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { markInvoicePaidAction } from "@/app/actions/repair";
@@ -13,8 +14,11 @@ import {
 } from "@/components/workspace/ui";
 import { formatDate, formatMoney } from "@/lib/repair/format";
 import { getInvoices } from "@/lib/repair/queries";
+import { getStaff } from "@/lib/repair/session";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Invoices" };
 
 export default async function InvoicesPage({
   searchParams,
@@ -22,7 +26,8 @@ export default async function InvoicesPage({
   searchParams: Promise<{ notice?: string; error?: string }>;
 }) {
   const params = await searchParams;
-  const invoices = await getInvoices();
+  const [invoices, staff] = await Promise.all([getInvoices(), getStaff()]);
+  const canManage = staff?.role !== "user";
   const paid = invoices.filter((invoice) => invoice.status === "paid");
   const unpaid = invoices.filter((invoice) => invoice.status !== "paid" && invoice.status !== "void");
   const revenue = paid.reduce((total, invoice) => total + invoice.total_cents, 0);
@@ -96,12 +101,14 @@ export default async function InvoicesPage({
                       <span className="text-[11px] text-positive-ink">Paid {formatDate(invoice.paid_at)}</span>
                     ) : invoice.status === "void" ? (
                       <span className="text-[11px] text-muted">Void</span>
-                    ) : (
+                    ) : canManage ? (
                       <form action={markInvoicePaidAction}>
                         <input type="hidden" name="invoice_id" value={invoice.id} />
                         <input type="hidden" name="return_to" value="/invoices" />
                         <SubmitButton pendingText="Recording...">Mark paid</SubmitButton>
                       </form>
+                    ) : (
+                      <span className="text-[11px] text-muted">Manager review</span>
                     )}
                   </div>
                 </div>

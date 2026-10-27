@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 
 import { RepairBench } from "@/components/patchwork/repair-bench";
 import { Feedback, Panel, StatusPill } from "@/components/workspace/ui";
@@ -12,6 +13,11 @@ import {
 import { getTrackedTicket } from "@/lib/repair/queries";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Track your repair",
+  description: "Check repair progress with your tracking code and the email or phone on file.",
+};
 
 type SearchParams = Promise<{
   code?: string;
@@ -60,13 +66,13 @@ export default async function TrackPage({ searchParams }: { searchParams: Search
                 Track your repair.
               </h1>
               <p className="mt-4 max-w-[44ch] text-[14px] leading-6 text-muted">
-                Enter the ticket code from your intake receipt and the email or phone number on the
-                repair. No account needed.
+                Enter the tracking code from your intake receipt and the email or phone number on
+                the repair. No account needed.
               </p>
 
               <form className="mt-7 space-y-3" method="get">
                 <label className="block">
-                  <span className="mb-1.5 block text-[12px] font-medium text-ink">Ticket code</span>
+                  <span className="mb-1.5 block text-[12px] font-medium text-ink">Tracking code</span>
                   <input
                     name="code"
                     defaultValue={code}
@@ -97,7 +103,7 @@ export default async function TrackPage({ searchParams }: { searchParams: Search
             </div>
 
             <div className="mt-8 border-t border-line pt-4 text-[11px] leading-5 text-muted">
-              <p>Your code is on the intake receipt. Contact the shop if you cannot find it.</p>
+              <p>Your tracking code is on the intake receipt. Contact the shop if you cannot find it.</p>
             </div>
           </div>
 
@@ -119,6 +125,10 @@ export default async function TrackPage({ searchParams }: { searchParams: Search
               <p className="mt-2 text-[12px] text-muted">
                 {DEVICE_CATEGORY_LABELS[ticket.device.category] ?? ticket.device.category} · opened{" "}
                 {formatDate(ticket.created_at)} · updated {formatRelative(ticket.updated_at)}
+              </p>
+              <p className="mt-1 text-[11px] text-muted">
+                Tracking code <span className="font-mono text-ink">{code.toUpperCase()}</span> ·
+                ticket <span className="font-mono text-ink">{ticket.ticket_number}</span>
               </p>
 
               <div className="mt-6 rounded-xl border border-line bg-paper p-4">

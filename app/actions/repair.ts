@@ -30,6 +30,14 @@ async function client() {
   return createSupabaseServerClient();
 }
 
+async function requireManager(returnTo: string) {
+  const staff = await requireStaff();
+  if (staff.role === "user") {
+    failTo(returnTo, "Managers and owners manage this area.");
+  }
+  return staff;
+}
+
 export async function createCustomerAction(formData: FormData) {
   await requireStaff();
   const fullName = readString(formData, "fullName");
@@ -251,6 +259,20 @@ export async function updateTicketStatusAction(formData: FormData) {
   if (!isTicketStatus(status)) failTo(`/tickets/${ticketId}`, "Choose a valid status.");
 
   const supabase = await client();
+
+  if (status === "picked_up") {
+    const { data: invoice, error: invoiceError } = await supabase
+      .from("invoices")
+      .select("status")
+      .eq("ticket_id", ticketId)
+      .maybeSingle();
+
+    if (invoiceError) failTo(`/tickets/${ticketId}`, invoiceError.message);
+    if (!invoice || invoice.status !== "paid") {
+      failTo(`/tickets/${ticketId}`, "Collect payment before marking this ticket picked up.");
+    }
+  }
+
   const { error } = await supabase
     .from("tickets")
     .update({
@@ -328,9 +350,9 @@ export async function addTicketPartAction(formData: FormData) {
 }
 
 export async function createInvoiceAction(formData: FormData) {
-  await requireStaff();
   const ticketId = readString(formData, "ticket_id");
   if (!ticketId) failTo("/tickets", "Ticket is required.");
+  await requireManager(`/tickets/${ticketId}`);
 
   const supabase = await client();
   const { error } = await supabase.rpc("create_ticket_invoice", { p_ticket_id: ticketId });
@@ -342,11 +364,11 @@ export async function createInvoiceAction(formData: FormData) {
 }
 
 export async function markInvoicePaidAction(formData: FormData) {
-  await requireStaff();
   const invoiceId = readString(formData, "invoice_id");
   const returnTo = readString(formData, "return_to") || "/invoices";
 
   if (!invoiceId) failTo(returnTo, "Invoice is required.");
+  await requireManager(returnTo);
 
   const supabase = await client();
   const { error } = await supabase.rpc("mark_invoice_paid", { p_invoice_id: invoiceId });
@@ -358,7 +380,7 @@ export async function markInvoicePaidAction(formData: FormData) {
 }
 
 export async function addPartAction(formData: FormData) {
-  await requireStaff();
+  await requireManager("/inventory?new=1");
   const sku = readString(formData, "sku").toUpperCase();
   const name = readString(formData, "name");
   const category = readString(formData, "category") || "general";
@@ -394,7 +416,7 @@ export async function addPartAction(formData: FormData) {
 }
 
 export async function adjustStockAction(formData: FormData) {
-  await requireStaff();
+  await requireManager("/inventory");
   const partId = readString(formData, "part_id");
   const delta = Number(readString(formData, "delta") || "0");
   if (!partId || !Number.isInteger(delta) || delta === 0) {
@@ -419,7 +441,7 @@ export async function adjustStockAction(formData: FormData) {
 }
 
 export async function updateRoleAction(formData: FormData) {
-  await requireAdmin();
+  const actor = await requireAdmin();
   const profileId = readString(formData, "profile_id");
   const role = readString(formData, "role");
   if (!profileId || !["superadmin", "admin", "user"].includes(role)) {
@@ -427,6 +449,29 @@ export async function updateRoleAction(formData: FormData) {
   }
 
   const supabase = await client();
+  const { data: target, error: readError } = await supabase
+    .from("profiles")
+    .select("id, role")
+    .eq("id", profileId)
+    .maybeSingle();
+
+  if (readError) failTo("/team", readError.message);
+  if (!target) failTo("/team", "Staff member not found.");
+
+  if ((target.role === "superadmin" || role === "superadmin") && actor.role !== "superadmin") {
+    failTo("/team", "Only an owner can change owner roles.");
+  }
+
+  if (target.role === "superadmin" && role !== "superadmin") {
+    const { count, error: countError } = await supabase
+      .from("profiles")
+      .select("id", { count: "exact", head: true })
+      .eq("role", "superadmin");
+
+    if (countError) failTo("/team", countError.message);
+    if ((count ?? 0) <= 1) failTo("/team", "The last owner cannot be demoted.");
+  }
+
   const { error } = await supabase.from("profiles").update({ role }).eq("id", profileId);
   if (error) failTo("/team", error.message);
 
@@ -435,7 +480,7 @@ export async function updateRoleAction(formData: FormData) {
 }
 
 export async function inviteStaffAction(formData: FormData) {
-  await requireAdmin();
+  const actor = await requireAdmin();
   const fullName = readString(formData, "full_name");
   const email = readString(formData, "email").toLowerCase();
   const password = readString(formData, "password");
@@ -446,6 +491,9 @@ export async function inviteStaffAction(formData: FormData) {
   if (emailError) failTo("/team", emailError);
   if (password.length < 8) failTo("/team", "Temporary password must be at least 8 characters.");
   if (!["superadmin", "admin", "user"].includes(role)) failTo("/team", "Choose a valid role.");
+  if (role === "superadmin" && actor.role !== "superadmin") {
+    failTo("/team", "Only an owner can add another owner.");
+  }
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();

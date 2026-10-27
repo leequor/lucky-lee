@@ -30,6 +30,7 @@ import {
   TICKET_STATUS_META,
 } from "@/lib/repair/format";
 import { getInventory, getStaffProfiles, getTicketDetail } from "@/lib/repair/queries";
+import { getStaff as getCurrentStaff } from "@/lib/repair/session";
 import { TICKET_PRIORITIES, TICKET_STATUSES } from "@/lib/repair/types";
 
 export const dynamic = "force-dynamic";
@@ -42,10 +43,11 @@ type PageProps = {
 export default async function TicketDetailPage({ params, searchParams }: PageProps) {
   const { id } = await params;
   const query = await searchParams;
-  const [ticket, staff, parts] = await Promise.all([
+  const [ticket, staff, parts, currentStaff] = await Promise.all([
     getTicketDetail(id),
     getStaffProfiles(),
     getInventory(),
+    getCurrentStaff(),
   ]);
 
   if (!ticket) notFound();
@@ -59,6 +61,7 @@ export default async function TicketDetailPage({ params, searchParams }: PagePro
   const total = subtotal + tax;
   const invoice = ticket.invoice;
   const canAddPart = parts.some((part) => part.stock > 0);
+  const canManageInvoices = currentStaff?.role !== "user";
 
   return (
     <div>
@@ -94,7 +97,7 @@ export default async function TicketDetailPage({ params, searchParams }: PagePro
         <div className="text-right text-[11px] text-muted">
           <p>Opened {formatRelative(ticket.created_at)}</p>
           <p className="mt-1">
-            Public code <span className="font-mono text-ink">{ticket.public_code}</span>
+            Tracking code <span className="font-mono text-ink">{ticket.public_code}</span>
           </p>
         </div>
       </div>
@@ -329,19 +332,25 @@ export default async function TicketDetailPage({ params, searchParams }: PagePro
               <div className="border-t border-line p-5">
                 {invoice.status === "paid" ? (
                   <p className="text-[12px] text-positive-ink">Paid {formatDate(invoice.paid_at)}</p>
-                ) : (
+                ) : canManageInvoices ? (
                   <form action={markInvoicePaidAction}>
                     <input type="hidden" name="invoice_id" value={invoice.id} />
                     <input type="hidden" name="return_to" value={`/tickets/${ticket.id}`} />
                     <SubmitButton pendingText="Recording... " className="w-full">Mark paid + collected</SubmitButton>
                   </form>
+                ) : (
+                  <p className="text-[12px] text-muted">Awaiting manager collection.</p>
                 )}
               </div>
-            ) : (
+            ) : canManageInvoices ? (
               <form action={createInvoiceAction} className="border-t border-line p-5">
                 <input type="hidden" name="ticket_id" value={ticket.id} />
                 <SubmitButton pendingText="Generating..." className="w-full">Generate invoice</SubmitButton>
               </form>
+            ) : (
+              <p className="border-t border-line p-5 text-[12px] text-muted">
+                A manager generates the invoice when the repair is ready.
+              </p>
             )}
           </Panel>
 

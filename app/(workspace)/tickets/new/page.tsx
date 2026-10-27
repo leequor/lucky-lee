@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Feedback, PageHeader, Panel } from "@/components/workspace/ui";
@@ -5,6 +6,8 @@ import { TicketIntakeForm } from "@/components/workspace/ticket-intake-form";
 import { getCustomerOptions, getStaffProfiles } from "@/lib/repair/queries";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "New ticket" };
 
 type SearchParams = Promise<{ error?: string; mode?: string }>;
 
@@ -63,8 +66,8 @@ export default async function NewTicketPage({ searchParams }: { searchParams: Se
           <Panel className="reveal reveal-delay-2 p-5">
             <h2 className="text-[14px] font-medium text-ink">What the customer gets</h2>
             <p className="mt-2 text-[12px] leading-5 text-muted">
-              Every ticket gets a public code. The customer opens{" "}
-              <Link href="/track" className="text-accent hover:text-[#ff8358]">
+              Every ticket gets a tracking code. The customer opens{" "}
+              <Link href="/track" className="text-accent underline underline-offset-2 hover:text-[#ff8358]">
                 /track
               </Link>{" "}
               and enters the code plus the email or phone on file.

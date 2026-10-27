@@ -33,10 +33,10 @@ export function TicketIntakeForm({
   initialMode?: "existing" | "new";
 }) {
   const [mode, setMode] = useState<"existing" | "new">(initialMode);
-  const [customerId, setCustomerId] = useState(customers[0]?.id ?? "");
+  const [customerId, setCustomerId] = useState("");
   const selected = customers.find((customer) => customer.id === customerId);
   const devices = selected?.devices ?? [];
-  const [deviceId, setDeviceId] = useState(devices[0]?.id ?? "");
+  const [deviceId, setDeviceId] = useState("");
 
   const switchMode = (next: "existing" | "new") => {
     setMode(next);
@@ -80,8 +80,7 @@ export function TicketIntakeForm({
             onChange={(event) => {
               const nextId = event.target.value;
               setCustomerId(nextId);
-              const next = customers.find((customer) => customer.id === nextId);
-              setDeviceId(next?.devices[0]?.id ?? "");
+              setDeviceId("");
             }}
             required
           >
@@ -218,7 +217,7 @@ export function TicketIntakeForm({
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line pt-5">
         <p className="max-w-[52ch] text-[11px] leading-5 text-muted">
           Intake creates a public tracking code automatically. The customer can follow the repair
-          with their ticket code and email or phone.
+          with their tracking code and email or phone.
         </p>
         <SubmitButton pendingText="Creating ticket...">Create ticket</SubmitButton>
       </div>

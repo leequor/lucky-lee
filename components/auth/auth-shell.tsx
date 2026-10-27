@@ -15,7 +15,7 @@ const PROOF = [
   },
   {
     title: "Customer tracking",
-    note: "A public code shows progress without exposing customer data.",
+    note: "A tracking code shows progress without exposing customer data.",
   },
 ];
 

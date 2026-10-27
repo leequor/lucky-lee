@@ -60,6 +60,7 @@ the service-role-only server action.
 2. The function totals labour + parts, applies 12% tax, upserts the invoice, marks the ticket ready,
    and records an event.
 3. `mark_invoice_paid()` sets the invoice paid and moves the ticket to picked up/collected.
+   `picked_up` is rejected by the status action unless the invoice is paid.
 
 ### Public tracking
 
@@ -133,9 +134,9 @@ invoices
 | --- | --- |
 | Browser -> server | Server actions validate every field; no client-only trust. |
 | Server -> Supabase | Anon key + staff session for normal work; service role only for seed and staff creation. |
-| Repair tables | RLS enabled; authenticated staff can work, anonymous users cannot read. |
+| Repair tables | RLS enabled; authenticated staff read, managers and owners write inventory and invoices. |
 | Public tracker | Security-definer RPC returns only customer-safe fields. |
-| Profiles | Staff can read the staff directory; only owner/manager can change roles. |
+| Profiles | Staff can read the directory; owners change owner roles, managers change other roles. |
 | Stock | `add_ticket_part()` runs with row locks and rejects insufficient stock. |
 | Invoices | Generated and paid through database functions, not client-supplied totals. |
 | Secrets | `.env.local` ignored; service role is server-only. |

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import {
@@ -14,6 +15,8 @@ import { getStaffProfiles, getTickets } from "@/lib/repair/queries";
 import { TICKET_PRIORITIES, TICKET_STATUSES } from "@/lib/repair/types";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Tickets" };
 
 type SearchParams = Promise<{
   q?: string;
