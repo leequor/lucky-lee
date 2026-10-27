@@ -14,7 +14,12 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "html", "json-summary"],
       include: ["app/**/*.{ts,tsx}", "components/**/*.{ts,tsx}", "lib/**/*.{ts,tsx}"],
-      exclude: ["**/*.d.ts", "app/design-preview/**"],
+      exclude: [
+        "**/*.d.ts",
+        "app/design-preview/**",
+        // WebGL scene is exercised by browser/E2E screenshots; jsdom has no WebGL context.
+        "components/patchwork/repair-scene.tsx",
+      ],
       thresholds: {
         statements: 60,
         branches: 55,
