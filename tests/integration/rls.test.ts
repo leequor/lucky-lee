@@ -196,7 +196,6 @@ describe.skipIf(!configured)("profiles RLS against a live Supabase project", () 
 
     const { data, error } = await anon.rpc("track_ticket", {
       p_code: "TRACK1041",
-      p_contact: "maya.chen@example.com",
     });
 
     expect(error).toBeNull();
@@ -280,23 +279,26 @@ describe.skipIf(!configured)("profiles RLS against a live Supabase project", () 
     expect(data ?? []).toHaveLength(1);
   });
 
-  it("requires a real email or phone for tracking", async () => {
+  it("tracks with only the code and rejects the guessable ticket number", async () => {
     const anon = createClient(url!, anonKey!, {
       auth: { autoRefreshToken: false, persistSession: false },
     });
 
-    const byPhone = await anon.rpc("track_ticket", {
-      p_code: "track1041",
-      p_contact: "415-555-0142",
+    const byCode = await anon.rpc("track_ticket", {
+      p_code: " track1041 ",
     });
-    const byJunk = await anon.rpc("track_ticket", {
-      p_code: "TRACK1041",
-      p_contact: "not-a-contact",
+    const byTicketNumber = await anon.rpc("track_ticket", {
+      p_code: "PW-1041",
+    });
+    const unknown = await anon.rpc("track_ticket", {
+      p_code: "NOPE",
     });
 
-    expect(byPhone.error).toBeNull();
-    expect(byPhone.data).toMatchObject({ ticket_number: "PW-1041" });
-    expect(byJunk.error).toBeNull();
-    expect(byJunk.data).toBeNull();
+    expect(byCode.error).toBeNull();
+    expect(byCode.data).toMatchObject({ ticket_number: "PW-1041" });
+    expect(byTicketNumber.error).toBeNull();
+    expect(byTicketNumber.data).toBeNull();
+    expect(unknown.error).toBeNull();
+    expect(unknown.data).toBeNull();
   });
 });

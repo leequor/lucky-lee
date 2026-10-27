@@ -21,11 +21,11 @@ Every staff account is created through the `/team` action, not through public si
 | `customers`, `devices`, `tickets`, `ticket_events`, `ticket_parts` | Authenticated staff can work the shop. |
 | `parts`, `invoices` select | Any authenticated staff member can read. |
 | `parts`, `invoices` write | Owner/manager only. Technicians use `add_ticket_part`; billing RPCs are manager/owner-only. |
-| `track_ticket` | Anonymous RPC; requires a tracking code plus the matching email or phone. |
+| `track_ticket` | Anonymous RPC; requires only the unguessable tracking code. |
 
 `public.is_admin()` is a `security definer` function with a fixed `search_path`. It avoids recursive RLS checks and is executable by authenticated users only.
 
-The role guard is in `supabase/migrations/202610270005_role_guards.sql`; the billing RPC guard is in `202610270007_billing_rpc_guards.sql`; the tracker contact guard is in `202610270006_track_phone_guard.sql`. They are enforced for direct API calls as well as the UI.
+The role guard is in `supabase/migrations/202610270005_role_guards.sql`; the billing RPC guard is in `202610270007_billing_rpc_guards.sql`; the code-only tracker is in `202610270008_track_code_only.sql`. They are enforced for direct API calls as well as the UI.
 
 ## 3. Roles
 
@@ -45,11 +45,11 @@ Technicians can still add parts to a ticket and update ticket status. The securi
 
 ## 4. Public tracking
 
-- `/track` accepts the tracking code plus the email or phone on file. No customer account is needed.
-- `track_ticket(code, contact)` returns only the ticket number, status, issue, device, first name, and customer-visible timeline events.
+- `/track` accepts the unguessable tracking code on its own. No customer account, email, or phone is needed.
+- `track_ticket(code)` returns only the ticket number, status, issue, device, first name, and customer-visible timeline events.
 - It never returns the address, payment details, internal notes, or staff-only fields.
-- A contact with no digits does not match a customer with no phone stored.
-- There is no rate limiting on the public RPC yet. Add edge rate limiting before a public launch.
+- The sequential `PW-` number is deliberately rejected. Anyone with the tracking code can see that repair's status, so the code is a bearer credential and must be given only to the customer.
+- The generated code is 10 random hex characters. There is no rate limiting on the public RPC yet. Add edge rate limiting before a public launch, and lengthen codes if the tracker is exposed to a wider audience.
 
 ## 5. Password reset
 
@@ -80,7 +80,7 @@ The seed script uses the Admin API with the service-role key and creates three c
 - [x] Server-side role provisioning.
 - [x] RLS for repair tables and manager/owner write policies.
 - [x] Owner role guard and last-owner protection.
-- [x] Public tracking allow-list and contact guard.
+- [x] Public tracking allow-list and unguessable code.
 - [ ] Configure custom SMTP and the token-hash reset template.
 - [ ] Set the Supabase Site URL and redirect allow-list to the production domain.
 - [ ] Add rate limiting to `/track` and auth endpoints.

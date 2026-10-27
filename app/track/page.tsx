@@ -16,21 +16,19 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Track your repair",
-  description: "Check repair progress with your tracking code and the email or phone on file.",
+  description: "Check repair progress with the tracking code from your intake receipt.",
 };
 
 type SearchParams = Promise<{
   code?: string;
-  contact?: string;
   error?: string;
 }>;
 
 export default async function TrackPage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
   const code = params.code?.trim() ?? "";
-  const contact = params.contact?.trim() ?? "";
-  const hasQuery = Boolean(code && contact);
-  const ticket = hasQuery ? await getTrackedTicket(code, contact) : null;
+  const hasQuery = Boolean(code);
+  const ticket = hasQuery ? await getTrackedTicket(code) : null;
 
   return (
     <main className="min-h-[100dvh] bg-paper">
@@ -66,8 +64,8 @@ export default async function TrackPage({ searchParams }: { searchParams: Search
                 Track your repair.
               </h1>
               <p className="mt-4 max-w-[44ch] text-[14px] leading-6 text-muted">
-                Enter the tracking code from your intake receipt and the email or phone number on
-                the repair. No account needed.
+                Enter the tracking code from your intake receipt. No email, phone number, or
+                account needed.
               </p>
 
               <form className="mt-7 space-y-3" method="get">
@@ -77,20 +75,14 @@ export default async function TrackPage({ searchParams }: { searchParams: Search
                     name="code"
                     defaultValue={code}
                     placeholder="e.g. TRACK1041"
+                    aria-describedby="tracking-code-help"
                     className="h-11 w-full rounded-lg border border-line bg-paper px-3.5 font-mono text-[13px] uppercase tracking-[0.04em] text-ink outline-none placeholder:font-sans placeholder:tracking-normal placeholder:text-muted/55 focus:border-accent"
                     required
                   />
                 </label>
-                <label className="block">
-                  <span className="mb-1.5 block text-[12px] font-medium text-ink">Email or phone</span>
-                  <input
-                    name="contact"
-                    defaultValue={contact}
-                    placeholder="maya@northline.studio or 415-555-0142"
-                    className="h-11 w-full rounded-lg border border-line bg-paper px-3.5 text-[13px] text-ink outline-none placeholder:text-muted/55 focus:border-accent"
-                    required
-                  />
-                </label>
+                <p id="tracking-code-help" className="mt-1.5 text-[11px] leading-5 text-muted">
+                  The 10-character code on your receipt, not the PW- number.
+                </p>
                 <button
                   type="submit"
                   className="mt-2 inline-flex h-11 w-full items-center justify-center rounded-full bg-accent text-[13px] font-semibold text-[#170A05] transition-colors hover:bg-[#ff8358]"
@@ -99,7 +91,7 @@ export default async function TrackPage({ searchParams }: { searchParams: Search
                 </button>
               </form>
 
-              <Feedback error={params.error || (hasQuery && !ticket ? "No ticket matched that code and contact." : undefined)} />
+              <Feedback error={params.error || (hasQuery && !ticket ? "No ticket matched that code. Check the 10-character code on your receipt." : undefined)} />
             </div>
 
             <div className="mt-8 border-t border-line pt-4 text-[11px] leading-5 text-muted">
@@ -180,9 +172,9 @@ export default async function TrackPage({ searchParams }: { searchParams: Search
         ) : (
           <section className="mt-5 grid gap-4 sm:grid-cols-3">
             {[
-              ["1", "Find your code", "The code is printed on the intake receipt, next to the ticket number."],
-              ["2", "Use the contact on file", "Enter the email or phone number you gave at the counter."],
-              ["3", "No account needed", "The tracker only shows repair progress, not your address or payment details."],
+              ["1", "Find your code", "The 10-character code is printed on the intake receipt, next to the ticket number."],
+              ["2", "Check the stage", "Open the tracker any time; the stage and timeline update as the bench works."],
+              ["3", "Keep it private", "The code is the key. Anyone who has it sees status only, never payment details."],
             ].map(([step, title, body]) => (
               <Panel key={step} className="reveal p-5">
                 <p className="figure text-[11px] text-accent">{step}</p>

@@ -97,7 +97,7 @@ Sentence case everywhere. Numbers in tables and totals use `font-variant-numeric
 ### Public tracker
 
 - Same brand and 3D bench, but no workspace chrome.
-- Form takes the tracking code plus email or phone.
+- Form takes the 10-character tracking code. No email or phone is needed.
 - The result shows device, issue, current stage, and only customer-visible timeline events.
 - Never shows address, payment details, internal notes, or staff-only fields.
 

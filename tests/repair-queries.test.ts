@@ -256,12 +256,11 @@ describe("repair queries", () => {
 
   it("tracks a ticket through the public RPC", async () => {
     vi.mocked(createSupabaseServerClient).mockResolvedValue(client as never);
-    expect(await getTrackedTicket("TRACK1041", "maya@example.com")).toMatchObject({
+    expect(await getTrackedTicket("TRACK1041")).toMatchObject({
       ticket_number: "PW-1041",
     });
     expect(client.rpc).toHaveBeenCalledWith("track_ticket", {
       p_code: "TRACK1041",
-      p_contact: "maya@example.com",
     });
   });
 

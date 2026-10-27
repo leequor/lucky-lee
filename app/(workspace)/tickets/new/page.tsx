@@ -70,7 +70,7 @@ export default async function NewTicketPage({ searchParams }: { searchParams: Se
               <Link href="/track" className="text-accent underline underline-offset-2 hover:text-[#ff8358]">
                 /track
               </Link>{" "}
-              and enters the code plus the email or phone on file.
+              and enters the code. No email or phone number is needed.
             </p>
             <div className="mt-4 rounded-xl border border-line bg-paper p-3">
               <p className="text-[10px] text-muted">Customer sees</p>

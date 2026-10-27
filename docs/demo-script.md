@@ -86,7 +86,7 @@ decorative hero.”
 
 1. Show `/team` roles: Owner, Manager, Technician.
 2. Explain RLS: anonymous users cannot read repair tables.
-3. Open `/track`, enter `TRACK1041` + `maya.chen@example.com`.
+3. Open `/track`, enter `TRACK1041`.
 4. Show only status/device/timeline; no address or payment details.
 5. Open `/status` and show both checks ready.
 

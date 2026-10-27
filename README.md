@@ -27,7 +27,7 @@ Built with Next.js 16, React 19, Tailwind CSS, Supabase Auth/Postgres/RLS, and a
 - **Inventory** — parts, SKU, stock, reorder levels, cost, price, supplier, and automatic stock movement when a part is attached to a repair.
 - **Invoices** — labour + parts + 12% tax, unpaid/paid ledger, and payment marks the ticket collected.
 - **Team** — owner, manager, and technician roles. Owners manage owner access; managers manage non-owner roles. Owners and managers create confirmed staff accounts.
-- **Public tracker** — customers check repair progress with the tracking code from their receipt plus the email or phone on file. No account needed.
+- **Public tracker** — customers check repair progress with the tracking code from their receipt. No account, email, or phone needed.
 - **3D teardown** — a three-layer display/chassis/back-panel scene with a live repair screen on the dashboard, auth shell, tracker, and status page.
 
 ## Stack
@@ -105,7 +105,7 @@ The seed script creates these accounts. The password comes from `DEMO_PASSWORD` 
 | `admin@luckypatcher.test` | Manager |
 | `user@luckypatcher.test` | Technician |
 
-Public tracking uses the seeded ticket **PW-1041** with tracking code **TRACK1041** and contact `maya.chen@example.com`.
+Public tracking uses the seeded ticket **PW-1041** with tracking code **TRACK1041**. The code is the only input.
 
 ## Data model
 
@@ -120,7 +120,7 @@ profiles ── assigned_to / created_by / actor
 - `tickets` get a generated `PW-####` number and an unguessable tracking code.
 - `ticket_parts` is the join between a repair and the parts it consumed.
 - `invoices` store labour, parts, subtotal, tax, total, and payment state.
-- `track_ticket(code, contact)` is a security-definer RPC that returns only customer-safe progress data.
+- `track_ticket(code)` is a security-definer RPC that returns only customer-safe progress data. It accepts the random tracking code, not the sequential `PW-` number.
 - Staff read the repair tables through RLS; managers and owners write inventory and invoices. Anonymous users only reach the tracking RPC.
 
 ## Repository map
