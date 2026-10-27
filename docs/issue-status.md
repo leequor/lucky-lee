@@ -41,9 +41,10 @@ This table maps the original issues in `leequor/Lucky-Patcher-` to the tracking 
 - The app is deployed at <https://lucky-lee.vercel.app> with a hosted Supabase project.
 - Hosted login, logout, protected redirect, reset link, new-password login, reused-link rejection,
   and all 7 RLS checks passed.
-- The interface was rebuilt a third time; the shipped system is the quiet product interface in
-  [`design-system.md`](design-system.md). Final mockups in `design/mockups/` are captured from the
-  running app.
+- The interface was rebuilt a fourth time; the shipped system is the Lucky Vault interface in
+  [`design-system.md`](design-system.md). It uses a midnight-jade ground, a live 3D leaf field,
+  and a jade progress accent. Final mockups in `design/mockups/` are captured from the running
+  app.
 - Remaining external actions: real-inbox email delivery, team acknowledgement of the working
   agreement (#18), and the full team rehearsal (#19).
 - The Vercel project is Git-connected to `main`; the first merged build auto-deploys to production.

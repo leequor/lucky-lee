@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 const linkClass =
-  "font-medium text-ink underline decoration-[#c9c9c9] underline-offset-4 transition-colors hover:decoration-ink";
+  "font-medium text-ink underline decoration-[#345347] underline-offset-4 transition-colors hover:decoration-accent";
 
 export default function RegisterPage() {
   return (

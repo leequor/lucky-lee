@@ -6,15 +6,15 @@ type ButtonVariant = "primary" | "secondary" | "ghost";
 type ButtonSize = "sm" | "md" | "lg";
 
 const VARIANTS: Record<ButtonVariant, string> = {
-  primary: "bg-[#141414] text-white hover:bg-[#2b2b2b] active:bg-black",
-  secondary: "border border-line bg-wash text-ink hover:bg-[#e6e6e6]",
+  primary: "bg-ink text-paper hover:bg-white active:bg-[#dedbd0]",
+  secondary: "border border-line bg-wash text-ink hover:border-[#335245] hover:bg-[#18261f]",
   ghost: "bg-transparent text-muted hover:bg-wash hover:text-ink",
 };
 
 const SIZES: Record<ButtonSize, string> = {
-  sm: "h-8 px-3 text-[13px]",
-  md: "h-9 px-3.5 text-[13px]",
-  lg: "h-10 px-4 text-[14px]",
+  sm: "h-8 px-3.5 text-[13px]",
+  md: "h-9 px-4 text-[13px]",
+  lg: "h-11 px-5 text-[14px]",
 };
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -33,7 +33,7 @@ export function Button({
     <button
       type={type}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors disabled:pointer-events-none disabled:opacity-45",
+        "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors duration-200 active:translate-y-px disabled:pointer-events-none disabled:opacity-45",
         VARIANTS[variant],
         SIZES[size],
         className,

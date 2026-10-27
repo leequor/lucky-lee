@@ -6,16 +6,38 @@ import { cn } from "@/lib/utils";
 function Clover({ className }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 20 20"
+      viewBox="0 0 32 32"
       aria-hidden="true"
       className={cn("h-5 w-5", className)}
-      fill="currentColor"
+      fill="none"
     >
-      <circle cx="6.7" cy="6.7" r="3.6" />
-      <circle cx="13.3" cy="6.7" r="3.6" />
-      <circle cx="6.7" cy="13.3" r="3.6" />
-      <circle cx="13.3" cy="13.3" r="3.6" className="text-accent" />
-      <rect x="9.4" y="13.2" width="1.2" height="5.6" rx="0.6" />
+      <g fill="currentColor">
+        <path
+          d="M16 16C16 11.6 12.8 8 8.8 8C6 8 4.4 9.8 4.8 12.1C5.2 14.7 8.4 16 12 16Z"
+          opacity="0.62"
+        />
+        <path
+          d="M16 16C16 11.6 12.8 8 8.8 8C6 8 4.4 9.8 4.8 12.1C5.2 14.7 8.4 16 12 16Z"
+          opacity="0.88"
+          transform="rotate(90 16 16)"
+        />
+        <path
+          d="M16 16C16 11.6 12.8 8 8.8 8C6 8 4.4 9.8 4.8 12.1C5.2 14.7 8.4 16 12 16Z"
+          transform="rotate(180 16 16)"
+        />
+        <path
+          d="M16 16C16 11.6 12.8 8 8.8 8C6 8 4.4 9.8 4.8 12.1C5.2 14.7 8.4 16 12 16Z"
+          opacity="0.78"
+          transform="rotate(270 16 16)"
+        />
+      </g>
+      <path
+        d="M16 18.3C15.8 22 15 24.6 13.5 27"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+      <circle cx="16" cy="16" r="2.1" fill="#E6C77B" />
     </svg>
   );
 }
@@ -31,7 +53,7 @@ export function Logo({
 }) {
   const content = (
     <>
-      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-line bg-surface text-ink">
+      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-line bg-wash text-accent">
         <Clover />
       </span>
       {!markOnly ? (

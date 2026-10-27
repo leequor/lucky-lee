@@ -15,6 +15,7 @@
     "test:integration": "vitest run --config vitest.integration.config.mts",
     "test:e2e": "playwright test",
     "check:env": "node scripts/check-env.mjs",
+    "capture:mockups": "node scripts/capture-mockups.mjs",
     "seed:demo": "node scripts/seed-demo-users.mjs",
     "db:push": "supabase db push"
   },

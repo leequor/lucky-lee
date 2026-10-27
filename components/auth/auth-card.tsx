@@ -13,16 +13,16 @@ export function AuthCard({
 }) {
   return (
     <div className="w-full max-w-form">
-      <div className="rounded-lg border border-line bg-surface p-6 sm:p-7">
-        <h1 className="text-[24px] font-semibold leading-tight tracking-[-0.02em] text-ink">
+      <div className="rounded-2xl border border-line bg-surface p-6 sm:p-8">
+        <h1 className="text-balance text-[27px] font-semibold leading-[1.1] tracking-[-0.035em] text-ink sm:text-[30px]">
           {title}
         </h1>
-        <p className="mt-2 text-[14px] leading-6 text-muted">{description}</p>
+        <p className="mt-3 text-[14px] leading-6 text-muted">{description}</p>
 
-        <div className="mt-6">{children}</div>
+        <div className="mt-7">{children}</div>
 
         {footer ? (
-          <div className="mt-6 border-t border-line pt-4 text-[13px] text-muted">{footer}</div>
+          <div className="mt-7 border-t border-line pt-5 text-[13px] text-muted">{footer}</div>
         ) : null}
       </div>
     </div>

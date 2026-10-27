@@ -1,28 +1,37 @@
 import Link from "next/link";
 
 import { Logo } from "@/components/ui/logo";
+import { LuckyScene } from "@/components/visual/lucky-scene";
 
 export default function NotFound() {
   return (
-    <main className="grid min-h-[100dvh] bg-paper px-6 py-6">
-      <div className="mx-auto flex w-full max-w-canvas flex-col">
+    <main className="relative min-h-[100dvh] overflow-hidden bg-paper px-5 py-6 sm:px-6">
+      <div className="mx-auto flex min-h-[calc(100dvh-3rem)] w-full max-w-canvas flex-col">
         <Logo />
 
-        <div className="flex flex-1 flex-col justify-center py-16">
-          <p className="text-[14px] text-muted">404</p>
-          <h1 className="mt-2 text-[32px] font-semibold leading-tight tracking-[-0.02em] text-ink">
-            Page not found
-          </h1>
-          <p className="mt-3 max-w-[46ch] text-[14px] leading-6 text-muted">
-            The link may be old, or the page only exists in a local design preview.
-          </p>
-          <div className="mt-6">
-            <Link
-              href="/"
-              className="inline-flex h-10 items-center justify-center rounded-md bg-[#141414] px-4 text-[14px] font-medium text-white transition-colors hover:bg-[#2b2b2b]"
-            >
-              Back to the app
-            </Link>
+        <div className="grid flex-1 items-center gap-8 py-14 lg:grid-cols-[1fr_0.9fr]">
+          <div>
+            <p className="figure text-[13px] text-accent">404</p>
+            <h1 className="mt-3 text-[42px] font-semibold leading-[0.98] tracking-[-0.05em] text-ink sm:text-[56px]">
+              This leaf fell off.
+            </h1>
+            <p className="mt-4 max-w-[46ch] text-[14px] leading-6 text-muted">
+              The link may be old, or the page only exists in a local design preview. Head back to
+              the account overview and try again.
+            </p>
+            <div className="mt-7">
+              <Link
+                href="/"
+                className="inline-flex h-11 items-center justify-center rounded-full bg-ink px-5 text-[14px] font-medium text-paper transition-colors hover:bg-white"
+              >
+                Back to the app
+              </Link>
+            </div>
+          </div>
+
+          <div className="relative min-h-[260px] overflow-hidden rounded-2xl border border-line bg-[#08110d]">
+            <div className="scene-field pointer-events-none absolute inset-0" aria-hidden="true" />
+            <LuckyScene className="absolute inset-0" />
           </div>
         </div>
 

@@ -43,7 +43,7 @@ export function FormField({
         aria-invalid={Boolean(error)}
         aria-describedby={describedBy}
         className={cn(
-          "h-10 w-full rounded-md border border-line bg-surface px-3 text-[14px] text-ink outline-none transition-colors placeholder:text-[#9a9a9a] focus:border-ink",
+          "h-11 w-full rounded-md border border-line bg-paper/70 px-3.5 text-[14px] text-ink outline-none transition-colors placeholder:text-muted/55 hover:border-[#2B4238] focus:border-accent focus:bg-paper",
           error ? "border-negative focus:border-negative" : null,
           className,
         )}

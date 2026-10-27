@@ -1,84 +1,90 @@
 # Design System
 
-The app uses a quiet product interface: an off-white ground, white panels, near-black type, a
-single blue accent used only on real data, and status colours only where something has a state.
-It is built to look like a tool the team works in, not a marketing page.
+The app uses the **Lucky Vault** interface: a midnight-jade ground, warm-white type, one jade
+accent, and a gold core in the product mark. It is still a working tool, but the account screen
+now has a signature 3D element instead of a plain panel.
 
 ## Brand idea
 
-- **One ground, one ink, one accent.** Chrome is achromatic; blue marks the sprint progress and
-  nothing else.
-- **Surfaces are flat.** Panels separate by one tone step and a 1 px line. No shadows, no glows.
-- **Soft geometry.** Panels use 8 px corners, controls 6 px. Nothing is a pill except status tags.
+- **Four leaves, one account.** The clover is the product mark. A real-time 3D leaf field is the
+  one decorative element, and it is built from the same four loops as the mark.
+- **One ground, one ink, one accent.** Chrome is near-black green; jade marks progress, live state,
+  and the primary brand moments. Gold appears only in the mark core.
+- **Surfaces are flat.** Panels separate by one tone step and a 1 px line. No shadows at rest, no
+  glass, no blurred navigation.
+- **Soft geometry.** Panels use 16 px corners, controls 10 px, and action buttons are full-radius.
 - **Geist** sets all text. **Geist Mono** is reserved for IDs and code.
-- **No decoration.** No gradients, blobs, illustrations, index numbers, or tracked-out labels.
+- **No decorative noise.** The only pattern is a faint SVG dot field inside the 3D scene panel.
 
 ## Color palette
 
 | Token | Hex | Use |
 | --- | --- | --- |
-| `paper` | `#F7F7F7` | Page ground. |
-| `surface` | `#FFFFFF` | Panels, inputs, navigation. |
-| `ink` | `#0A0A0A` | Text and primary action fill. |
-| `muted` | `#6B6B6B` | Secondary text, labels, metadata. |
-| `line` | `#E6E6E6` | Panel borders and row rules. |
-| `wash` | `#EFEFEF` | Secondary button fill, quiet insets. |
-| `accent` | `#1D5FBF` | Sprint progress bar only. |
-| `positive` | `#2E7D32` | Ready dot and status text. |
-| `positive-soft` | `#DCFAE5` | Ready tag fill. |
-| `negative` | `#C4242A` | Error borders, dots, text. |
-| `negative-soft` | `#FFEDEA` | Error alert fill. |
-| `warn` | `#92400E` | Preview banner text. |
-| `warn-soft` | `#FFFBEB` | Preview banner fill. |
+| `paper` | `#060B09` | Page ground. |
+| `surface` | `#0D1512` | Panels, inputs, navigation. |
+| `ink` | `#F1F4F0` | Text and primary action fill. |
+| `muted` | `#A0AEA6` | Secondary text, labels, metadata. |
+| `line` | `#1C2A24` | Panel borders and row rules. |
+| `wash` | `#131E19` | Secondary button fill, quiet insets. |
+| `accent` | `#4CE3A6` | Progress, live state, role highlight. |
+| `gold` | `#E6C77B` | Clover core and small scene nodes only. |
+| `positive` | `#4CE3A6` | Ready dot and status text. |
+| `positive-soft` | `#0D2A20` | Ready tag fill. |
+| `negative` | `#F07A70` | Error borders, dots, text. |
+| `negative-soft` | `#2B1517` | Error alert fill. |
+| `warn` | `#E9BC70` | Preview banner text. |
+| `warn-soft` | `#2A2114` | Preview banner fill. |
 
-Colour is data, status, or the one primary action. It never decorates the chrome.
+Colour is data, status, or the one primary action. It never decorates chrome.
 
 ## Typography
 
 | Role | Family | Size / weight |
 | --- | --- | --- |
-| Page title | Geist | 24 px / 600, tracking -0.02em |
-| Utility page title | Geist | 28 px / 600 |
-| Section heading | Geist | 16 px / 500 |
-| Body | Geist | 14 px / 400, line-height 1.5–1.7 |
+| App title | Geist | 24 px phone, 32 px desktop / 600, tracking -0.045em |
+| Auth title | Geist | 27 px phone, 30 px desktop / 600 |
+| Public utility title | Geist | 34 px phone, 44 px desktop / 600 |
+| Section heading | Geist | 17 px / 500 |
+| Body | Geist | 13–14 px / 400, line-height 1.5–1.7 |
 | Field label | Geist | 14 px / 500 |
-| Metadata and hints | Geist | 12–13 px / 400 |
-| IDs and code | Geist Mono | 13 px, truncate long values |
+| Metadata and hints | Geist | 11–13 px / 400 |
+| IDs and code | Geist Mono | 12–13 px, truncate long values |
 
 Sentence case everywhere. No uppercase labels, no letter-spaced capitals. Numbers that align use
 `font-variant-numeric: tabular-nums` (`.figure`).
 
 ## Spacing and shape
 
-- Spacing scale: 4, 8, 12, 16, 20, 24, 32, 40 px.
-- Page gutter: 24 px.
-- Content width: 1080 px canvas, 420 px auth form.
-- Radius: panels 8 px, controls 6 px, status tags full.
-- Borders: 1 px `line`. No 4 px accent bars, no double rules.
-- Shadow: none. Focus uses a 2 px black outline.
+- Spacing scale: 4, 8, 12, 16, 20, 24, 32, 40, 48 px.
+- Page gutter: 20 px phone, 24 px desktop.
+- Content width: 1120 px canvas, 440 px auth form.
+- Radius: panels 16 px, controls 10 px, action buttons and status tags full.
+- Borders: 1 px `line`. No 2 px accent bars, no double rules.
+- Shadow: none at rest. Focus uses a 2 px jade outline.
+- The 3D panel uses a flat `#08110D` field with a 28 px SVG dot pattern.
 
 ## Core components
 
 ### Buttons
 
-- **Primary:** near-black `#141414` fill, white text, 6 px radius. Hover lightens to `#2B2B2B`.
-- **Secondary:** `wash` fill, 1 px `line` border, ink text. Hover `#E6E6E6`.
+- **Primary:** `ink` fill, `paper` text, full radius. Hover turns white.
+- **Secondary:** `wash` fill, 1 px `line` border, ink text. Hover border `#335245`.
 - **Ghost:** text only; hover fills `wash`.
-- Sizes: 32 px small, 36 px default, 40 px large/auth.
+- Sizes: 32 px small, 36 px default, 44 px large/auth.
 - Disabled: 45% opacity, no pointer events.
-- Pending: label swaps to the pending copy with a small pulse mark.
+- Pending: label swaps to the pending copy with a static mark.
 
 ### Inputs
 
-- Height 40 px, 6 px radius, 1 px `line`, white fill.
-- Focus: border turns ink; the global focus outline stays visible.
+- Height 44 px, 10 px radius, 1 px `line`, `paper` fill inside the card.
+- Focus: border turns jade and the field returns to `paper`.
 - Error: red border, red 12 px message with `role="alert"`.
 - Label 14 px above the field; hint 12 px muted on the label row.
-- Placeholder `#9A9A9A`; never the only label.
+- Autofill is forced back to the dark surface so Chrome cannot paint a white field.
 
 ### Alerts
 
-- 6 px radius, flat tinted fill, no left bar.
+- 16 px radius, flat tinted fill, 1 px state border, no left bar.
 - **Success:** `positive-soft` / `positive-ink`.
 - **Error:** `negative-soft` / `negative-ink`.
 - **Info:** `wash` / ink.
@@ -87,62 +93,67 @@ Sentence case everywhere. No uppercase labels, no letter-spaced capitals. Number
 ### Status tags
 
 - Full radius, 12 px medium, with a 6 px dot for state.
-- **Ready:** `positive-soft` fill, `positive-ink` text, green dot.
-- **Open / neutral:** `wash` fill, `#3D3D3D` text, grey dot.
+- **Ready:** `positive-soft` fill, `positive-ink` text, jade dot.
+- **Open / neutral:** `wash` fill, `muted` text, grey dot.
 - **Error:** `negative-soft` fill, `negative-ink` text.
 - State is always spelled out; colour is never the only signal.
 
 ### Navigation
 
-- 64 px white bar, 1 px bottom rule.
-- Clover mark in a white tile, wordmark at 15 px/600.
-- Right cluster: status link, email, role tag, round avatar, secondary Log out.
-- Below 768 px the email, role, and status link hide; the log-out target stays.
+- 64 px solid ground, 1 px bottom rule, no blur.
+- Clover mark in a 36 px wash tile, wordmark at 15 px/600.
+- Right cluster: status pill, email, role tag, round avatar, secondary Log out.
+- Below 768 px the email, role, and status link hide; the avatar and Log out stay.
+
+## The 3D scene
+
+`components/visual/lucky-scene.tsx` is a dependency-free canvas renderer.
+
+- Four torus loops form the clover; a gold stem and core complete the mark.
+- Depth-sorted segments use alpha for distance, so the shape reads in 3D without WebGL.
+- Orbiting dust is deterministic, not random per frame.
+- Pointer movement tilts the field; touch does not block page scrolling.
+- It pauses when the tab is hidden, caps device pixel ratio at 2, and renders a still frame when
+  `prefers-reduced-motion` is set.
+- The canvas is `aria-hidden`; all meaning is in the surrounding text.
 
 ## Layout
 
 ### Auth shell
 
-- Full-height ground with the product mark at the top and a quiet footer.
-- Form card centred in a 420 px measure on a white panel.
-- No split-screen statement panel, no oversized type.
-- Fields stack in one column; the forgot-password link sits on the password label row.
+- Split screen at 1024 px and wider: a brand statement, the live 3D scene, and three security
+  facts on the left; the form card on the right.
+- Phone and tablet: logo and status row, a 128 px 3D banner, then the form card, then a quiet
+  footer.
+- Form card: 440 px measure, 16 px radius, one column of fields, recovery link on the password
+  label row.
 
 ### Landing
 
-- White navigation bar, then a 1080 px canvas.
-- Title row: `Account overview`, who is signed in, role tag, and one secondary action.
-- `Your account` panel: two-column label/value grid on desktop, stacked rows on mobile.
-- `Sprint 1 checklist`: heading row with `x of 5 ready`, a 8 px blue progress bar, then rows
+- Solid navigation bar, then a 1120 px canvas.
+- Hero: title, sign-in identity, readiness figure, role tag, status action, and a live 3D panel.
+- `Sprint 1 checklist`: heading row with `x of 5 ready`, an 8 px jade progress bar, then rows
   with title, one-line note, and a status tag.
+- `Your account`: identity, role, email state, provider, member date, account ID, account health.
 - `Access and environment`: three cells divided by 1 px lines, one short fact each.
 - Footer rule with product, sprint, and session state.
 
-### Status
+### Status page
 
-- Same white header and 1080 px canvas.
-- Heading, explanation, then the two health rows in one panel.
-- Below it, `If a check fails` with three short runbook rows so the page is not half empty.
+- Public utility page with the same shell and a 3D connection panel on desktop.
+- Health rows keep the app and Supabase checks first; the runbook follows.
 
 ## Motion
 
-- Transitions are colour and background only, 150 ms.
-- No entrance animations, no scroll effects.
-- Everything collapses under `prefers-reduced-motion: reduce`.
+- Entrance: a 14 px rise and fade, staggered by 90 ms across hero, checklist, and environment.
+- Canvas: continuous slow rotation plus pointer tilt; reduced motion gets one still frame.
+- Buttons: colour and 1 px press movement only.
+- All animation is disabled under `prefers-reduced-motion`.
 
-## Accessibility
+## Rejected looks
 
-- Body and metadata text meet AA on `paper` and `surface`.
-- Focus is always visible: 2 px ink outline with 2 px offset.
-- Form labels are never placeholders; errors are wired with `aria-invalid` and `aria-describedby`.
-- Status tags pair a dot with words.
-- Controls are at least 32 px tall; primary and mobile actions are 40–44 px.
-- Layout checked at 360, 390, 768, 1440, and 1900 px.
+Do not bring these back:
 
-## Avoid
-
-- Black statement panels, safety-yellow fills, clover green, cream, coral, Fraunces.
-- Gradients, glass, blobs, shadows, background grids.
-- Uppercase tracked-out mono labels, index numbers (`01 / 02`), thin accent rules.
-- More than one accent colour, or colour on chrome.
-- Fake metrics or vague marketing copy.
+- cream + clover green + coral + Fraunces
+- black + safety yellow + Bricolage + Space Mono
+- light grey + white cards + blue progress-only accent (the previous quiet UI)

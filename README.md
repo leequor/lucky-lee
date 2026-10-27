@@ -69,6 +69,7 @@ missing. The database connection test is at <http://localhost:3000/status> and
 | --- | --- |
 | `npm run dev` | Start the local Next.js server. |
 | `npm run check:env` | Verify the required Supabase environment variables without printing secrets. |
+| `npm run capture:mockups` | Capture the six design mockups from a running production build. |
 | `npm test` | Run the Vitest suite. |
 | `npm run test:watch` | Run Vitest in watch mode. |
 | `npm run test:coverage` | Run the unit suite with the coverage gate. |
@@ -120,6 +121,7 @@ components/
   auth/                   Auth shell, card, and forms
   landing/                Landing page and live status panel
   ui/                     Button, input, alert, logo, navbar, role badge
+  visual/                 Dependency-free 3D canvas leaf field
 lib/
   auth/                   Validation, error mapping, service calls, session helpers
   supabase/               Browser, server, and proxy clients
@@ -182,6 +184,10 @@ The integration and browser suites need a local Supabase stack. See
 [`docs/testing.md`](docs/testing.md) for the setup and the exact commands.
 
 ## Design
+
+The shipped interface is the Lucky Vault system: a midnight-jade ground, a warm-white ink, one
+jade accent, and a dependency-free 3D canvas leaf field on the auth, landing, status, and not-found
+screens.
 
 - [Design system](docs/design-system.md)
 - [Wireframes](design/wireframes)

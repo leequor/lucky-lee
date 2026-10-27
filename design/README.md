@@ -14,27 +14,29 @@ the mockups are captured from it and serve as the visual reference for the prese
 | `wireframes/reset-password.svg` | Set a new password | Original structure: two password fields and expired-link state. |
 
 The wireframes are historical planning artifacts. The shipped layout keeps the same form
-structure inside the quiet product interface.
+structure inside the Lucky Vault interface.
 
 ### Final mockups
 
 | File | Screen | Notes |
 | --- | --- | --- |
-| `mockups/login.png` | Login | Centred 420 px card on the off-white ground. |
+| `mockups/login.png` | Login | Split shell with the live 3D leaf field. |
 | `mockups/register.png` | Register | Adds the optional display name field. |
 | `mockups/forgot-password.png` | Reset request | Single email field and generic success state. |
 | `mockups/reset-password.png` | Set a new password | Preview of the valid recovery-session state. |
-| `mockups/landing-preview.png` | Landing | Account panel, sprint checklist, environment summary. |
+| `mockups/landing-preview.png` | Landing | Hero, live 3D panel, sprint checklist, account card. |
 | `mockups/status.png` | System status | App and Supabase health rows with the runbook. |
+
+Regenerate the set from a running app with the Playwright capture script in `scripts/`.
 
 ## Developer notes
 
 ### Auth shell
 
 - Use `components/auth/auth-shell.tsx`; do not rebuild it per page.
-- Mark and status link on one row, form centred, quiet footer at the bottom.
-- No split-screen statement panel, no cards inside cards.
-- On mobile the card keeps a 24 px gutter and full-width fields.
+- Desktop: brand statement, 3D scene, and three security facts on the left; form on the right.
+- Phone/tablet: logo row, 128 px 3D banner, centered form card, quiet footer.
+- The form card is 440 px, 16 px radius, one column.
 
 ### Login
 
@@ -61,26 +63,34 @@ structure inside the quiet product interface.
 
 ### Landing page
 
-- Title row names the page and who is signed in; the role tag is repeated from the navbar.
-- Account panel uses one left edge and a two-column label/value grid.
-- Checklist carries the only blue element in the product: the progress bar.
+- Hero answers "are we ready?": title, identity, readiness figure, role tag, status action.
+- The 3D panel is decorative; all state is repeated in text elsewhere.
+- Checklist carries the jade progress bar.
 - Status tags use the dot plus the word, never colour alone.
 - Logout is a form submit in the navbar.
 
 ### Responsive rules
 
-- 390 px: single column, 24 px gutter, full-width cards, role and status action wrap under the title.
-- 768 px: same single column with wider panels.
-- 1440 px: 1080 px canvas, two-column account grid, three-cell environment strip.
+- 390 px: single column, 20 px gutter, stacked hero, full-width cards, 24 px app title.
+- 768 px: single column with wider panels; nav keeps the email and role.
+- 1440 px: 1120 px canvas, split hero, two-column checklist/account row, three-cell environment
+  strip.
 
 ## Color and type references
 
 Full tokens are in [docs/design-system.md](../docs/design-system.md). Short version:
 
-- Ground `#F7F7F7`, panel `#FFFFFF`, ink `#0A0A0A`, muted `#6B6B6B`, line `#E6E6E6`.
-- Accent blue `#1D5FBF` for the sprint progress only.
-- Ready green `#2E7D32` on `#DCFAE5`; error red `#C4242A` on `#FFEDEA`.
+- Ground `#060B09`, panel `#0D1512`, ink `#F1F4F0`, muted `#A0AEA6`, line `#1C2A24`.
+- Accent jade `#4CE3A6` for progress, live state, and the role highlight.
+- Gold `#E6C77B` only in the clover core.
+- Ready jade `#4CE3A6` on `#0D2A20`; error `#F07A70` on `#2B1517`.
 - Text: Geist. IDs and code: Geist Mono.
+
+## The 3D scene
+
+`components/visual/lucky-scene.tsx` draws four depth-sorted torus loops, a gold stem, a gold core,
+and deterministic orbiting dust. It tilts with the pointer, pauses when the tab is hidden, and
+renders one still frame for reduced-motion visitors. It has no runtime dependencies.
 
 ## Screenshots
 

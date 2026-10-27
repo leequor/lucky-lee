@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 const linkClass =
-  "font-medium text-ink underline decoration-[#c9c9c9] underline-offset-4 transition-colors hover:decoration-ink";
+  "font-medium text-ink underline decoration-[#345347] underline-offset-4 transition-colors hover:decoration-accent";
 const codeClass = "rounded-sm bg-wash px-1.5 py-0.5 font-mono text-[12px] text-ink";
 
 export default async function ResetPasswordPage() {
@@ -57,7 +57,7 @@ export default async function ResetPasswordPage() {
       >
         <Link
           href="/forgot-password"
-          className="inline-flex h-10 w-full items-center justify-center rounded-md bg-[#141414] px-4 text-[14px] font-medium text-white transition-colors hover:bg-[#2b2b2b]"
+          className="inline-flex h-11 w-full items-center justify-center rounded-full bg-ink px-4 text-[14px] font-medium text-paper transition-colors hover:bg-white"
         >
           Request a new reset link
         </Link>

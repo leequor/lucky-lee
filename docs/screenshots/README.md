@@ -6,7 +6,7 @@ presentation. They are not redrawn.
 ## Capture setup
 
 - App: local production build (`npm run build` + `npm start`)
-- Viewport: 1440 × 900, full page
+- Viewport: 1440 × 1000, full page
 - Fonts: loaded from the app build
 - Auth: hosted Supabase project; signed-in demo account for the landing page
 - Reset form: local-only `/design-preview/reset-password` route

@@ -3,11 +3,12 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 html {
   scroll-behavior: smooth;
+  background: #060b09;
 }
 
 body {
@@ -16,13 +17,13 @@ body {
 }
 
 ::selection {
-  background: #dbe7fb;
-  color: #0a0a0a;
+  background: #1d4d3c;
+  color: #f1f4f0;
 }
 
 @layer base {
   * {
-    border-color: #e6e6e6;
+    border-color: #1c2a24;
   }
 
   a,
@@ -32,8 +33,31 @@ body {
   }
 
   :focus-visible {
-    outline: 2px solid #141414;
-    outline-offset: 2px;
+    outline: 2px solid #4ce3a6;
+    outline-offset: 3px;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #f1f4f0;
+    box-shadow: 0 0 0 1000px #0d1512 inset; /* taste-skill-ignore shadow */
+    caret-color: #f1f4f0;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #060b09;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #22352c;
+    border-radius: 9999px;
+    border: 2px solid #060b09;
   }
 }
 
@@ -44,6 +68,39 @@ body {
 
   .figure {
     font-variant-numeric: tabular-nums;
+  }
+
+  .scene-field {
+    background-color: #08110d;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Ccircle cx='1' cy='1' r='1' fill='%234CE3A6' fill-opacity='.18'/%3E%3C/svg%3E");
+    background-size: 28px 28px;
+  }
+
+  .reveal {
+    animation: reveal 700ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+  }
+
+  .reveal-delay-1 {
+    animation-delay: 90ms;
+  }
+
+  .reveal-delay-2 {
+    animation-delay: 180ms;
+  }
+
+  .reveal-delay-3 {
+    animation-delay: 270ms;
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

@@ -24,14 +24,14 @@ const STATE_LABEL = {
 } as const;
 
 const PILL = {
-  loading: "bg-wash text-[#3d3d3d]",
+  loading: "bg-wash text-muted",
   ok: "bg-positive-soft text-positive-ink",
   warn: "bg-warn-soft text-warn",
   error: "bg-negative-soft text-negative-ink",
 } as const;
 
 const DOT = {
-  loading: "bg-[#9a9a9a]",
+  loading: "bg-[#5a6b62]",
   ok: "bg-positive",
   warn: "bg-warn",
   error: "bg-negative",
@@ -113,7 +113,7 @@ export function StatusPanel() {
         </div>
       ) : null}
 
-      <div className="overflow-hidden rounded-lg border border-line bg-surface">
+      <div className="overflow-hidden rounded-2xl border border-line bg-surface">
         <StatusRow
           label="Next.js app"
           state={app ? "ok" : error ? "error" : "loading"}

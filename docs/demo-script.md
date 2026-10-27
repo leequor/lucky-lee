@@ -119,8 +119,8 @@ development shortcut."
 **Ian Kenneth + Alexander**
 
 1. Show the design system and one wireframe/mockup pair.
-2. Point out the quiet product interface: off-white ground, one blue progress element, the
-   responsive auth card, and the landing page.
+2. Point out the Lucky Vault interface: midnight-jade ground, the live 3D leaf field, jade
+   progress, the responsive auth shell, and the landing page.
 3. Close with the Sprint 1 outcome: register, login/logout, reset, landing, roles, RLS, tests,
    and documentation.
 4. Invite questions.
