@@ -22,8 +22,13 @@ vi.mock("@/lib/repair/queries", () => ({
   getInventory: vi.fn(),
 }));
 
+vi.mock("@/lib/repair/session", () => ({
+  getStaff: vi.fn(),
+}));
+
 import TicketDetailPage from "@/app/(workspace)/tickets/[id]/page";
 import { getInventory, getStaffProfiles, getTicketDetail } from "@/lib/repair/queries";
+import { getStaff } from "@/lib/repair/session";
 
 const ticket = {
   id: "ticket-1",
@@ -111,6 +116,13 @@ describe("TicketDetailPage", () => {
         updated_at: "2026-10-01T10:00:00.000Z",
       },
     ]);
+    vi.mocked(getStaff).mockResolvedValue({
+      id: "s1",
+      email: "alex@example.com",
+      role: "superadmin",
+      fullName: "Alex",
+      createdAt: null,
+    });
 
     render(
       await TicketDetailPage({
@@ -126,5 +138,67 @@ describe("TicketDetailPage", () => {
     expect(screen.getByText("Ticket updated.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Generate invoice" })).toBeInTheDocument();
     expect(screen.getByText("$329.28")).toBeInTheDocument();
+  });
+
+  it("tells technicians a manager will generate the invoice", async () => {
+    vi.mocked(getTicketDetail).mockResolvedValue(ticket as never);
+    vi.mocked(getStaffProfiles).mockResolvedValue([]);
+    vi.mocked(getInventory).mockResolvedValue([]);
+    vi.mocked(getStaff).mockResolvedValue({
+      id: "s3",
+      email: "user@example.com",
+      role: "user",
+      fullName: "Demo User",
+      createdAt: null,
+    });
+
+    render(
+      await TicketDetailPage({
+        params: Promise.resolve({ id: "ticket-1" }),
+        searchParams: Promise.resolve({}),
+      }),
+    );
+
+    expect(screen.queryByRole("button", { name: "Generate invoice" })).not.toBeInTheDocument();
+    expect(screen.getByText(/A manager generates the invoice/)).toBeInTheDocument();
+  });
+
+  it("tells technicians an unpaid invoice is awaiting a manager", async () => {
+    vi.mocked(getTicketDetail).mockResolvedValue({
+      ...ticket,
+      invoice: {
+        id: "invoice-1",
+        ticket_id: "ticket-1",
+        invoice_number: "INV-1",
+        labour_cents: 4500,
+        parts_cents: 24900,
+        subtotal_cents: 29400,
+        tax_cents: 3528,
+        total_cents: 32928,
+        status: "sent",
+        issued_at: "2026-10-27T10:00:00.000Z",
+        paid_at: null,
+        notes: null,
+      },
+    } as never);
+    vi.mocked(getStaffProfiles).mockResolvedValue([]);
+    vi.mocked(getInventory).mockResolvedValue([]);
+    vi.mocked(getStaff).mockResolvedValue({
+      id: "s3",
+      email: "user@example.com",
+      role: "user",
+      fullName: "Demo User",
+      createdAt: null,
+    });
+
+    render(
+      await TicketDetailPage({
+        params: Promise.resolve({ id: "ticket-1" }),
+        searchParams: Promise.resolve({}),
+      }),
+    );
+
+    expect(screen.queryByRole("button", { name: /Mark paid/ })).not.toBeInTheDocument();
+    expect(screen.getByText("Awaiting manager collection.")).toBeInTheDocument();
   });
 });
