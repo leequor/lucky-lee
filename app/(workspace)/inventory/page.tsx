@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { addPartAction, adjustStockAction } from "@/app/actions/repair";
@@ -13,8 +14,11 @@ import {
 } from "@/components/workspace/ui";
 import { formatMoney } from "@/lib/repair/format";
 import { getInventory } from "@/lib/repair/queries";
+import { getStaff } from "@/lib/repair/session";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Inventory" };
 
 const CATEGORIES = ["screen", "battery", "charging", "camera", "keyboard", "storage", "cooling", "supplies", "general"];
 
@@ -24,17 +28,18 @@ export default async function InventoryPage({
   searchParams: Promise<{ q?: string; notice?: string; error?: string; new?: string }>;
 }) {
   const params = await searchParams;
-  const parts = await getInventory(params.q);
+  const [parts, staff] = await Promise.all([getInventory(params.q), getStaff()]);
+  const canManage = staff?.role !== "user";
   const lowStock = parts.filter((part) => part.stock <= part.reorder_level);
   const stockValue = parts.reduce((total, part) => total + part.stock * part.cost_cents, 0);
-  const openForm = params.new === "1";
+  const openForm = params.new === "1" && canManage;
 
   return (
     <div>
       <PageHeader
         title="Inventory"
         description="Parts on the shelf, reorder levels, and what each repair actually costs."
-        actions={<PrimaryLink href="/inventory?new=1">Add part</PrimaryLink>}
+        actions={canManage ? <PrimaryLink href="/inventory?new=1">Add part</PrimaryLink> : undefined}
       />
       <Feedback notice={params.notice} error={params.error} />
 
@@ -159,29 +164,35 @@ export default async function InventoryPage({
                     <p className="text-[10px] text-muted">cost {formatMoney(part.cost_cents)}</p>
                   </div>
                   <div className="flex gap-2 lg:justify-end">
-                    <form action={adjustStockAction}>
-                      <input type="hidden" name="part_id" value={part.id} />
-                      <input type="hidden" name="delta" value="-1" />
-                      <button
-                        type="submit"
-                        disabled={part.stock === 0}
-                        className="grid h-8 w-8 place-items-center rounded-lg border border-line text-[14px] text-muted hover:border-negative/40 hover:text-negative disabled:opacity-30"
-                        aria-label={`Remove one ${part.name}`}
-                      >
-                        −
-                      </button>
-                    </form>
-                    <form action={adjustStockAction}>
-                      <input type="hidden" name="part_id" value={part.id} />
-                      <input type="hidden" name="delta" value="1" />
-                      <button
-                        type="submit"
-                        className="grid h-8 w-8 place-items-center rounded-lg border border-line text-[14px] text-muted hover:border-positive/40 hover:text-positive"
-                        aria-label={`Add one ${part.name}`}
-                      >
-                        +
-                      </button>
-                    </form>
+                    {canManage ? (
+                      <>
+                        <form action={adjustStockAction}>
+                          <input type="hidden" name="part_id" value={part.id} />
+                          <input type="hidden" name="delta" value="-1" />
+                          <button
+                            type="submit"
+                            disabled={part.stock === 0}
+                            className="grid h-8 w-8 place-items-center rounded-lg border border-line text-[14px] text-muted hover:border-negative/40 hover:text-negative disabled:opacity-30"
+                            aria-label={`Remove one ${part.name}`}
+                          >
+                            −
+                          </button>
+                        </form>
+                        <form action={adjustStockAction}>
+                          <input type="hidden" name="part_id" value={part.id} />
+                          <input type="hidden" name="delta" value="1" />
+                          <button
+                            type="submit"
+                            className="grid h-8 w-8 place-items-center rounded-lg border border-line text-[14px] text-muted hover:border-positive/40 hover:text-positive"
+                            aria-label={`Add one ${part.name}`}
+                          >
+                            +
+                          </button>
+                        </form>
+                      </>
+                    ) : (
+                      <span className="text-[10px] text-muted">Manager-managed</span>
+                    )}
                   </div>
                 </div>
               );
@@ -191,7 +202,8 @@ export default async function InventoryPage({
       </Panel>
 
       <p className="mt-4 text-[11px] text-muted">
-        Stock moves automatically when a part is attached to a ticket. Manual adjustments are owner-controlled.
+        Stock moves automatically when a part is attached to a ticket. Manual adjustments are
+        owner- and manager-controlled.
       </p>
     </div>
   );

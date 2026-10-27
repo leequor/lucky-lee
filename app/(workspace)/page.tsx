@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { RepairBench } from "@/components/patchwork/repair-bench";
@@ -20,6 +21,8 @@ import {
 import { getDashboardData } from "@/lib/repair/queries";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Repair desk" };
 
 export default async function DashboardPage() {
   const data = await getDashboardData();

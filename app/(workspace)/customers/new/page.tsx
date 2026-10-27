@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { createCustomerAction } from "@/app/actions/repair";
@@ -7,6 +8,8 @@ import { TextAreaField } from "@/components/workspace/form-controls";
 import { Feedback, PageHeader, Panel } from "@/components/workspace/ui";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "New customer" };
 
 export default async function NewCustomerPage({
   searchParams,

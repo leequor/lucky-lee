@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { inviteStaffAction, updateRoleAction } from "@/app/actions/repair";
 import { FormField } from "@/components/ui/form-field";
 import { SubmitButton } from "@/components/ui/submit-button";
@@ -16,6 +17,8 @@ import { initials } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
+export const metadata: Metadata = { title: "Team" };
+
 export default async function TeamPage({
   searchParams,
 }: {
@@ -28,6 +31,7 @@ export default async function TeamPage({
     getDashboardData(),
   ]);
   const canManage = staff?.role !== "user";
+  const isOwner = staff?.role === "superadmin";
   const load = new Map(dashboard.teamLoad.map((member) => [member.id, member]));
 
   return (
@@ -44,6 +48,8 @@ export default async function TeamPage({
           <div className="divide-y divide-line">
             {profiles.map((member) => {
               const memberLoad = load.get(member.id);
+              const canEditMember = canManage && (isOwner || member.role !== "superadmin");
+
               return (
                 <div key={member.id} className="grid gap-3 px-5 py-4 sm:grid-cols-[1.2fr_0.7fr_0.8fr_auto] sm:items-center">
                   <div className="flex min-w-0 items-center gap-3">
@@ -69,7 +75,7 @@ export default async function TeamPage({
                     <span className="figure text-[12px] text-ink">{memberLoad?.active ?? 0}</span> in repair
                   </div>
                   <div>
-                    {canManage ? (
+                    {canEditMember ? (
                       <form action={updateRoleAction} className="flex items-center gap-2">
                         <input type="hidden" name="profile_id" value={member.id} />
                         <label className="sr-only" htmlFor={`role-${member.id}`}>
@@ -81,7 +87,7 @@ export default async function TeamPage({
                           defaultValue={member.role}
                           className="h-8 rounded-lg border border-line bg-paper px-2 text-[11px] text-ink outline-none focus:border-accent"
                         >
-                          <option value="superadmin">Owner</option>
+                          {isOwner ? <option value="superadmin">Owner</option> : null}
                           <option value="admin">Manager</option>
                           <option value="user">Technician</option>
                         </select>
@@ -93,7 +99,9 @@ export default async function TeamPage({
                         </button>
                       </form>
                     ) : (
-                      <span className="text-[10px] text-muted">Managed by owner</span>
+                      <span className="text-[10px] text-muted">
+                        {member.role === "superadmin" ? "Owner-managed" : "Manager-managed"}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -117,7 +125,7 @@ export default async function TeamPage({
                 <SelectField id="role" name="role" label="Role" defaultValue="user">
                   <option value="user">Technician</option>
                   <option value="admin">Manager</option>
-                  <option value="superadmin">Owner</option>
+                  {isOwner ? <option value="superadmin">Owner</option> : null}
                 </SelectField>
                 <SubmitButton pendingText="Creating account...">Create staff account</SubmitButton>
               </form>
@@ -136,10 +144,10 @@ export default async function TeamPage({
             <h2 className="text-[14px] font-medium text-ink">Role model</h2>
             <ul className="mt-3 space-y-3 text-[11px] leading-5 text-muted">
               <li>
-                <span className="text-ink">Owner</span> — full access, staff, and role changes.
+                <span className="text-ink">Owner</span> — full access, staff, and owner roles.
               </li>
               <li>
-                <span className="text-ink">Manager</span> — tickets, customers, inventory, invoices, staff roles.
+                <span className="text-ink">Manager</span> — tickets, customers, inventory, invoices, and staff roles.
               </li>
               <li>
                 <span className="text-ink">Technician</span> — day-to-day tickets and customer work.

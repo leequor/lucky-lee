@@ -1,7 +1,12 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 
 import { RepairBench } from "@/components/patchwork/repair-bench";
 import { Logo } from "@/components/ui/logo";
+
+export const metadata: Metadata = {
+  title: "Page not found",
+};
 
 export default function NotFound() {
   return (

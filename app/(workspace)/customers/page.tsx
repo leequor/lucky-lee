@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import {
@@ -11,6 +12,8 @@ import { getCustomers } from "@/lib/repair/queries";
 import { initials } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: "Customers" };
 
 export default async function CustomersPage({
   searchParams,

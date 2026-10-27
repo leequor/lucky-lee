@@ -35,7 +35,7 @@ describe("TrackPage", () => {
     render(await TrackPage({ searchParams: Promise.resolve({}) }));
 
     expect(screen.getByRole("heading", { name: "Track your repair." })).toBeInTheDocument();
-    expect(screen.getByLabelText("Ticket code")).toBeInTheDocument();
+    expect(screen.getByLabelText("Tracking code")).toBeInTheDocument();
     expect(screen.getByLabelText("Email or phone")).toBeInTheDocument();
     expect(screen.getByText("3D bench")).toBeInTheDocument();
     expect(vi.mocked(getTrackedTicket)).not.toHaveBeenCalled();
