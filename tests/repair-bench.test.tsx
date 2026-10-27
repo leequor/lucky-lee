@@ -39,7 +39,7 @@ describe("RepairBench", () => {
 
   it("hides layer controls in compact mode", async () => {
     render(<RepairBench compact />);
-    expect(await screen.findByTestId("repair-scene")).toBeInTheDocument();
+    expect(await screen.findByTestId("repair-scene", undefined, { timeout: 3000 })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Battery/ })).not.toBeInTheDocument();
     expect(screen.getByText("Live 3D")).toBeInTheDocument();
   });

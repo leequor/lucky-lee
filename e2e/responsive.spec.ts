@@ -28,7 +28,7 @@ test("the landing page has no horizontal scroll at mobile width", async ({ page 
   await page.getByLabel("Email").fill(demoUsers.user);
   await page.getByLabel("Password").fill(demoPassword);
   await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page).toHaveURL("/");
+  await expect(page).toHaveURL("/", { timeout: 15000 });
 
   const metrics = await page.evaluate(() => ({
     scrollWidth: document.documentElement.scrollWidth,

@@ -61,6 +61,12 @@ export function RepairBench({
   const rootRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [everVisible, setEverVisible] = useState(false);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setReady(true), compact ? 1800 : 0);
+    return () => window.clearTimeout(timer);
+  }, [compact]);
 
   useEffect(() => {
     const element = rootRef.current;
@@ -93,7 +99,7 @@ export function RepairBench({
     >
       <div className="scene-field pointer-events-none absolute inset-0 opacity-70" aria-hidden="true" />
 
-      {mounted && (visible || everVisible) ? (
+      {mounted && ready && (visible || everVisible) ? (
         <RepairScene
           activeLayer={active}
           reduced={reduced}

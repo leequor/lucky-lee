@@ -9,7 +9,7 @@
 | App version | Patchwork on `main` + Vercel production |
 | Unit and component test files | 35 |
 | Unit and component tests | 189 passed |
-| Coverage | 63.49% statements, 58.34% branches, 80.29% functions, 66.94% lines |
+| Coverage | 63.67% statements, 58.36% branches, 80.5% functions, 67.07% lines |
 | RLS integration tests | 14 passed against local Supabase in CI |
 | Browser E2E tests | 16 passed against local Supabase in CI |
 | TypeScript | Passed |
