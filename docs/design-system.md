@@ -105,9 +105,11 @@ Sentence case everywhere. Numbers in tables and totals use `font-variant-numeric
 
 `components/patchwork/repair-bench.tsx` and `repair-scene.tsx`.
 
-- Exploded iPhone: metallic frame, display, battery, logic board, camera module, floating screws.
-- The four layer buttons select a part; the selected layer lifts forward.
-- Pointer movement tilts the rig; the scene pauses under `prefers-reduced-motion`.
+- A repair bench with a standing display, open titanium frame, battery pack, logic board with
+  chips and gold connectors, camera module, screws, a precision driver, a spudger, and a parts tray.
+- An orange ribbon cable runs from the display to the board.
+- The four layer buttons select a part; the selected part lifts off the bench and settles back.
+- Pointer movement tilts the whole rig; the scene pauses under `prefers-reduced-motion`.
 - Built with React Three Fiber and Three.js; no external HDR, model, or texture downloads.
 - Compact mode hides the layer controls for auth banners and small panels.
 - Canvas is decorative; every state is repeated in text.
